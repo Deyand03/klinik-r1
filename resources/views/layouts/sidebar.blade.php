@@ -18,10 +18,11 @@
 </head>
 
 <body style="font-family: 'Poppins', sans-serif">
-    <nav>
 
-    </nav>
-
+    {{-- Sidebar --}}
+    <div>
+        
+    </div>
     <main>
         @yield('content')
     </main>
