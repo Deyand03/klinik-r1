@@ -26,7 +26,7 @@ Route::get('/', function () {
 // Pembayaran
 
 // Jadwal Dokter
-Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index']);
+Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
 
 // Rujukan Digital
 

@@ -15,7 +15,6 @@ class JadwalDokterController extends Controller
         ]);
 
         $jadwal_dokter = $res->json()['data'] ?? [];
-        @dd($jadwal_dokter['id']);
         return view('admin.jadwal_dokter.index', compact('jadwal_dokter'));
     }
 }
