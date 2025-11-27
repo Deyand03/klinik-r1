@@ -23,26 +23,49 @@
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 gap-3">
-            <li><a class="text-navbar hover:bg-transparent active:bg-transparent">Beranda
-                    <span class="absolute bottom-1 "></span>
+            <li><a href="{{ route('beranda') }}"
+                    class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
+                    Beranda
+                    <span
+                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) {{ request()->routeIs('beranda') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform duration-300 ease-out origin-left"></span>
+                    </span>
                 </a></li>
-            <li><a class="text-navbar hover:bg-transparent active:bg-transparent">Cari Dokter
-                    <span class="absolute bottom-1 "></span>
+            <li><a href="#"
+                    class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
+                    Cari Dokter
+                    <span
+                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
+                    </span>
                 </a></li>
-            <li><a class="text-navbar hover:bg-transparent active:bg-transparent">Fasilitas & Layanan
-                    <span class="absolute bottom-1 "></span>
+            <li><a href="#"
+                    class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
+                    Fasilitas & Layanan
+                    <span
+                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
+                    </span>
                 </a></li>
-            <li><a class="text-navbar hover:bg-transparent active:bg-transparent">Riwayat Reservasi
-                    <span class="absolute bottom-1 "></span>
+            <li><a href="#"
+                    class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
+                    Riwayat Reservasi
+                    <span
+                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
+                    </span>
                 </a></li>
         </ul>
     </div>
     <div class="navbar-end">
         @guest
-            <a href="{{ route('login') }}" class="px-2 py-1 bg-green-500/70 font-semibold text-green-900 rounded-lg shadow-md hover:-translate-y-px hover:shadow-md hover:shadow-green-500/50 transition-all duration-200">Login</a>
+            <a href="{{ route('login') }}"
+                class="px-2 py-1 bg-green-500/70 font-semibold text-green-900 rounded-lg shadow-md hover:-translate-y-px hover:shadow-md hover:shadow-green-500/50 transition-all duration-200">Login</a>
         @endguest
         @auth
-            {{-- Jika user dah login --}}
+            <div class="flex items-center">
+                {{ Auth::user()->pasien->nama_lengkap }}
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="btn btn-error">Logout</button>
+                </form>
+            </div>
         @endauth
     </div>
 </div>

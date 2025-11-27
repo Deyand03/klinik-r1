@@ -7,3 +7,19 @@
 
 @plugin "daisyui";
 
+@theme {
+    --color-brand-primary: #A8FBD3;
+    --color-brand-secondary: #4FB7B3;
+    --color-brand-tertiary: #637AB9;
+    --color-brand-dark: #31326F;
+    --color-brand-btn: #605DEC;
+}
+
+:root {
+    --bg-primary: #A8FBD3;
+    --bg-secondary: #4FB7B3;
+    --bg-tertiary: #637AB9;
+    --bg-dark: #31326F;
+    --text-primary: #FFFFFF;
+    --btn-primary: #605DEC;
+}
