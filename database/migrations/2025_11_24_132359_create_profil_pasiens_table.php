@@ -19,8 +19,6 @@ return new class extends Migration {
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->text('alamat');
             $table->string('no_hp');
-            $table->string('gol_darah')->nullable();
-            $table->text('riwayat_alergi')->nullable();
             $table->timestamps();
         });
     }
