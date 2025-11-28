@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RiwayatReservasi;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,7 +17,7 @@ Route::get('/', function () {
 // Fasilitas & Layanan
 
 // Riwayat Reservasi()
-
+Route::get('/pasien/riwayat-reservasi', [RiwayatReservasi::class, 'index'])->name('pasien.riwayat-reservasi');
 
 // Admin
 // Dashboard
@@ -41,4 +42,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
