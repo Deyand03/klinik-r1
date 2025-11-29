@@ -19,7 +19,7 @@
                 <li><a>Item 3</a></li>
             </ul>
         </div>
-        <a class="font-semibold text-xl text-navbar">KlinikR1</a>
+        <a class="font-semibold text-xl text-navbar">SI-Klinik</a>
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 gap-3">
@@ -54,18 +54,17 @@
         </ul>
     </div>
     <div class="navbar-end">
-        @guest
+        @if (session()->has('api_token'))
+        <div class="flex items-center gap-2">
+            <p class="text-md font-semibold">{{ session('user_data')['staff']['nama'] }}</p>
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button class="btn bg-red-400 text-red-900 px-2 py-1 rounded shadow-md transition-all duration-200 transform-gpu hover:bg-red-700 hover:shadow-red-400/50 hover:-translate-y-px hover:text-red-300">Logout</button>
+            </form>
+        </div>
+        @else
             <a href="{{ route('login') }}"
                 class="px-2 py-1 bg-green-500/70 font-semibold text-green-900 rounded-lg shadow-md hover:-translate-y-px hover:shadow-md hover:shadow-green-500/50 transition-all duration-200">Login</a>
-        @endguest
-        @auth
-            <div class="flex items-center">
-                {{ Auth::user()->pasien->nama_lengkap }}
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button class="btn btn-error">Logout</button>
-                </form>
-            </div>
-        @endauth
+        @endif
     </div>
 </div>
