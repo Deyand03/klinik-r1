@@ -1,9 +1,9 @@
 @extends('layouts.index')
 
-@section('title', 'KlinikR1 - Cari Dokter')
+@section('title', 'KlinikR1')
 
 @section('content')
-    <div class="bg-gradient-to-b from-[#637AB9] to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+    <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-4xl font-bold text-white mb-2">
                 Cari <span class="text-[#4cd6c0]">Dokter</span>
@@ -70,9 +70,9 @@
                             </p>
                         </div>
                         <div class="card-actions justify-end mt-auto">
-                            <button
+                            <a href="{{ route('profil_dokter') }}"
                                 class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
-                                & Jadwal Praktik</button>
+                                & Jadwal Praktik</a>
                         </div>
                     </div>
                 </div>
@@ -188,28 +188,32 @@
 
     <div class="card lg:card-side bg-white w-full rounded-none border-none flex flex-col lg:flex-row">
 
-        <figure class="lg:w-1/2 min-h-[300px] lg:min-h-[400px] relative m-0 p-0">
+        <figure class="lg:w-1/2 min-h-[250px] lg:min-h-[350px] relative m-0 p-0">
             <img src="https://placehold.co/800x600/e2e8f0/888888?text=Fasilitas+Rumah+Sakit" alt="Fasilitas RS"
                 class="absolute inset-0 w-full h-full object-cover" />
         </figure>
 
-        <div class="card-body lg:w-1/2 p-8 lg:p-16 justify-center">
-            <h3 class="text-[#4cd6c0] font-bold text-xl md:text-2xl uppercase tracking-wider mb-2">
+        <div class="card-body lg:w-1/2 p-6 lg:p-12 justify-center">
+            <h3 class="text-[#4cd6c0] font-bold text-lg md:text-xl uppercase tracking-wider mb-1">
                 Fasilitas dan Layanan
             </h3>
-            <h2 class="text-[#3b4c7a] font-bold text-2xl md:text-3xl mb-4 leading-tight">
+
+            <h2 class="text-[#3b4c7a] font-bold text-xl md:text-2xl mb-3 leading-tight">
                 Layanan Prima dengan Fasilitas Terlengkap dan Terintegrasi
             </h2>
-            <p class="text-gray-600 mb-8 leading-relaxed text-lg">
+
+            <p class="text-gray-600 mb-6 leading-relaxed text-base">
                 Kami menyediakan berbagai fasilitas medis modern untuk menunjang kesehatan Anda, mulai dari ruang
                 rawat inap yang nyaman hingga peralatan medis terkini.
             </p>
+
             <div class="card-actions">
                 <button
-                    class="btn bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-8 rounded-full normal-case text-lg shadow-lg">
+                    class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">
                     Lebih Lanjut
                 </button>
             </div>
         </div>
+
     </div>
 @endsection
