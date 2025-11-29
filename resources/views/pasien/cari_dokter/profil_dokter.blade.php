@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-@section('title', 'Profil Dokter - drg. Eugene Ahn')
+@section('title', 'Profil Dokter')
 
 @section('content')
     <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
@@ -81,8 +81,8 @@
                                     <td class="py-4 pl-6 text-center">Selasa</td>
                                     <td class="py-4 text-center">07:00 - 10:00</td>
                                     <td class="py-4 pr-6 text-center">
-                                        <button
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</button>
+                                        <a href="{{ route('pembayaran') }}"
+                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</a>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle">

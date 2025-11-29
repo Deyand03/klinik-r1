@@ -18,6 +18,9 @@ Route::get('/cari_dokter', function () {
 Route::get('/profil_dokter', function () {
     return view('pasien.cari_dokter.profil_dokter');
 })->name('profil_dokter');
+Route::get('/pembayaran', function () {
+    return view('pasien.cari_dokter.pembayaran');
+})->name('pembayaran');
 
 // Fasilitas & Layanan
 
