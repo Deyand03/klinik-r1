@@ -33,9 +33,8 @@ class AuthenticatedSessionController extends Controller
 
         if ($response->successful()) {
             $data = $response->json();
-            $token = $data['access_token'];
 
-            session(['api_token' => $token]);
+            session(['api_token' => $data['access_token']]);
             session(['user_data' => $data['user']]);
 
             // Regenerate session ID biar aman (standar Laravel)
@@ -45,7 +44,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah (Cek Backend).',
+            'email' => 'Email atau password salah',
         ]);
     }
 
@@ -56,7 +55,7 @@ class AuthenticatedSessionController extends Controller
     {
         $token = session('api_token');
         if ($token) {
-            Http::withToken($token)->post(env('API_URL') . '/logout');
+            Http::withToken($token)->post(env('API_URL') . '/logout.process');
         }
 
         Auth::guard('web')->logout();
@@ -65,6 +64,6 @@ class AuthenticatedSessionController extends Controller
 
         session()->forget(['api_token', 'user_data']);
 
-        return redirect('/');
+        return redirect()->route('beranda');
     }
 }

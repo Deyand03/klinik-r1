@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekamMedisController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,13 +22,16 @@ Route::get('/', function () {
 // Admin
 // Dashboard
 
-// Rekam Medis
+// Rekam Medis (Griyo)
 
 // Pembayaran
 
 // Jadwal Dokter
-Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
-
+Route::middleware('role:staff')->group(function (){
+    Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
+    Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
+    Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
+});
 // Rujukan Digital
 
 
