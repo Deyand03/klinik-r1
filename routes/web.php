@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RekamMedisController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,12 @@ Route::get('/', function () {
 
 // Pasien
 // Beranda, Login, Regis (Agne)
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest');
 
 // Cari Dokter (Zikra)
 Route::get('/cari_dokter', function () {
