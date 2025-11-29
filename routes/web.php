@@ -12,6 +12,15 @@ Route::get('/', function () {
 // Beranda, Login, Regis (Agne)
 
 // Cari Dokter (Zikra)
+Route::get('/cari_dokter', function () {
+    return view('pasien.cari_dokter.index');
+})->name('cari_dokter');
+Route::get('/profil_dokter', function () {
+    return view('pasien.cari_dokter.profil_dokter');
+})->name('profil_dokter');
+Route::get('/pembayaran', function () {
+    return view('pasien.cari_dokter.pembayaran');
+})->name('pembayaran');
 
 // Fasilitas & Layanan
 
