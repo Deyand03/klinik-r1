@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PembayaranController;
@@ -14,6 +15,12 @@ Route::get('/', function () {
 
 // Pasien
 // Beranda, Login, Regis (Agne)
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest');
 
 // Cari Dokter (Zikra)
 Route::get('/cari_dokter', function () {
