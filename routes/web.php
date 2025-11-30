@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\PembayaranAdminController;
 use App\Http\Controllers\RujukanDigitalController;
 
 Route::get('/', function () {
@@ -30,17 +32,24 @@ Route::get('/pembayaran', function () {
 
 
 // Admin
+
+
+
 // Dashboard
 
 // Rekam Medis (Griyo)
 
 // Pembayaran
+// Route::get('/pembayaran/index', [PembayaranController::class, 'index']);
+
 
 // Jadwal Dokter
 Route::middleware('role:staff')->group(function (){
     Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
     Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
     Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
+
+    Route::get('/admin/pembayaran/index', [PembayaranAdminController::class,'index']);
 });
 // Rujukan Digital
 Route::middleware('role:staff')->group(function (){
