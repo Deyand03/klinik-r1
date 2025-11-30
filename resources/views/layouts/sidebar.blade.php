@@ -33,7 +33,7 @@
                         <span class="text-2xl">🏥</span>
                     </div>
                     <div>
-                        <h1 class="text-lg font-bold text-brand-dark leading-tight">KlinikR1</h1>
+                        <h1 class="text-lg font-bold text-brand-dark leading-tight">SI KLINIK</h1>
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Portal Internal</p>
                     </div>
                 </div>
@@ -51,13 +51,13 @@
                     <div class="relative z-10 avatar online">
                         <div class="w-10 h-10 rounded-full ring ring-white">
                             <img
-                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'Admin') }}&background=31326F&color=fff" />
+                                src="https://ui-avatars.com/api/?name={{ session('user_data')['staff']['nama'] }}&background=31326F&color=fff" />
                         </div>
                     </div>
                     <div class="relative z-10">
                         <p class="text-sm font-bold text-brand-dark group-hover:text-brand-dark transition-colors">
-                            {{ Auth::user()->name ?? 'Administrator' }}</p>
-                        <p class="text-xs text-gray-500 font-medium capitalize">{{ Auth::user()->role ?? 'Staff' }}</p>
+                            {{ session('user_data')['staff']['nama'] }}</p>
+                        <p class="text-xs text-gray-500 font-medium capitalize">{{ session('user_data')['role'] }}</p>
                     </div>
                 </div>
             </div>
