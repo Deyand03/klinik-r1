@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-@section('title', '')
+@section('title', 'Rujukan Digital')
 @section('content')
 
 @endsection

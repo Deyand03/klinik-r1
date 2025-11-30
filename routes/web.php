@@ -29,7 +29,9 @@ Route::get('/', function () {
 Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
 
 // Rujukan Digital
-
+Route::get('/admin/rujukan-digital', function () {
+    return view('admin.rujukan_digital.index');
+})->name('admin.rujukan-digital');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
