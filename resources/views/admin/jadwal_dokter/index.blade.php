@@ -62,7 +62,8 @@
 
             <button @click="addModalOpen = true"
                 class="btn bg-brand-secondary hover:bg-brand-secondary/90 text-white border-none gap-2 shadow-lg shadow-brand-secondary/30 rounded-xl px-6 transform hover:-translate-y-1 transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
                 Tambah Jadwal
@@ -77,7 +78,13 @@
                     <label class="label pb-1"><span class="label-text font-bold text-gray-500 text-xs uppercase tracking-wider">Cari Dokter</span></label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                            <svg class="h-[1em] opacity-50 z-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                                stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
                         </span>
                         <input type="text" x-model="searchTerm" placeholder="Ketik nama..." class="input input-bordered w-full pl-10 bg-gray-50 focus:bg-white focus:border-brand-secondary rounded-xl transition-all" />
                     </div>
@@ -200,7 +207,9 @@
                 <div class="col-span-1 md:col-span-2 xl:col-span-3 text-center py-12 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
                     <div class="text-gray-400 mb-2">📅</div>
                     <p class="text-gray-500 font-medium">Belum ada jadwal dokter yang tersedia.</p>
-                    <button @click="addModalOpen = true" class="text-brand-secondary hover:underline text-sm font-bold mt-2">Buat jadwal baru sekarang</button>
+                    <button @click="addModalOpen = true"
+                        class="text-brand-secondary hover:underline text-sm font-bold mt-2">Buat jadwal baru
+                        sekarang</button>
                 </div>
             @endforelse
 
@@ -263,9 +272,10 @@
 
                             <!-- Checkbox Hari -->
                             <div>
-                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Hari Praktek</label>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Hari
+                                    Praktek</label>
                                 <div class="flex flex-wrap gap-2">
-                                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $day)
+                                    @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $day)
                                         <label class="cursor-pointer relative">
                                             <input type="checkbox" name="hari[]" value="{{ $day }}" class="peer sr-only" />
                                             <div class="px-4 py-2 rounded-xl text-sm font-semibold border border-gray-200 text-gray-500 bg-white transition-all peer-checked:bg-brand-secondary peer-checked:text-white peer-checked:border-brand-secondary hover:bg-gray-50">
@@ -339,9 +349,10 @@
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Hari Praktek</label>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Hari
+                                    Praktek</label>
                                 <div class="flex flex-wrap gap-2">
-                                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $day)
+                                    @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $day)
                                         <label class="cursor-pointer relative">
                                             <input type="checkbox" name="hari[]" value="{{ $day }}" class="peer sr-only"
                                                 :checked="selectedJadwal?.hari?.includes('{{ $day }}')" />
