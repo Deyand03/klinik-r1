@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::get('/', function () {
 
 // Admin
 // Dashboard
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
 // Rekam Medis
 
@@ -27,6 +29,8 @@ Route::get('/', function () {
 
 // Jadwal Dokter
 Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
+Route::post('/admin/reservasi/{id}/confirm', [AdminDashboardController::class, 'confirm'])
+    ->name('admin.reservasi.confirm');
 
 // Rujukan Digital
 
