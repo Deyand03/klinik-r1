@@ -51,7 +51,7 @@
                             alt="Dokter"
                             class="relative rounded-2xl shadow-2xl border-4 border-white/10 transform hover:scale-105 transition duration-500 ease-in-out object-cover h-[500px] w-full">
                         <div
-                            class="absolute bottom-10 -left-10 bg-white p-4 rounded-xl shadow-xl flex items-center gap-4 animate-bounce duration-[3000ms]">
+                            class="absolute bottom-10 -left-10 bg-white p-4 rounded-xl shadow-xl flex items-center gap-4 animate-bounce duration-3000ms">
                             <div class="bg-green-100 p-3 rounded-full text-green-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -119,14 +119,14 @@
 
 <div class="mb-20"></div>
 
----
 
-<section class="max-w-7xl mx-auto px-4 py-8">
+
+<section class="max-w-7xl mx-auto px-4 py-20">
     <div class="text-center mb-16">
         <h2 class="text-brand-secondary font-bold tracking-wider uppercase mb-2">KLINIK YANG TERSEDIA</h2>
         <p class="text-3xl md:text-4xl font-bold text-brand-dark">Beberapa Klinik yang Tersedia</p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
 
         @php
             $kliniks = [
@@ -139,21 +139,34 @@
         @endphp
 
         @foreach ($kliniks as $klinik)
-        <div class="flex flex-col items-center text-center group">
-            <div class="relative w-full aspect-4/3 rounded-xl overflow-hidden shadow-lg mb-3 transition transform group-hover:scale-105">
-                <img src="{{ asset($klinik['img']) }}" alt="Klinik {{ $klinik['nama'] }}" class="w-full h-full object-cover">
+        <div class="bg-white rounded-xl shadow-lg border-r-8 border-brand-secondary overflow-hidden group transition duration-300 hover:shadow-xl">
 
-                <div class="absolute inset-0 border-2 border-transparent group-hover:border-custom-green rounded-xl transition duration-300"></div>
+            <div class="flex items-center w-full">
+
+                <div class="w-1/2 aspect-4/3 shrink-0">
+                    <img src="{{ asset($klinik['img']) }}" alt="Klinik {{ $klinik['nama'] }}" class="w-full h-full object-cover">
+                </div>
+
+                <div class="w-1/2 flex items-center h-full">
+
+                    <div class="border-l-4 border-custom-green h-full shrink-0"></div>
+
+                    <div class="p-3">
+                        <h4 class="text-sm text-gray-500 font-semibold mb-0.5">Klinik</h4>
+                        <h3 class="text-lg font-bold text-blue-600 group-hover:text-custom-green transition">{{ $klinik['nama'] }}</h3>
+                    </div>
+                </div>
             </div>
-            <h4 class="text-sm text-gray-500">Klinik</h4>
-            <h3 class="text-lg font-bold text-gray-800 group-hover:text-custom-green transition">{{ $klinik['nama'] }}</h3>
+
+            <div class="absolute inset-0 border-2 border-transparent rounded-xl pointer-events-none"></div>
+
         </div>
         @endforeach
 
     </div>
 </section>
 
----
+
 
 <section id="layanan" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
