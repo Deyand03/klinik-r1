@@ -3,6 +3,7 @@
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RekamMedisController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -22,6 +23,8 @@ Route::get('/', function () {
 // Dashboard
 
 // Rekam Medis
+Route::get('/admin/rekam-medis', [RekamMedisController::class, 'index'])->name('admin.rekam-medis');
+Route::post('/rekam-medis/tambah', [RekamMedisController::class, 'store'])->name('rekam.store');
 
 // Pembayaran
 
