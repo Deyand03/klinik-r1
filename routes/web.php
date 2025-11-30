@@ -45,7 +45,8 @@ Route::get('/pembayaran', function () {
 
 // Dashboard
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-
+Route::post('/admin/reservasi/{id}/confirm', [AdminDashboardController::class, 'confirm'])
+    ->name('admin.reservasi.confirm');
 // Rekam Medis (Griyo)
 
 // Pembayaran
