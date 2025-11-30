@@ -3,7 +3,7 @@
 @section('title', 'KlinikR1')
 
 @section('content')
-    <div class="bg-white min-h-screen">
+    <div class="bg-white min-h-screen pt-18">
 
         <div class="bg-[#6379AA] md:p-4 mb-8">
             <div class="grid grid-cols-3 gap-2 md:h-64 lg:h-80 w-80%">
@@ -12,16 +12,16 @@
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
                         Gambar tidak tersedia
                     </span>
-                    <img src="#" alt="Tensi" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto1.jpg') }}" alt="Tensi"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
                 <div
                     class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
                         Gambar tidak tersedia
                     </span>
-                    <img src="#" alt="Mata" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto2.jpg') }}" alt="Mata"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
 
                 <div
@@ -29,8 +29,8 @@
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
                         Gambar tidak tersedia
                     </span>
-                    <img src="#" alt="Gigi" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto3.jpg') }}" alt="Gigi"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         {{-- Gambar: Lebar 40% (w-2/5) --}}
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/ambulance-car_146671-18698.jpg"
+                            <img src="{{ asset('img/foto4.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Ambulans" />
                         </figure>
 
@@ -72,7 +72,7 @@
                     {{-- Card 2: Pemeriksaan Mata --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/optometrist-examining-female-patient-eye-slit-lamp-clinic_651396-1602.jpg"
+                            <img src="{{ asset('img/foto5.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Mata" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -86,7 +86,7 @@
                     {{-- Card 3: Pemeriksaan Gigi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/dentist-examining-patient-s-teeth_1098-554.jpg"
+                            <img src="{{ asset('img/foto6.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Gigi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -100,7 +100,7 @@
                     {{-- Card 4: Mikrodermabrasi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/dermatologist-examining-patient-s-skin_23-2148967022.jpg"
+                            <img src="{{ asset('img/foto7.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Mikrodermabrasi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -133,7 +133,7 @@
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         {{-- Gambar: Lebar 40% (w-2/5) --}}
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/ambulance-car_146671-18698.jpg"
+                            <img src="{{ asset('img/foto8.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Ambulans" />
                         </figure>
 
@@ -149,7 +149,7 @@
 
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/optometrist-examining-female-patient-eye-slit-lamp-clinic_651396-1602.jpg"
+                            <img src="{{ asset('img/foto9.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Mata" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -164,7 +164,7 @@
                     {{-- Card 3: Pemeriksaan Gigi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/dentist-examining-patient-s-teeth_1098-554.jpg"
+                            <img src="{{ asset('img/foto10.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Gigi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -179,7 +179,7 @@
                     {{-- Card 4: Mikrodermabrasi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="https://img.freepik.com/free-photo/dermatologist-examining-patient-s-skin_23-2148967022.jpg"
+                            <img src="{{ asset('img/foto11.jpg') }}"
                                 class="absolute inset-0 w-full h-full object-cover" alt="Mikrodermabrasi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
@@ -218,7 +218,7 @@
                     </a>
 
                     {{-- Button Gigi --}}
-                    <a href="{{route('fasilitas-layanan.klinik-gigi')}}"
+                    <a href="{{ route('fasilitas-layanan.klinik-gigi') }}"
                         class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group">
                         <span class="text-[#6379AA] font-bold text-lg group-hover:pl-2 transition-all">Gigi</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -262,11 +262,11 @@
         </div>
 
         {{-- SECTION 5: CARI DOKTER --}}
-        <div class="bg-gray-50 py-16">
+        <div class="bg-gray-50 py-8">
             <div class="container mx-auto px-4 md:px-12 lg:px-24">
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <div class="w-full md:w-1/2 flex justify-center">
-                        <img src="https://img.freepik.com/free-photo/medical-team-standing-arms-crossed_1098-18512.jpg"
+                        <img src="{{ asset('img/caridokter.png') }}"
                             alt="Tim Dokter" class="w-full max-w-md object-contain mix-blend-multiply">
                     </div>
 
@@ -280,7 +280,7 @@
                         </p>
 
                         <button
-                            class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-white font-bold px-8 rounded-md shadow-lg">
+                            class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-[#0d0d1e] font-bold px-8 rounded-md shadow-lg">
                             Cari Dokter
                         </button>
                     </div>
@@ -288,4 +288,5 @@
             </div>
         </div>
     </div>
+    @vite('resources/js/utility/navbar_beranda.js')
 @endsection

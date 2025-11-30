@@ -16,6 +16,12 @@ Route::get('/', function () {
 
 // Fasilitas & Layanan
 Route::get('/pasien/fasilitas-layanan', [FasilitasLayananController::class, 'index'])->name('pasien.fasilitas-layanan');
+Route::get('/pasien/fasilitas-layanan/klinik-gigi', [FasilitasLayananController::class, 'klinik_gigi'])->name('fasilitas-layanan.klinik-gigi');
+Route::get('/pasien/fasilitas-layanan/klinik-gizi', [FasilitasLayananController::class, 'klinik_gizi'])->name('fasilitas-layanan.klinik-gizi');
+Route::get('/pasien/fasilitas-layanan/klinik-umum', [FasilitasLayananController::class, 'klinik_umum'])->name('fasilitas-layanan.klinik-umum');
+Route::get('/pasien/fasilitas-layanan/klinik-kulit', [FasilitasLayananController::class, 'klinik_kulit'])->name('fasilitas-layanan.klinik-kulit');
+Route::get('/pasien/fasilitas-layanan/klinik-mata', [FasilitasLayananController::class, 'klinik_mata'])->name('fasilitas-layanan.klinik-mata');
+
 // Riwayat Reservasi()
 
 
