@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\JadwalDokterController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekamMedisController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\RujukanDigitalController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -42,7 +43,10 @@ Route::middleware('role:staff')->group(function (){
     Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
 });
 // Rujukan Digital
-
+Route::middleware('role:staff')->group(function (){
+    Route::get('/admin/rujukan-digital', [RujukanDigitalController::class, 'rujukanDigital'])->name('admin.rujukan-digital');
+    Route::post('/admin/rujukan-digital/store', [RujukanDigitalController::class, 'storeRujukanDigital'])->name('admin.rujukan-digital.store');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
