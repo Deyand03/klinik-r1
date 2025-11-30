@@ -6,6 +6,7 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\PembayaranAdminController;
+use App\Http\Controllers\RujukanDigitalController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -51,7 +52,10 @@ Route::middleware('role:staff')->group(function (){
     Route::get('/admin/pembayaran/index', [PembayaranAdminController::class,'index']);
 });
 // Rujukan Digital
-
+Route::middleware('role:staff')->group(function (){
+    Route::get('/admin/rujukan-digital', [RujukanDigitalController::class, 'rujukanDigital'])->name('admin.rujukan-digital');
+    Route::post('/admin/rujukan-digital/store', [RujukanDigitalController::class, 'storeRujukanDigital'])->name('admin.rujukan-digital.store');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

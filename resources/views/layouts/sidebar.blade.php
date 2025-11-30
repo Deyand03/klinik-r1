@@ -139,11 +139,11 @@
                 <div class="my-4 border-t border-gray-100"></div>
 
                 <!-- MENU: MASTER (Abu-abu) -->
-                <a href="/master/staff"
-                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->is('master*') ? 'bg-gray-800 text-white shadow-lg shadow-gray-500/30' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' }}">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                <a href="{{ route('admin.rujukan-digital') }}"
+                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->routeIs('admin.rujukan-digital') ? 'bg-sky-800 text-white shadow-lg shadow-sky-500/30' : 'text-gray-500 hover:bg-sky-100 hover:text-sky-900' }}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="transition-transform duration-300 opacity-50 group-hover:scale-110 {{ request()->is('master*') ? 'text-white' : 'text-gray-400 group-hover:text-gray-900' }}">
+                        class="transition-transform duration-300 opacity-50 group-hover:scale-110 {{ request()->routeIs('admin.rujukan-digital') ? 'text-white' : 'text-gray-400 group-hover:text-sky-900' }}">
                         <path
                             d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
                             stroke="#25282B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
