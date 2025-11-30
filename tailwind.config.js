@@ -15,6 +15,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'custom-teal': '#4FB7B3',
+                'custom-light-teal': '#A8FBD3',
+            },
         },
     },
 
