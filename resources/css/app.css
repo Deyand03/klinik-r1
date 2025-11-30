@@ -25,3 +25,38 @@
     --text-primary: #FFFFFF;
     --btn-primary: #605DEC;
 }
+
+.circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    bottom: -200px;
+    animation: floatUp 25s linear infinite;
+    border-radius: 4px;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 10%;
+    }
+    100% {
+        transform: translateY(-1200px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}

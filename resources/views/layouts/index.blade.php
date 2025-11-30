@@ -27,7 +27,7 @@
     </main>
 
     <footer>
-        
+        <x-footer></x-footer>
     </footer>
 </body>
 
