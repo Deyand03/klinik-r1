@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FasilitasLayananController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,7 @@ Route::get('/', function () {
 // Cari Dokter (Zikra)
 
 // Fasilitas & Layanan
-
+Route::get('/pasien/fasilitas-layanan', [FasilitasLayananController::class, 'index'])->name('pasien.fasilitas-layanan');
 // Riwayat Reservasi()
 
 
