@@ -8,30 +8,28 @@
         <div class="bg-[#6379AA] md:p-4 mb-12">
             <div class="grid grid-cols-3 gap-2 md:h-64 lg:h-80 w-80%">
                 {{-- Gambar 1 --}}
-                <div class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
+                <div
+                    class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">Gambar tidak
                         tersedia</span>
-                    <img src="{{ asset('img/foto1.jpg') }}"
-                        alt="Tensi" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto1.jpg') }}" alt="Tensi"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
                 {{-- Gambar 2 --}}
                 <div
                     class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">Gambar tidak
                         tersedia</span>
-                    <img src="{{ asset('img/foto2.jpg') }}"
-                        alt="Mata" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto2.jpg') }}" alt="Mata"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
                 {{-- Gambar 3 --}}
                 <div
                     class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
                     <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">Gambar tidak
                         tersedia</span>
-                    <img src="{{ asset('img/foto3.jpg') }}"
-                        alt="Gigi" class="w-full h-full object-cover z-10 relative rounded-2xl"
-                        onerror="this.style.display='none'">
+                    <img src="{{ asset('img/foto3.jpg') }}" alt="Gigi"
+                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
             </div>
         </div>
@@ -47,14 +45,14 @@
                     <div class="flex flex-col border-t border-gray-200">
 
                         {{-- MENU ITEM: UMUM (Inactive) --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-umum')}}"
+                        <a href="{{ route('fasilitas-layanan.klinik-umum') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Umum</span>
                         </a>
 
                         {{-- MENU ITEM: GIGI (ACTIVE STATE) --}}
                         {{-- Perhatikan class: bg-gray-50, border-l-[6px], border-[#7DD3D5] --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-gigi')}}"
+                        <a href="{{ route('fasilitas-layanan.klinik-gigi') }}"
                             class="flex justify-between items-center py-4 px-4 bg-gray-50 border-b border-l-[6px] border-[#7DD3D5] shadow-sm">
                             <span class="text-[#2B3A55] font-bold text-lg">Gigi</span>
                             {{-- Icon Segitiga Khas Active State --}}
@@ -70,19 +68,19 @@
                         </a>
 
                         {{-- MENU ITEM: MATA (Inactive) --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-mata')}}"
+                        <a href="{{ route('fasilitas-layanan.klinik-mata') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Mata</span>
                         </a>
 
                         {{-- MENU ITEM: GIZI (Inactive) --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-gizi')}}"
+                        <a href="{{ route('fasilitas-layanan.klinik-gizi') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Gizi</span>
                         </a>
 
                         {{-- MENU ITEM: KULIT (Inactive) --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-kulit')}}"
+                        <a href="{{ route('fasilitas-layanan.klinik-kulit') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Kulit dan
                                 Kelamin</span>
@@ -138,8 +136,8 @@
             <div class="container mx-auto px-4 md:px-12 lg:px-24">
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <div class="w-1 md:w-1/2 flex justify-center">
-                        <img src="{{ asset('img/caridokter.png')}}"
-                            alt="Tim Dokter" class="w-full max-w-md object-contain mix-blend-multiply">
+                        <img src="{{ asset('img/caridokter.png') }}" alt="Tim Dokter"
+                            class="w-full max-w-md object-contain mix-blend-multiply">
                     </div>
 
                     <div class="w-full md:w-1/2 text-left">
@@ -151,10 +149,10 @@
                             Cari spesialisasi yang Anda butuhkan dan buat janji temu dengan mudah.
                         </p>
 
-                        <button
+                        <a href="#"
                             class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-[#0d0d1e] font-bold px-8 rounded-md shadow-lg">
                             Cari Dokter
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

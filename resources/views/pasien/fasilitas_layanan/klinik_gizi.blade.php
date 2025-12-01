@@ -101,7 +101,7 @@
                         <p>
                             Klinik gizi kami menyediakan asesmen nutrisi, perencanaan diet, serta pendampingan berkelanjutan
                             dengan standar pelayanan yang aman dan terukur untuk memastikan perubahan kesehatan Anda
-                            berlangsung optimal dan berkelanjutan. 
+                            berlangsung optimal dan berkelanjutan.
                         </p>
                     </div>
 
@@ -147,10 +147,10 @@
                             Cari spesialisasi yang Anda butuhkan dan buat janji temu dengan mudah.
                         </p>
 
-                        <button
+                        <a href="#"
                             class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-[#0d0d1e] font-bold px-8 rounded-md shadow-lg">
                             Cari Dokter
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

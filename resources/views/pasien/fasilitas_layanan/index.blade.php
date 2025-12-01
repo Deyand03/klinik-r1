@@ -56,8 +56,8 @@
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         {{-- Gambar: Lebar 40% (w-2/5) --}}
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto4.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Ambulans" />
+                            <img src="{{ asset('img/foto4.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Ambulans" />
                         </figure>
 
                         {{-- Konten: Lebar 60% (w-3/5) --}}
@@ -72,8 +72,8 @@
                     {{-- Card 2: Pemeriksaan Mata --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto5.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Mata" />
+                            <img src="{{ asset('img/foto5.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Mata" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Pemeriksaan Mata</h3>
@@ -86,8 +86,8 @@
                     {{-- Card 3: Pemeriksaan Gigi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto6.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Gigi" />
+                            <img src="{{ asset('img/foto6.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Gigi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Pemeriksaan Gigi</h3>
@@ -100,8 +100,8 @@
                     {{-- Card 4: Mikrodermabrasi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto7.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Mikrodermabrasi" />
+                            <img src="{{ asset('img/foto7.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Mikrodermabrasi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Mikrodermabrasi</h3>
@@ -133,8 +133,8 @@
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         {{-- Gambar: Lebar 40% (w-2/5) --}}
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto8.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Ambulans" />
+                            <img src="{{ asset('img/foto8.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Ambulans" />
                         </figure>
 
                         {{-- Konten: Lebar 60% (w-3/5) --}}
@@ -149,8 +149,8 @@
 
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto9.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Mata" />
+                            <img src="{{ asset('img/foto9.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Mata" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Laboratorium</h3>
@@ -164,8 +164,8 @@
                     {{-- Card 3: Pemeriksaan Gigi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto10.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Gigi" />
+                            <img src="{{ asset('img/foto10.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Gigi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Ruang Tindakan</h3>
@@ -179,8 +179,8 @@
                     {{-- Card 4: Mikrodermabrasi --}}
                     <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
                         <figure class="w-2/5 relative h-full">
-                            <img src="{{ asset('img/foto11.jpg') }}"
-                                class="absolute inset-0 w-full h-full object-cover" alt="Mikrodermabrasi" />
+                            <img src="{{ asset('img/foto11.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
+                                alt="Mikrodermabrasi" />
                         </figure>
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Farmasi</h3>
@@ -208,8 +208,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {{-- Button Umum --}}
-                    <a href="#"
-                        class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group">
+                    <a href="{{ route('fasilitas-layanan.klinik-umum') }}"
+                        class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition md:col-span-2 md:w-1/2 md:mx-auto shadow-sm group">
                         <span class="text-[#6379AA] font-bold text-lg group-hover:pl-2 transition-all">Umum</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                             stroke="currentColor" class="w-6 h-6 text-[#7DD3D5]">
@@ -228,7 +228,7 @@
                     </a>
 
                     {{-- Button Mata --}}
-                    <a href="#"
+                    <a href="{{ route('fasilitas-layanan.klinik-mata') }}"
                         class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group">
                         <span class="text-[#6379AA] font-bold text-lg group-hover:pl-2 transition-all">Mata</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -238,7 +238,7 @@
                     </a>
 
                     {{-- Button Gizi --}}
-                    <a href="#"
+                    <a href="{{ route('fasilitas-layanan.klinik-gizi') }}"
                         class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group">
                         <span class="text-[#6379AA] font-bold text-lg group-hover:pl-2 transition-all">Gizi</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -248,8 +248,8 @@
                     </a>
 
                     {{-- Button Kulit --}}
-                    <a href="#"
-                        class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group col-span-1 md:col-span-2 md:w-1/2 md:mx-auto">
+                    <a href="{{ route('fasilitas-layanan.klinik-kulit') }}"
+                        class="bg-white rounded p-4 flex justify-between items-center hover:bg-gray-100 transition shadow-sm group">
                         <span class="text-[#6379AA] font-bold text-lg group-hover:pl-2 transition-all">Kulit &
                             Kelamin</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -266,8 +266,8 @@
             <div class="container mx-auto px-4 md:px-12 lg:px-24">
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <div class="w-full md:w-1/2 flex justify-center">
-                        <img src="{{ asset('img/caridokter.png') }}"
-                            alt="Tim Dokter" class="w-full max-w-md object-contain mix-blend-multiply">
+                        <img src="{{ asset('img/caridokter.png') }}" alt="Tim Dokter"
+                            class="w-full max-w-md object-contain mix-blend-multiply">
                     </div>
 
                     <div class="w-full md:w-1/2 text-left">
@@ -279,10 +279,10 @@
                             Cari spesialisasi yang Anda butuhkan dan buat janji temu dengan mudah.
                         </p>
 
-                        <button
+                        <a href="#"
                             class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-[#0d0d1e] font-bold px-8 rounded-md shadow-lg">
                             Cari Dokter
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
