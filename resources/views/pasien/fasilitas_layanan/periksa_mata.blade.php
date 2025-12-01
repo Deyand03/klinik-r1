@@ -46,8 +46,14 @@
 
                         {{-- MENU ITEM: UMUM (Inactive) --}}
                         <a href="{{ route('layanan.satu') }}"
+                            class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
+                            <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Pemeriksaan
+                                Ambulans</span>
+                        </a>
+
+                        <a href="{{ route('layanan.dua') }}"
                             class="flex justify-between items-center py-4 px-4 bg-gray-50 border-b border-l-[6px] border-[#7DD3D5] shadow-sm">
-                            <span class="text-[#2B3A55] font-bold text-lg">Ambulans</span>
+                            <span class="text-[#2B3A55] font-bold text-lg">Pemerikaaan Mata</span>
                             {{-- Icon Segitiga Khas Active State --}}
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-4 h-4 text-[#7DD3D5]">
@@ -62,19 +68,15 @@
 
                         {{-- MENU ITEM: GIGI (ACTIVE STATE) --}}
                         {{-- Perhatikan class: bg-gray-50, border-l-[6px], border-[#7DD3D5] --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-gigi') }}"
-                            class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
-                            <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Pemeriksaan
-                                Mata</span>
-                        </a>
+                        
 
-                        <a href="{{ route('fasilitas-layanan.klinik-gizi') }}"
+                        <a href="{{ route('layanan.tiga') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Pemerikasaan
-                                Gizi</span>
+                                Gigi</span>
                         </a>
 
-                        <a href="{{ route('fasilitas-layanan.klinik-kulit') }}"
+                        <a href="{{ route('layanan.empat') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span
                                 class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Mikrodermabrasi</span>
@@ -90,21 +92,21 @@
                 </div>
 
                 <div class="lg:col-span-9 pl-0 lg:pl-8">
-                    <h1 class="text-[#2B3A55] font-bold text-3xl md:text-4xl mb-6">Umum</h1>
+                    <h1 class="text-[#2B3A55] font-bold text-3xl md:text-4xl mb-6">Pemeriksaan Mata</h1>
 
                     <div
                         class="w-[90%] h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden mb-6 shadow-md relative bg-gray-100 group">
                         <span
                             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400 font-medium">Gambar
-                            Ambulans</span>
+                            Pemeriksaan Mata</span>
                         {{-- Ganti src dengan gambar ambulans asli kamu --}}
-                        <img src="{{asset('img/foto4.jpg')}}" alt="Layanan Ambulans"
+                        <img src="{{asset('img/foto5.jpg')}}" alt="Layanan Ambulans"
                             class="w-full h-full object-cover z-10 relative" onerror="this.style.display='none'">
                     </div>
 
                     <div class="text-gray-500 text-lg font-medium leading-relaxed space-y-4 mb-10 text-justify">
                         <p>
-                            Layanan Ambulans yang siaga 24 jam di nomor darurat (0123) 4567 8910.
+                            Ragam layanan pemeriksaan dan deteksi gangguan mata dengan peralatan diagnostik terkini.
                         </p>
                     </div>
                 </div>

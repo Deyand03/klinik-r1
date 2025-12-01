@@ -62,19 +62,19 @@
 
                         {{-- MENU ITEM: GIGI (ACTIVE STATE) --}}
                         {{-- Perhatikan class: bg-gray-50, border-l-[6px], border-[#7DD3D5] --}}
-                        <a href="{{ route('fasilitas-layanan.klinik-gigi') }}"
+                        <a href="{{ route('layanan.dua') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Pemeriksaan
                                 Mata</span>
                         </a>
 
-                        <a href="{{ route('fasilitas-layanan.klinik-gizi') }}"
+                        <a href="{{ route('layanan.tiga') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Pemerikasaan
-                                Gizi</span>
+                                Gigi</span>
                         </a>
 
-                        <a href="{{ route('fasilitas-layanan.klinik-kulit') }}"
+                        <a href="{{ route('layanan.empat') }}"
                             class="group flex justify-between items-center py-4 px-2 border-b border-gray-200 hover:text-[#7DD3D5] transition-colors">
                             <span
                                 class="text-[#2B3A55] font-bold text-lg group-hover:pl-1 transition-all">Mikrodermabrasi</span>
@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="lg:col-span-9 pl-0 lg:pl-8">
-                    <h1 class="text-[#2B3A55] font-bold text-3xl md:text-4xl mb-6">Umum</h1>
+                    <h1 class="text-[#2B3A55] font-bold text-3xl md:text-4xl mb-6">Ambulans</h1>
 
                     <div
                         class="w-[90%] h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden mb-6 shadow-md relative bg-gray-100 group">

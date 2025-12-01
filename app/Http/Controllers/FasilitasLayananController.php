@@ -42,15 +42,15 @@ class FasilitasLayananController extends Controller
     }
 
     public function layanandua(){
-        return view('pasien.fasilitas_layanan.ambulans');
+        return view('pasien.fasilitas_layanan.periksa_mata');
     }
 
     public function layanantiga(){
-        return view('pasien.fasilitas_layanan.ambulans');
+        return view('pasien.fasilitas_layanan.periksa_gigi');
     }
 
     public function layananempat(){
-        return view('pasien.fasilitas_layanan.ambulans');
+        return view('pasien.fasilitas_layanan.mikrodermabrasi');
     }
     
     public function fasilitassatu(){
