@@ -53,24 +53,23 @@
                     {{-- Card 1: Ambulans --}}
                     {{-- h-52: Membuat card lebih tinggi --}}
                     {{-- border-r-[8px]: Membuat garis tebal di sebelah KANAN --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
-                        {{-- Gambar: Lebar 40% (w-2/5) --}}
+                    <a href="{{ route('layanan.satu') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto4.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Ambulans" />
                         </figure>
-
-                        {{-- Konten: Lebar 60% (w-3/5) --}}
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Ambulans</h3>
                             <p class="text-sm text-gray-500 leading-relaxed">
                                 Layanan Ambulans yang siaga 24 jam di nomor darurat (0123) 4567 8910
                             </p>
                         </div>
-                    </div>
+                    </a>
 
                     {{-- Card 2: Pemeriksaan Mata --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    <a href="{{ route('layanan.dua') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto5.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Mata" />
@@ -81,10 +80,11 @@
                                 Ragam layanan pemeriksaan dan deteksi gangguan mata dengan peralatan diagnostik terkini
                             </p>
                         </div>
-                    </div>
+                    </a>
 
                     {{-- Card 3: Pemeriksaan Gigi --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    <a href="{{ route('layanan.tiga') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto6.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Gigi" />
@@ -95,10 +95,11 @@
                                 Layanan pemeriksaan komprehensif untuk mendeteksi dini masalah gigi dan mulut
                             </p>
                         </div>
-                    </div>
+                    </a>
 
                     {{-- Card 4: Mikrodermabrasi --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    <a href="{{ route('layanan.empat') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto7.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Mikrodermabrasi" />
@@ -110,8 +111,7 @@
                                 wajah
                             </p>
                         </div>
-                    </div>
-
+                    </a>
                 </div>
             </div>
             <div class="mb-16">
@@ -130,24 +130,23 @@
                     {{-- Card 1: Ambulans --}}
                     {{-- h-52: Membuat card lebih tinggi --}}
                     {{-- border-r-[8px]: Membuat garis tebal di sebelah KANAN --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
-                        {{-- Gambar: Lebar 40% (w-2/5) --}}
+                    <a href="{{ route('fasilitas.satu') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto8.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Ambulans" />
                         </figure>
-
-                        {{-- Konten: Lebar 60% (w-3/5) --}}
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Ruang Tunggu Nyaman</h3>
                             <p class="text-sm text-gray-500 leading-relaxed">
-                                Nikmati ruang tunggu kami yang luas, bersih,
-                                dan menyenangkan.
+                                Nikmati ruang tunggu kami yang luas, bersih, dan menyenangkan.
                             </p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    {{-- Card 2: Laboratorium --}}
+                    <a href="{{ route('fasilitas.dua') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto9.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Mata" />
@@ -155,14 +154,14 @@
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Laboratorium</h3>
                             <p class="text-sm text-gray-500 leading-relaxed">
-                                Menyediakan pemeriksaan dasar secara cepat dan
-                                akurat untuk mendukung diagnosis dokter.
+                                Menyediakan pemeriksaan dasar secara cepat dan akurat untuk mendukung diagnosis dokter.
                             </p>
                         </div>
-                    </div>
+                    </a>
 
-                    {{-- Card 3: Pemeriksaan Gigi --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    {{-- Card 3: Ruang Tindakan --}}
+                    <a href="{{ route('fasilitas.tiga') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto10.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Gigi" />
@@ -170,14 +169,14 @@
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Ruang Tindakan</h3>
                             <p class="text-sm text-gray-500 leading-relaxed">
-                                Dilengkapi peralatan medis standar untuk
-                                menangani tindakan ringan.
+                                Dilengkapi peralatan medis standar untuk menangani tindakan ringan.
                             </p>
                         </div>
-                    </div>
+                    </a>
 
-                    {{-- Card 4: Mikrodermabrasi --}}
-                    <div class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7]">
+                    {{-- Card 4: Farmasi --}}
+                    <a href="{{ route('fasilitas.empat') }}"
+                        class="flex bg-white shadow-lg rounded-xl overflow-hidden h-52 border-r-[8px] border-[#4EC3C7] hover:shadow-xl transition-shadow cursor-pointer">
                         <figure class="w-2/5 relative h-full">
                             <img src="{{ asset('img/foto11.jpg') }}" class="absolute inset-0 w-full h-full object-cover"
                                 alt="Mikrodermabrasi" />
@@ -185,11 +184,10 @@
                         <div class="w-3/5 flex flex-col justify-center p-6 bg-gray-50/30">
                             <h3 class="text-[#2B3A55] font-bold text-xl mb-2">Farmasi</h3>
                             <p class="text-sm text-gray-500 leading-relaxed">
-                                Menyediakan obat-obatan lengkap sesuai resep
-                                dokter dengan pelayanan yang ramah dan cepat.
+                                Menyediakan obat-obatan lengkap sesuai resep dokter dengan pelayanan yang ramah dan cepat.
                             </p>
                         </div>
-                    </div>
+                    </a>
 
                 </div>
             </div>

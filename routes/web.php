@@ -21,6 +21,14 @@ Route::get('/pasien/fasilitas-layanan/klinik-gizi', [FasilitasLayananController:
 Route::get('/pasien/fasilitas-layanan/klinik-umum', [FasilitasLayananController::class, 'klinik_umum'])->name('fasilitas-layanan.klinik-umum');
 Route::get('/pasien/fasilitas-layanan/klinik-kulit', [FasilitasLayananController::class, 'klinik_kulit'])->name('fasilitas-layanan.klinik-kulit');
 Route::get('/pasien/fasilitas-layanan/klinik-mata', [FasilitasLayananController::class, 'klinik_mata'])->name('fasilitas-layanan.klinik-mata');
+Route::get('/pasien/layanan/ambulans', [FasilitasLayananController::class, 'layanansatu'])->name('layanan.satu');
+Route::get('/pasien/layanan/pemerikaan mata', [FasilitasLayananController::class, 'layanandua'])->name('layanan.dua');
+Route::get('/pasien/layanan/pemerikasaan gigi', [FasilitasLayananController::class, 'layanantiga'])->name('layanan.tiga');
+Route::get('/pasien/layanan/mikrodermabrasi', [FasilitasLayananController::class, 'layananempat'])->name('layanan.empat');
+Route::get('/pasien/fasilitas/ruang tunggu', [FasilitasLayananController::class, 'fasilitassatu'])->name('fasilitas.satu');
+Route::get('/pasien/fasilitas/laboratorium', [FasilitasLayananController::class, 'fasilitasdua'])->name('fasilitas.dua');
+Route::get('/pasien/fasilitas/ruang tindakan', [FasilitasLayananController::class, 'fasilitastiga'])->name('fasilitas.tiga');
+Route::get('/pasien/fasilitas/farmasi', [FasilitasLayananController::class, 'fasilitasempat'])->name('fasilitas.empat');
 
 // Riwayat Reservasi()
 
