@@ -66,10 +66,10 @@
             <nav class="flex-1 overflow-y-auto px-4 pb-4 space-y-1 no-scrollbar">
 
                 <!-- MENU: DASHBOARD -->
-                <a href="/dashboard"
-                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->is('dashboard') ? 'bg-brand-dark text-white shadow-lg shadow-brand-dark/30' : 'text-gray-500 hover:text-brand-dark hover:bg-gray-50' }}">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->routeIs('admin.dashboard') ? 'bg-brand-dark text-white shadow-lg shadow-brand-dark/30' : 'text-gray-500 hover:text-brand-dark hover:bg-gray-50' }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 transition-transform duration-300 group-hover:scale-110 {{ request()->is('dashboard') ? 'text-brand-primary' : 'text-gray-400 group-hover:text-brand-dark' }}"
+                        class="h-5 w-5 transition-transform duration-300 group-hover:scale-110 {{ request()->routeis('admin.dashboard') ? 'text-brand-primary' : 'text-gray-400 group-hover:text-brand-dark' }}"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -105,10 +105,10 @@
                 </div>
 
                 <!-- MENU: REKAM MEDIS (Ungu/Brand Btn) -->
-                <a href="/medical-records"
-                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->is('medical-records*') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/30' : 'text-gray-500 hover:bg-brand-btn/10 hover:text-brand-btn' }}">
+                <a href="{{route('admin.rekam-medis')}}"
+                    class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->routeIs('admin.rekam-medis') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/30' : 'text-gray-500 hover:bg-brand-btn/10 hover:text-brand-btn' }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 {{ request()->is('medical-records*') ? 'text-white' : 'text-gray-400 group-hover:text-brand-btn' }}"
+                        class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 {{ request()->routeIs('admin.rekam-medis') ? 'text-white' : 'text-gray-400 group-hover:text-brand-btn' }}"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
