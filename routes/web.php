@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\FasilitasLayananController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RekamMedisController;
-use App\Http\Controllers\PembayaranController;
-use App\Http\Controllers\PembayaranAdminController;
 use App\Http\Controllers\RujukanDigitalController;
+use App\Http\Controllers\PembayaranAdminController;
+use App\Http\Controllers\FasilitasLayananController;
+use App\Http\Controllers\StaffOperasionalController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -31,9 +33,15 @@ Route::get('/cari_dokter', function () {
 Route::get('/profil_dokter', function () {
     return view('pasien.cari_dokter.profil_dokter');
 })->name('profil_dokter');
-Route::get('/pembayaran', function () {
+Route::get('/tiket_antrian', function () {
     return view('pasien.cari_dokter.tiket_antrian');
-})->name('pembayaran');
+})->name('tiket_antrian');
+
+// Booking
+Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+
+// Route buat tombol aksi di tabel
+Route::post('/admin/reservasi/{id}/confirm', [AdminDashboardController::class, 'confirm'])->name('admin.reservasi.confirm');
 
 // Fasilitas & Layanan
 Route::get('/pasien/fasilitas-layanan', [FasilitasLayananController::class, 'index'])->name('pasien.fasilitas-layanan');
@@ -72,15 +80,15 @@ Route::post('/admin/reservasi/{id}/confirm', [AdminDashboardController::class, '
 
 
 // Jadwal Dokter
-Route::middleware('role:staff')->group(function (){
+Route::middleware('role:staff')->group(function () {
     Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
     Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
     Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
 
-    Route::get('/admin/pembayaran/index', [PembayaranAdminController::class,'index']);
+    Route::get('/admin/pembayaran/index', [PembayaranAdminController::class, 'index']);
 });
 // Rujukan Digital
-Route::middleware('role:staff')->group(function (){
+Route::middleware('role:staff')->group(function () {
     Route::get('/admin/rujukan-digital', [RujukanDigitalController::class, 'rujukanDigital'])->name('admin.rujukan-digital');
     Route::post('/admin/rujukan-digital/store', [RujukanDigitalController::class, 'storeRujukanDigital'])->name('admin.rujukan-digital.store');
 });
@@ -95,4 +103,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+Route::middleware(['cek_session'])->group(function () {
+
+    // DASHBOARD UMUM (Statistik doang)
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    // 1. RESEPSIONIS
+    Route::get('/staff/resepsionis', [StaffOperasionalController::class, 'indexResepsionis'])->name('staff.resepsionis');
+    Route::post('/staff/resepsionis/{id}/checkin', [StaffOperasionalController::class, 'checkIn'])->name('staff.resepsionis.checkin');
+
+    // 2. PERAWAT (Input Anamnesa & Vital)
+    Route::get('/staff/perawat', [StaffOperasionalController::class, 'indexPerawat'])->name('staff.perawat');
+    Route::post('/staff/perawat/{id}/store', [StaffOperasionalController::class, 'storePerawat'])->name('staff.perawat.store');
+
+    // 3. DOKTER (Input Diagnosa & Resep)
+    Route::get('/staff/dokter', [StaffOperasionalController::class, 'indexDokter'])->name('staff.dokter');
+    // ... route store dokter ...
+
+    // 4. KASIR
+    Route::get('/staff/kasir', [StaffOperasionalController::class, 'indexKasir'])->name('staff.kasir');
+});
+
+
+
+
+require __DIR__ . '/auth.php';

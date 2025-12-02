@@ -27,8 +27,12 @@
                     <div class="absolute top-0 right-0 -mr-4 -mt-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
                     <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
 
+                    {{-- GANTI BAGIAN NOMOR ANTRIAN --}}
                     <h2 class="text-lg font-semibold tracking-widest uppercase opacity-90">Nomor Antrian</h2>
-                    <div class="mt-2 text-6xl font-extrabold font-mono tracking-tighter">A-001</div>
+                    <div class="mt-2 text-6xl font-extrabold font-mono tracking-tighter">
+                        {{ $tiket['no_antrian'] ?? 'A-???' }}
+                    </div>
+
                     <p class="text-sm mt-2 font-medium bg-white/20 inline-block px-3 py-1 rounded-full">
                         Status: Menunggu Check-In
                     </p>
@@ -61,7 +65,8 @@
                         </div>
                         <div>
                             <p class="text-xs text-gray-400 font-bold uppercase">Dokter</p>
-                            <p class="text-brand-dark font-bold">drg. Eugene Ahn</p>
+                            {{-- GANTI BAGIAN NAMA PASIEN & DOKTER --}}
+                            <p class="text-brand-dark font-bold text-lg">{{ session('user_data')['name'] ?? 'Pasien' }}</p>
                             <p class="text-xs text-brand-secondary font-semibold">Klinik Gigi</p>
                         </div>
                     </div>
