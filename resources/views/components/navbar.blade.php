@@ -56,7 +56,7 @@
     <div class="navbar-end">
         @if (session()->has('api_token'))
         <div class="flex items-center gap-2">
-            <p class="text-md font-semibold">{{ session('user_data')['staff']['nama'] }}</p>
+            <p class="text-md font-semibold">{{ session('user_data')['staff']['nama_lengkap'] }}</p>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
                 <button class="btn bg-red-400 text-red-900 px-2 py-1 rounded shadow-md transition-all duration-200 transform-gpu hover:bg-red-700 hover:shadow-red-400/50 hover:-translate-y-px hover:text-red-300">Logout</button>

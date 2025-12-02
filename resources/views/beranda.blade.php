@@ -31,11 +31,11 @@
                     </p>
 
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="/doctors"
+                        <a href="{{ route('cari_dokter') }}"
                             class="btn bg-brand-btn hover:bg-brand-btn/90 text-white border-none px-8 rounded-full shadow-lg shadow-brand-btn/30 transition-transform hover:-translate-y-1">
                             Buat Janji Temu
                         </a>
-                        <a href="#layanan"
+                        <a href="{{ route('pasien.fasilitas-layanan') }}"
                             class="btn btn-outline text-brand-primary hover:bg-brand-primary hover:text-brand-dark border-brand-primary rounded-full px-8">
                             Lihat Layanan
                         </a>
@@ -79,7 +79,7 @@
                         <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-btn transition">Jadwal
                             Dokter</h3>
                         <p class="text-gray-600 mb-6">Cek ketersediaan dokter umum spesialis kami hari ini.</p>
-                        <a href="/doctors"
+                        <a href="{{ route('cari_dokter') }}"
                             class="text-brand-btn font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
                             Lihat Jadwal <span class="text-xl">→</span>
                         </a>
@@ -101,7 +101,7 @@
                         <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-secondary transition">
                             Pasien Baru?</h3>
                         <p class="text-gray-600 mb-4">Daftar online sekarang untuk menghindari antrian panjang.</p>
-                        <a href="/register"
+                        <a href="{{ route('register') }}"
                             class="text-brand-secondary font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
                             Daftar Sekarang <span class="text-xl">→</span>
                         </a>

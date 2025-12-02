@@ -32,7 +32,7 @@ Route::get('/profil_dokter', function () {
     return view('pasien.cari_dokter.profil_dokter');
 })->name('profil_dokter');
 Route::get('/pembayaran', function () {
-    return view('pasien.cari_dokter.pembayaran');
+    return view('pasien.cari_dokter.tiket_antrian');
 })->name('pembayaran');
 
 // Fasilitas & Layanan

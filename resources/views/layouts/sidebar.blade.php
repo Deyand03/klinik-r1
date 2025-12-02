@@ -51,12 +51,12 @@
                     <div class="relative z-10 avatar online">
                         <div class="w-10 h-10 rounded-full ring ring-white">
                             <img
-                                src="https://ui-avatars.com/api/?name={{ session('user_data')['staff']['nama'] }}&background=31326F&color=fff" />
+                                src="https://ui-avatars.com/api/?name={{ session('user_data')['staff']['nama_lengkap'] }}&background=31326F&color=fff" />
                         </div>
                     </div>
                     <div class="relative z-10">
                         <p class="text-sm font-bold text-brand-dark group-hover:text-brand-dark transition-colors">
-                            {{ session('user_data')['staff']['nama'] }}</p>
+                            {{ session('user_data')['staff']['nama_lengkap'] }}</p>
                         <p class="text-xs text-gray-500 font-medium capitalize">{{ session('user_data')['role'] }}</p>
                     </div>
                 </div>
