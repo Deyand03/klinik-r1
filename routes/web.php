@@ -37,6 +37,9 @@ Route::get('/pembayaran', function () {
 // Fasilitas & Layanan
 
 // Riwayat Reservasi()
+Route::get('/riwayat_reservasi', function () {
+    return view('pasien.riwayat_reservasi.index');
+})->name('riwayat_reservasi');
 
 
 // Admin
@@ -57,15 +60,15 @@ Route::post('/admin/reservasi/{id}/confirm', [AdminDashboardController::class, '
 
 
 // Jadwal Dokter
-Route::middleware('role:staff')->group(function (){
+Route::middleware('role:staff')->group(function () {
     Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
     Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
     Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
 
-    Route::get('/admin/pembayaran/index', [PembayaranAdminController::class,'index']);
+    Route::get('/admin/pembayaran/index', [PembayaranAdminController::class, 'index']);
 });
 // Rujukan Digital
-Route::middleware('role:staff')->group(function (){
+Route::middleware('role:staff')->group(function () {
     Route::get('/admin/rujukan-digital', [RujukanDigitalController::class, 'rujukanDigital'])->name('admin.rujukan-digital');
     Route::post('/admin/rujukan-digital/store', [RujukanDigitalController::class, 'storeRujukanDigital'])->name('admin.rujukan-digital.store');
 });
@@ -80,4 +83,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -20,6 +20,7 @@
 <body style="font-family: 'Poppins', sans-serif">
     <nav>
         <x-navbar></x-navbar>
+
     </nav>
 
     <main>
