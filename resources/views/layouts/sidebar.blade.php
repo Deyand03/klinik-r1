@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- MENU: REKAM MEDIS (Ungu/Brand Btn) -->
-                <a href="{{route('admin.rekam-medis')}}"
+                <a href="{{ route('admin.rekam-medis') }}"
                     class="relative flex items-center gap-3 px-4 py-3.5 rounded-xl group overflow-hidden transition-all duration-300 {{ request()->routeIs('admin.rekam-medis') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/30' : 'text-gray-500 hover:bg-brand-btn/10 hover:text-brand-btn' }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 {{ request()->routeIs('admin.rekam-medis') ? 'text-white' : 'text-gray-400 group-hover:text-brand-btn' }}"
@@ -133,8 +133,6 @@
                     <span class="font-semibold text-sm">Pembayaran</span>
                 </a>
 
-
-
                 <!-- SEPARATOR -->
                 <div class="my-4 border-t border-gray-100"></div>
 
@@ -154,7 +152,7 @@
                     </span>
                 </a>
             </nav>
-
+            
             <!-- 4. LOGOUT BUTTON -->
             <div class="p-4 border-t border-gray-100 ">
                 <form method="POST" action="{{ route('logout') }}">

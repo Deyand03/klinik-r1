@@ -3,148 +3,244 @@
 @section('title', 'Profil Dokter')
 
 @section('content')
-    <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
+    {{-- 
+      WRAPPER UTAMA ALPINE.JS 
+    --}}
+    <div x-data="{
+        bookingModalOpen: false,
+        selectedDay: '',
+        selectedShiftLabel: '', // Contoh: '07:00 - 12:00'
+        
+        openBooking(day, shiftLabel) {
+            this.selectedDay = day;
+            this.selectedShiftLabel = shiftLabel;
+            this.bookingModalOpen = true;
+        }
+    }">
 
-            <div class="mb-6 md:mb-8">
-                <a href="{{ route('cari_dokter') }}"
-                    class="inline-flex items-center text-white hover:text-gray-200 transition-colors font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Kembali
-                </a>
-            </div>
-
-            <div class="grid grid-cols-[110px_1fr] md:flex md:flex-row gap-4 md:gap-12 items-start">
-
-                <div class="col-span-1 md:w-1/3 lg:w-1/4 shrink-0">
-                    <div
-                        class="aspect-3/4 relative rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20">
-                        <img src="https://placehold.co/600x800/png?text=drg.+Eugene" alt="drg. Eugene Ahn"
-                            class="object-cover w-full h-full" />
+        {{-- BAGIAN 1: HEADER PROFIL (Tidak Berubah) --}}
+        <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-6 md:mb-8">
+                    <a href="{{ route('cari_dokter') }}" class="inline-flex items-center text-white hover:text-gray-200 transition-colors font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Kembali
+                    </a>
+                </div>
+                <div class="grid grid-cols-[110px_1fr] md:flex md:flex-row gap-4 md:gap-12 items-start">
+                    <div class="col-span-1 md:w-1/3 lg:w-1/4 shrink-0">
+                        <div class="aspect-3/4 relative rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20">
+                            <img src="https://placehold.co/600x800/png?text=drg.+Eugene" alt="drg. Eugene Ahn" class="object-cover w-full h-full" />
+                        </div>
+                    </div>
+                    <div class="contents md:flex md:flex-col md:w-2/3 lg:w-3/4 md:justify-center">
+                        <div class="col-span-1 text-white self-center md:self-start mb-0 md:mb-8">
+                            <h1 class="text-xl sm:text-2xl md:text-5xl font-bold mb-1 md:mb-3 leading-tight">drg. Eugene Ahn</h1>
+                            <p class="text-sm sm:text-base md:text-2xl opacity-90 font-medium badge badge-outline text-white md:border-none md:p-0">Klinik: Gigi</p>
+                        </div>
+                        <div class="col-span-2 bg-white rounded-2xl p-6 md:p-8 shadow-xl text-gray-700 mt-4 md:mt-0">
+                            <h3 class="text-[#2C3753] font-bold text-lg md:text-2xl mb-2 md:mb-4">Tentang Dokter</h3>
+                            <p class="leading-relaxed text-sm md:text-lg text-gray-600">
+                                Eugene adalah dokter gigi yang berpengalaman dalam perawatan konservasi, estetika, dan penanganan pasien dengan berbagai kebutuhan.
+                            </p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="contents md:flex md:flex-col md:w-2/3 lg:w-3/4 md:justify-center">
-                    <div class="col-span-1 text-white self-center md:self-start mb-0 md:mb-8">
-                        <h1 class="text-xl sm:text-2xl md:text-5xl font-bold mb-1 md:mb-3 leading-tight">drg. Eugene Ahn
-                        </h1>
-                        <p
-                            class="text-sm sm:text-base md:text-2xl opacity-90 font-medium badge badge-outline text-white md:border-none md:p-0">
-                            Klinik: Gigi</p>
-                    </div>
-
-                    <div class="col-span-2 bg-white rounded-2xl p-6 md:p-8 shadow-xl text-gray-700 mt-4 md:mt-0">
-                        <h3 class="text-[#2C3753] font-bold text-lg md:text-2xl mb-2 md:mb-4">Tentang Dokter</h3>
-                        <p class="leading-relaxed text-sm md:text-lg text-gray-600">
-                            Eugene adalah dokter gigi yang berpengalaman dalam perawatan konservasi, estetika, dan
-                            penanganan pasien dengan berbagai kebutuhan, termasuk yang memiliki kecemasan saat berobat.
-                            Selama bertahun-tahun bekerja di klinik keluarga dan layanan gigi komunitas, ia terbiasa
-                            menangani kasus restoratif yang beragam serta berkolaborasi dengan spesialis lain untuk
-                            memastikan pasien mendapatkan hasil terbaik.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-                <div class="w-full">
-                    <h3 class="text-[#2C3753] font-bold text-xl md:hidden mb-4">Jadwal Praktik</h3>
-                    <div class="overflow-x-auto rounded-xl shadow-lg border border-gray-200">
-                        <table class="table w-full min-w-[600px]">
-                            <thead class="bg-brand-tertiary text-white text-base">
-                                <tr>
-                                    <th class="py-4 pl-6 text-center w-1/3">Hari</th>
-                                    <th class="py-4 text-center w-1/3">Jam Praktik</th>
-                                    <th class="py-4 pr-6 text-center w-1/3">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700 font-medium text-base bg-white">
-                                <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle">
-                                    <td class="py-4 pl-6 text-center">Senin</td>
-                                    <td class="py-4 text-center">07:00 - 10:00</td>
-                                    <td class="py-4 pr-6 text-center">
-                                        <button
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle">
-                                    <td class="py-4 pl-6 text-center">Selasa</td>
-                                    <td class="py-4 text-center">07:00 - 10:00</td>
-                                    <td class="py-4 pr-6 text-center">
-                                        <a href="{{ route('pembayaran') }}"
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</a>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle">
-                                    <td class="py-4 pl-6 text-center">Rabu</td>
-                                    <td class="py-4 text-center">13:00 - 15:00</td>
-                                    <td class="py-4 pr-6 text-center">
-                                        <button
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle">
-                                    <td class="py-4 pl-6 text-center">Kamis</td>
-                                    <td class="py-4 text-center">10:00 - 12:00</td>
-                                    <td class="py-4 pr-6 text-center">
-                                        <button
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 align-middle">
-                                    <td class="py-4 pl-6 text-center">Jum'at</td>
-                                    <td class="py-4 text-center">07:00 - 12:00</td>
-                                    <td class="py-4 pr-6 text-center">
-                                        <button
-                                            class="btn btn-sm bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md w-full px-6 whitespace-nowrap">Booking</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-2 italic sm:hidden">* Geser tabel ke samping untuk booking</p>
-                </div>
-
-                <div class="card bg-white shadow-lg border border-gray-200 rounded-xl p-6 lg:p-10 h-full">
-                    <h3 class="text-[#2C3753] font-bold text-xl md:text-2xl mb-6">Pengalaman Bekerja</h3>
-                    <ul class="list-disc list-inside space-y-4 text-gray-600 font-medium text-lg">
-                        <li class="pl-2">6 Tahun praktik klinik</li>
-                        <li class="pl-2">Pengalaman layanan gigi komunitas</li>
-                        <li class="pl-2">Penanganan pasien seluruh usia</li>
-                    </ul>
-                </div>
-
             </div>
         </div>
-    </div>
 
-    <div class="card lg:card-side bg-white w-full rounded-none border-none flex flex-col lg:flex-row">
-        <figure class="lg:w-1/2 min-h-[250px] lg:min-h-[350px] relative m-0 p-0">
-            <img src="https://placehold.co/800x600/e2e8f0/888888?text=Fasilitas+Rumah+Sakit" alt="Fasilitas RS"
-                class="absolute inset-0 w-full h-full object-cover" />
-        </figure>
-        <div class="card-body lg:w-1/2 p-6 lg:p-12 justify-center">
-            <h3 class="text-brand-secondary font-bold text-lg md:text-xl uppercase tracking-wider mb-1">Fasilitas dan
-                Layanan</h3>
-            <h2 class="text-[#3b4c7a] font-bold text-xl md:text-2xl mb-3 leading-tight">Layanan Prima dengan Fasilitas
-                Terlengkap dan Terintegrasi</h2>
-            <p class="text-gray-600 mb-6 leading-relaxed text-base">Kami menyediakan berbagai fasilitas medis modern untuk
-                menunjang kesehatan Anda, mulai dari ruang rawat inap yang nyaman hingga peralatan medis terkini.</p>
-            <div class="card-actions">
-                <button
-                    class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">Lebih
-                    Lanjut</button>
+        {{-- BAGIAN 2: JADWAL PRAKTIK --}}
+        <div class="bg-white py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+                    <div class="w-full">
+                        <h3 class="text-[#2C3753] font-bold text-xl md:hidden mb-4">Jadwal Praktik</h3>
+                        
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 rounded-r-lg">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-blue-700">
+                                        <span class="font-bold">Info:</span> Silakan pilih jadwal untuk mendapatkan nomor antrian online sebelum datang ke klinik.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl shadow-lg border border-gray-200">
+                            <table class="table w-full min-w-[500px]">
+                                <thead class="bg-brand-tertiary text-white text-base">
+                                    <tr>
+                                        <th class="py-4 pl-6 text-left w-1/3">Hari</th>
+                                        <th class="py-4 text-center w-1/3">Jam Praktik</th>
+                                        <th class="py-4 pr-6 text-center w-1/3">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-700 font-medium text-base bg-white">
+                                    
+                                    {{-- ROW 1: SENIN (Hari Ini) --}}
+                                    <tr class="hover:bg-green-50/50 border-b border-gray-100 align-middle transition-colors">
+                                        <td class="py-5 pl-6 text-left">
+                                            <span class="block font-bold text-brand-secondary text-lg">Senin</span>
+                                            <span class="text-xs font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded-full uppercase tracking-wide">Hari Ini</span>
+                                        </td>
+                                        <td class="py-5 text-center">
+                                            <div class="flex flex-col items-center">
+                                                <span class="font-mono text-lg font-bold text-[#2C3753]">07:00 - 12:00</span>
+                                                <span class="text-xs font-medium text-gray-500 mt-1">Sisa Kuota: 3</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-5 pr-6 text-center">
+                                            <button 
+                                                @click="openBooking('Senin (Hari Ini)', '07:00 - 12:00')"
+                                                class="btn bg-brand-secondary hover:bg-emerald-600 text-white border-none shadow-md shadow-emerald-200 w-full px-6 whitespace-nowrap normal-case text-base font-bold rounded-xl">
+                                                Ambil Antrian
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    {{-- ROW 2: SELASA (Besok) --}}
+                                    <tr class="hover:bg-gray-50 border-b border-gray-100 align-middle transition-colors">
+                                        <td class="py-5 pl-6 text-left">
+                                            <span class="block font-bold text-gray-600 text-lg">Selasa</span>
+                                            <span class="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full uppercase tracking-wide">Besok</span>
+                                        </td>
+                                        <td class="py-5 text-center">
+                                            <div class="flex flex-col items-center">
+                                                <span class="font-mono text-lg font-bold text-gray-600">13:00 - 17:00</span>
+                                                <span class="text-xs font-medium text-gray-500 mt-1">Sisa Kuota: 5</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-5 pr-6 text-center">
+                                            <button 
+                                                @click="openBooking('Selasa (Besok)', '13:00 - 17:00')"
+                                                class="btn btn-outline border-brand-secondary text-brand-secondary hover:bg-brand-secondary hover:text-white hover:border-brand-secondary w-full px-6 whitespace-nowrap normal-case text-base font-bold rounded-xl">
+                                                Ambil Antrian
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {{-- SIDEBAR --}}
+                    <div class="card bg-white shadow-lg border border-gray-200 rounded-xl p-6 lg:p-10 h-full">
+                        <h3 class="text-[#2C3753] font-bold text-xl md:text-2xl mb-6">Pengalaman Bekerja</h3>
+                        <ul class="list-disc list-inside space-y-4 text-gray-600 font-medium text-lg">
+                            <li class="pl-2">6 Tahun praktik klinik</li>
+                            <li class="pl-2">Pengalaman layanan gigi komunitas</li>
+                            <li class="pl-2">Penanganan pasien seluruh usia</li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
         </div>
+
+        {{-- BAGIAN FASILITAS --}}
+        <div class="card lg:card-side bg-white w-full rounded-none border-none flex flex-col lg:flex-row">
+            <figure class="lg:w-1/2 min-h-[250px] lg:min-h-[350px] relative m-0 p-0">
+                <img src="https://placehold.co/800x600/e2e8f0/888888?text=Fasilitas+Rumah+Sakit" alt="Fasilitas RS" class="absolute inset-0 w-full h-full object-cover" />
+            </figure>
+            <div class="card-body lg:w-1/2 p-6 lg:p-12 justify-center">
+                <h3 class="text-brand-secondary font-bold text-lg md:text-xl uppercase tracking-wider mb-1">Fasilitas dan Layanan</h3>
+                <h2 class="text-[#3b4c7a] font-bold text-xl md:text-2xl mb-3 leading-tight">Layanan Prima dengan Fasilitas Terlengkap</h2>
+                <p class="text-gray-600 mb-6 leading-relaxed text-base">Kami menyediakan berbagai fasilitas medis modern untuk menunjang kesehatan Anda.</p>
+                <div class="card-actions">
+                    <button class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">Lebih Lanjut</button>
+                </div>
+            </div>
+        </div>
+
+        {{-- ======================================================================== --}}
+        {{-- MODAL BOOKING (STANDARD VERSION) --}}
+        {{-- ======================================================================== --}}
+        <div x-show="bookingModalOpen" style="display: none;" 
+             class="fixed inset-0 z-50 overflow-y-auto" 
+             aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            
+            <div x-show="bookingModalOpen" x-transition.opacity class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" @click="bookingModalOpen = false"></div>
+
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div x-show="bookingModalOpen" 
+                     x-transition:enter="ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                     class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100">
+                    
+                    {{-- Header Modal --}}
+                    <div class="bg-brand-tertiary px-6 py-4 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">Konfirmasi Booking</h3>
+                        <button @click="bookingModalOpen = false" class="text-white/70 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+
+                    <div class="px-6 py-6">
+                        <form action="" method="POST">
+                            @csrf
+                            
+                            {{-- Review Dokter --}}
+                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 mb-6 flex gap-4 items-center">
+                                <div class="avatar placeholder">
+                                    <div class="bg-brand-secondary text-white rounded-full w-12"><span class="text-xl font-bold">EA</span></div>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Dokter Pilihan</p>
+                                    <h4 class="font-bold text-[#2C3753]">drg. Eugene Ahn</h4>
+                                    <p class="text-sm text-gray-600 mt-0.5">
+                                        <span x-text="selectedDay" class="font-semibold text-brand-secondary"></span> • 
+                                        <span x-text="selectedShiftLabel"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- INPUT KELUHAN (TEXTAREA) --}}
+                            <div class="mb-5 text-left">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    Keluhan / Gejala Awal <span class="text-red-500">*</span>
+                                </label>
+                                <textarea name="keluhan" rows="3" required
+                                    class="textarea textarea-bordered w-full rounded-xl bg-white text-gray-700 focus:border-brand-secondary focus:ring-brand-secondary text-base leading-relaxed"
+                                    placeholder="Contoh: Gigi geraham bawah sakit berdenyut sejak kemarin malam..."></textarea>
+                                <p class="text-xs text-gray-400 mt-1.5 ml-1">* Informasi ini membantu dokter mempersiapkan penanganan.</p>
+                            </div>
+
+                            {{-- INFO GENERAL --}}
+                            <div class="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-r-lg mb-6 text-left">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-xs text-gray-600 leading-relaxed">
+                                            <span class="font-bold">Catatan:</span> Harap datang pada rentang jam praktik yang dipilih. Tunjukkan bukti booking ke resepsionis untuk verifikasi kedatangan.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- TOMBOL --}}
+                            <div class="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+                                <button type="button" @click="bookingModalOpen = false" class="btn btn-ghost text-gray-500 rounded-xl">Batal</button>
+                                <button type="submit" class="btn bg-brand-secondary hover:bg-emerald-600 text-white border-none rounded-xl px-6 shadow-lg">Ambil Antrian</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
