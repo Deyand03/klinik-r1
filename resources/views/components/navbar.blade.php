@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-sm px-10 bg-navbar">
+<div class="navbar fixed bg-base-100 shadow-sm px-10 bg-navbar z-50">
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -37,7 +37,7 @@
                         class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) {{ (request()->routeIs('cari_dokter') || request()->routeIs('profil_dokter')) || request()->routeIs('pembayaran') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform duration-300 ease-out origin-left"></span>
                     </span>
                 </a></li>
-            <li><a href="#"
+            <li><a href="{{ route('pasien.fasilitas-layanan')}}"
                     class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
                     Fasilitas & Layanan
                     <span
