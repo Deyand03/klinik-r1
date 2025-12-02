@@ -24,28 +24,49 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // Validasi Frontend (Opsional tapi bagus buat UX)
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ], [
-            'name.required' => 'Nama lengkap wajib diisi.',
-            'email.required' => 'Alamat email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email ini sudah terdaftar.',
-            'password.required' => 'Password wajib diisi.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+            'nik' => 'required|numeric|digits:16',
+            'no_hp' => 'required',
+            'tgl_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
+            'alamat_domisili' => 'required',
         ]);
 
-        $user = User::create([
+        // Kirim ke API Backend
+        $response = Http::post('http://127.0.0.1:8000/api/register', [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
+
+            'nik' => $request->nik,
+            'no_hp' => $request->no_hp,
+            'tgl_lahir' => $request->tgl_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'alamat_domisili' => $request->alamat_domisili,
+
+            // --- TAMBAHAN BARU ---
+            'golongan_darah' => $request->golongan_darah ?? '-', // Default strip jika kosong
+            'riwayat_alergi' => $request->riwayat_alergi ?? 'Tidak ada', // Default text
         ]);
 
-        Auth::login($user);
+        if ($response->successful()) {
+            $data = $response->json();
 
-        return redirect('/dashboard')->with('success', 'Pendaftaran berhasil! Selamat datang, ' . $user->name . '.');
+            // Auto Login
+            session([
+                'api_token' => $data['access_token'],
+                'user_data' => $data['user']
+            ]);
+
+            return redirect(route('beranda', absolute: false));
+        }
+
+
+
+        return back()->withErrors(['email' => 'Registrasi Gagal: ' . ($response->json()['message'] ?? 'Error Server')]);
     }
 }

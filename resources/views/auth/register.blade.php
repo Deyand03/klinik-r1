@@ -90,8 +90,12 @@
                         </svg>
                         <div>
                             <h3 class="text-sm font-bold text-red-800">Pendaftaran Gagal</h3>
-                            {{-- Karena Register bisa gagal karena Validasi (bukan hanya satu error) --}}
-                            <p class="text-sm text-red-600">Terjadi kesalahan pada input Anda. Silakan periksa kembali.</p>
+                            {{-- TAMPILKAN ERROR ASLI DI SINI --}}
+                            <ul class="list-disc list-inside text-sm text-red-600 mt-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 @endif
@@ -114,155 +118,122 @@
                 <form action="{{ route('register') }}" method="POST" class="space-y-5">
                     @csrf
 
-                    {{-- 1. Input Nama Lengkap --}}
-                    <div class="form-control group">
-                        <label class="label pl-0">
-                            <span
-                                class="label-text font-bold text-brand-dark group-focus-within:text-brand-secondary transition text-base">Nama Lengkap</span>
-                        </label>
-                        <div class="relative">
-                            {{-- Icon SVG: Person --}}
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-focus-within:text-brand-secondary transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                            <input type="text" name="name" placeholder="Nama Lengkap Anda"
-                                class="input input-bordered w-full pl-12 h-12 rounded-xl border-gray-300 focus:border-brand-secondary focus:ring-4 focus:ring-brand-secondary/10 transition-all bg-gray-50 focus:bg-white text-base shadow-sm"
-                                value="{{ old('name') }}" required autofocus />
-                        </div>
-                        @error('name')
-                            <p class="text-sm text-red-500 mt-2">{{ $message }}</p>
-                        @enderror
+                    {{-- SECTION 1: AKUN LOGIN --}}
+                    <p
+                        class="text-sm font-bold text-brand-secondary uppercase tracking-widest border-b border-gray-100 pb-2">
+                        Informasi Akun</p>
+
+                    {{-- Nama Lengkap --}}
+                    <div class="form-control">
+                        <label class="label font-bold text-brand-dark">Nama Lengkap</label>
+                        <input type="text" name="name" placeholder="Sesuai KTP"
+                            class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                            value="{{ old('name') }}" required />
                     </div>
 
-                    {{-- 2. Input Email Address --}}
-                    <div class="form-control group">
-                        <label class="label pl-0">
-                            <span
-                                class="label-text font-bold text-brand-dark group-focus-within:text-brand-secondary transition text-base">Email Address</span>
-                        </label>
-                        <div class="relative">
-                            {{-- Icon SVG: Email --}}
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-400 group-focus-within:text-brand-secondary transition"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <input type="email" name="email" placeholder="nama@email.com"
-                                class="input input-bordered w-full pl-12 h-12 rounded-xl border-gray-300 focus:border-brand-secondary focus:ring-4 focus:ring-brand-secondary/10 transition-all bg-gray-50 focus:bg-white text-base shadow-sm"
-                                value="{{ old('email') }}" required />
-                        </div>
-                        @error('email')
-                            <p class="text-sm text-red-500 mt-2">{{ $message }}</p>
-                        @enderror
+                    {{-- Email --}}
+                    <div class="form-control">
+                        <label class="label font-bold text-brand-dark">Email</label>
+                        <input type="email" name="email" placeholder="email@contoh.com"
+                            class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                            value="{{ old('email') }}" required />
                     </div>
 
-                    {{-- 3. Input Password --}}
-                    <div class="form-control group">
-                        <label class="label pl-0 flex justify-between">
-                            <span
-                                class="label-text font-bold text-brand-dark group-focus-within:text-brand-secondary transition text-base">Password</span>
-                        </label>
-                        <div class="relative">
-                            {{-- Icon Gembok --}}
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-400 group-focus-within:text-brand-secondary transition"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                            </div>
-
-                            {{-- Input Password --}}
-                            <input :type="showPassword ? 'text' : 'password'" name="password" placeholder="••••••••"
-                                class="input input-bordered w-full pl-12 pr-12 h-12 rounded-xl border-gray-300 focus:border-brand-secondary focus:ring-4 focus:ring-brand-secondary/10 transition-all bg-gray-50 focus:bg-white text-base shadow-sm"
-                                required />
-
-                            {{-- Tombol Mata (Eye Icon) --}}
-                            <button type="button" @click="showPassword = !showPassword"
-                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-brand-dark transition cursor-pointer z-10 focus:outline-none">
-                                {{-- Hide Icon --}}
-                                <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                {{-- Show Icon --}}
-                                <svg x-show="showPassword" style="display: none;" xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 011.575-3.175M7.5 7.5l9 9" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M10.73 5.08A10.05 10.05 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-1.575 3.175" />
-                                </svg>
-                            </button>
+                    {{-- Password & Konfirmasi --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Password</label>
+                            <input type="password" name="password" placeholder="Min. 8 Karakter"
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white" required />
                         </div>
-                        @error('password')
-                            <p class="text-sm text-red-500 mt-2">{{ $message }}</p>
-                        @enderror
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Ulangi Password</label>
+                            <input type="password" name="password_confirmation" placeholder="Ketik ulang..."
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white" required />
+                        </div>
                     </div>
 
-                    {{-- 4. Input Konfirmasi Password --}}
-                    <div class="form-control group">
-                        <label class="label pl-0 flex justify-between">
-                            <span
-                                class="label-text font-bold text-brand-dark group-focus-within:text-brand-secondary transition text-base">Konfirmasi Password</span>
-                        </label>
-                        <div class="relative">
-                            {{-- Icon Gembok --}}
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-400 group-focus-within:text-brand-secondary transition"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                            </div>
+                    {{-- SECTION 2: DATA PRIBADI (WAJIB UNTUK MEDIS) --}}
+                    <p
+                        class="text-sm font-bold text-brand-secondary uppercase tracking-widest border-b border-gray-100 pb-2 pt-4">
+                        Data Pasien</p>
 
-                            {{-- Input Konfirmasi Password. Note: name="password_confirmation" wajib untuk validasi Laravel --}}
-                            <input :type="showConfirmPassword ? 'text' : 'password'" name="password_confirmation" placeholder="••••••••"
-                                class="input input-bordered w-full pl-12 pr-12 h-12 rounded-xl border-gray-300 focus:border-brand-secondary focus:ring-4 focus:ring-brand-secondary/10 transition-all bg-gray-50 focus:bg-white text-base shadow-sm"
-                                required />
-
-                            {{-- Tombol Mata (Eye Icon) --}}
-                            <button type="button" @click="showConfirmPassword = !showConfirmPassword"
-                                class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-brand-dark transition cursor-pointer z-10 focus:outline-none">
-                                {{-- Hide Icon --}}
-                                <svg x-show="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                {{-- Show Icon --}}
-                                <svg x-show="showConfirmPassword" style="display: none;" xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 011.575-3.175M7.5 7.5l9 9" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M10.73 5.08A10.05 10.05 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-1.575 3.175" />
-                                </svg>
-                            </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- NIK --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">NIK (KTP/KK)</label>
+                            <input type="text" name="nik" placeholder="16 Digit" maxlength="16"
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                                value="{{ old('nik') }}" required />
                         </div>
-                        {{-- Laravel otomatis menambahkan error "password" jika password_confirmation tidak cocok --}}
-                        @error('password_confirmation')
-                            <p class="text-sm text-red-500 mt-2">{{ $message }}</p>
-                        @enderror
+
+                        {{-- No HP --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">No. WhatsApp</label>
+                            <input type="text" name="no_hp" placeholder="08xxxxxxxx"
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                                value="{{ old('no_hp') }}" required />
+                        </div>
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- Tanggal Lahir --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Tanggal Lahir</label>
+                            <input type="date" name="tgl_lahir"
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                                value="{{ old('tgl_lahir') }}" required />
+                        </div>
 
-                    {{-- Tombol Daftar --}}
-                    {{-- Hapus bagian 'Ingat Saya' karena tidak relevan untuk form register --}}
+                        {{-- Jenis Kelamin --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Jenis Kelamin</label>
+                            <select name="jenis_kelamin"
+                                class="select select-bordered w-full rounded-xl bg-gray-50 focus:bg-white" required>
+                                <option value="" disabled selected>-- Pilih --</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {{-- Alamat Domisili --}}
+                    <div class="form-control">
+                        <label class="label font-bold text-brand-dark">Alamat Domisili</label>
+                        <textarea name="alamat_domisili" class="textarea textarea-bordered h-20 rounded-xl bg-gray-50 focus:bg-white"
+                            placeholder="Jalan, RT/RW, Kelurahan, Kecamatan..." required>{{ old('alamat_domisili') }}</textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- Golongan Darah --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Golongan Darah</label>
+                            <select name="golongan_darah"
+                                class="select select-bordered w-full rounded-xl bg-gray-50 focus:bg-white">
+                                <option value="" selected>Tidak Tahu / -</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="O">O</option>
+                            </select>
+                        </div>
+
+                        {{-- Riwayat Alergi --}}
+                        <div class="form-control">
+                            <label class="label font-bold text-brand-dark">Riwayat Alergi</label>
+                            <input type="text" name="riwayat_alergi"
+                                placeholder="Contoh: Alergi Seafood, Antibiotik..."
+                                class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white"
+                                value="{{ old('riwayat_alergi') }}" />
+                            <label class="label">
+                                <span class="label-text-alt text-gray-400">Kosongkan jika tidak ada.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    {{-- TOMBOL DAFTAR --}}
                     <button type="submit"
-                        class="btn btn-block bg-brand-secondary hover:bg-brand-dark text-white border-none h-12 rounded-xl text-lg font-bold shadow-lg shadow-brand-secondary/30 hover:shadow-brand-secondary/50 transition-all transform hover:-translate-y-1 mt-8">
+                        class="btn btn-block bg-brand-secondary hover:bg-brand-dark text-white border-none h-12 rounded-xl text-lg font-bold shadow-lg mt-6">
                         Daftar Sekarang
                     </button>
                 </form>

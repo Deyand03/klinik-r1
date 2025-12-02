@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\JadwalDokterController;
@@ -106,23 +107,63 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['cek_session'])->group(function () {
 
-    // DASHBOARD UMUM (Statistik doang)
+    // ====================================================
+    // 1. TRAFFIC CONTROLLER (Pintu Gerbang Utama)
+    // ====================================================
+    // Dipanggil oleh tombol "Dashboard" di Sidebar
+    Route::get('/staff/dashboard', [DashboardController::class, 'index'])->name('staff.dashboard');
+
+
+    // ====================================================
+    // 2. DASHBOARD & VIEW OPERASIONAL (Halaman Tampilan)
+    // ====================================================
+
+    // Admin Dashboard (Statistik)
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
-    // 1. RESEPSIONIS
+    // Resepsionis View
     Route::get('/staff/resepsionis', [StaffOperasionalController::class, 'indexResepsionis'])->name('staff.resepsionis');
+
+    // Perawat View
+    Route::get('/staff/perawat', [StaffOperasionalController::class, 'indexPerawat'])->name('staff.perawat');
+
+    // Dokter View
+    Route::get('/staff/dokter', [StaffOperasionalController::class, 'indexDokter'])->name('staff.dokter');
+
+    // Kasir View
+    Route::get('/staff/kasir', [StaffOperasionalController::class, 'indexKasir'])->name('staff.kasir');
+
+
+    // ====================================================
+    // 3. AKSI OPERASIONAL (POST Form)
+    // ====================================================
+
+    // Aksi Resepsionis (Check-In)
     Route::post('/staff/resepsionis/{id}/checkin', [StaffOperasionalController::class, 'checkIn'])->name('staff.resepsionis.checkin');
 
-    // 2. PERAWAT (Input Anamnesa & Vital)
-    Route::get('/staff/perawat', [StaffOperasionalController::class, 'indexPerawat'])->name('staff.perawat');
+    // Aksi Perawat (Simpan Vital)
     Route::post('/staff/perawat/{id}/store', [StaffOperasionalController::class, 'storePerawat'])->name('staff.perawat.store');
 
-    // 3. DOKTER (Input Diagnosa & Resep)
-    Route::get('/staff/dokter', [StaffOperasionalController::class, 'indexDokter'])->name('staff.dokter');
-    // ... route store dokter ...
+    // Aksi Dokter (Simpan Diagnosa & Resep) - INI YANG TADI KURANG
+    Route::post('/staff/dokter/{id}/store', [StaffOperasionalController::class, 'storeDokter'])->name('staff.dokter.store');
 
-    // 4. KASIR
-    Route::get('/staff/kasir', [StaffOperasionalController::class, 'indexKasir'])->name('staff.kasir');
+    // Aksi Kasir (Bayar Lunas) - INI YANG TADI KURANG
+    Route::post('/staff/kasir/{id}/bayar', [StaffOperasionalController::class, 'storeKasir'])->name('staff.kasir.store');
+
+
+    // ====================================================
+    // 4. MENU KHUSUS ADMIN (Master Data)
+    // ====================================================
+    // Sesuai menu di Sidebar bagian bawah
+
+    // Halaman Jadwal Dokter
+    Route::get('/admin/jadwal', [AdminDashboardController::class, 'viewJadwal'])->name('admin.jadwal-dokter');
+
+    // Halaman Kelola Pegawai
+    Route::get('/master/staff', [AdminDashboardController::class, 'viewPegawai'])->name('master.staff'); // Sesuaikan nama route/url
+
+    // Halaman Rujukan (Opsional)
+    Route::get('/admin/rujukan', [AdminDashboardController::class, 'viewRujukan'])->name('admin.rujukan-digital');
 });
 
 
