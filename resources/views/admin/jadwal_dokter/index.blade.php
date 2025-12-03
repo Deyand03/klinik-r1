@@ -238,7 +238,7 @@
                                 <select name="staff_id" class="select select-bordered w-full bg-white focus:border-brand-secondary rounded-xl" required>
                                     <option disabled selected value="">-- Pilih Dokter --</option>
                                     @foreach($doctors as $doc)
-                                        <option value="{{ $doc['id'] }}">{{ $doc['nama'] }}</option>
+                                        <option value="{{ $doc['id'] }}">{{ $doc['nama_lengkap'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
