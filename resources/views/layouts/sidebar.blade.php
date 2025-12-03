@@ -72,8 +72,23 @@
             <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2 custom-scrollbar">
 
                 {{-- DASHBOARD STAFF (Menu Utama) --}}
+                @php
+                    // Tentukan kondisi "aktif" berdasarkan peran dan pola route yang umum
+                    if ($role == 'resepsionis') {
+                        $isActive = request()->routeIs('resepsionis.*') || request()->is('antrian*') || request()->routeIs('staff.dashboard');
+                    } elseif ($role == 'perawat') {
+                        $isActive = request()->routeIs('perawat.*') || request()->is('pemeriksaan*') || request()->routeIs('staff.dashboard');
+                    } elseif ($role == 'dokter') {
+                        $isActive = request()->routeIs('dokter.*') || request()->is('praktik*') || request()->routeIs('staff.dashboard');
+                    } elseif ($role == 'kasir') {
+                        $isActive = request()->routeIs('kasir.*') || request()->is('pembayaran*') || request()->routeIs('staff.dashboard');
+                    } else {
+                        $isActive = request()->routeIs('staff.dashboard');
+                    }
+                @endphp
+
                 <a href="{{ route('staff.dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group bg-brand-btn text-white shadow-lg shadow-brand-btn/20 hover:bg-brand-btn/90">
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ $isActive ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,24 +109,29 @@
                     </span>
                 </a>
 
-                {{-- DASHBOARD ADMIN (Khusus Admin) --}}
+                {{-- KHUSUS ADMIN (Menu Utama Tambahan) --}}
                 @if ($role == 'admin')
-                    <div class="mt-6 pt-4 border-t border-white/10">
-                        <p class="px-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Administrator</p>
+                    {{-- 2. Atur Jadwal Dokter --}}
+                    <a href="{{ route('admin.jadwal-dokter') }}"
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.jadwal-dokter') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="font-medium">Atur Jadwal Dokter</span>
+                    </a>
 
-                        <a href="{{ route('admin.dashboard') }}"
-                            class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition">
-                            <span class="font-medium text-sm">Statistik & Laporan</span>
-                        </a>
-                        <a href="{{ route('admin.jadwal-dokter') }}"
-                            class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition">
-                            <span class="font-medium text-sm">Atur Jadwal Dokter</span>
-                        </a>
-                        <a href="/master/staff"
-                            class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition">
-                            <span class="font-medium text-sm">Kelola Pegawai</span>
-                        </a>
-                    </div>
+                    {{-- 3. Kelola Pegawai --}}
+                    <a href="/master/staff"
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->is('master/staff*') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span class="font-medium">Kelola Pegawai</span>
+                    </a>
                 @endif
 
             </nav>

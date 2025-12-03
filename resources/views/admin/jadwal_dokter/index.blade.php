@@ -14,7 +14,7 @@
         filterStatus: '',
 
         // URL Template untuk Edit (ID dummy ':id' nanti direplace ID asli)
-        updateUrlTemplate: '{{ route('admin.jadwal-dokter.edit', 999) }}',
+        updateUrlTemplate: '',
 
         openEdit(data) {
             this.selectedJadwal = data;

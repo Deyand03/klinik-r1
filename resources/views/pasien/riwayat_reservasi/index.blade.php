@@ -2,8 +2,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
 
-
-
 @section('title', 'KlinikR1')
 @section('content')
     <section class="bg-gradient-to-r from-indigo-900 to-sky-700 text-white px-6 md:px-20 mb-4 pt-5 pb-15 relative">
