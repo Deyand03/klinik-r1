@@ -61,6 +61,9 @@ Route::get('/pasien/fasilitas/ruang tindakan', [FasilitasLayananController::clas
 Route::get('/pasien/fasilitas/farmasi', [FasilitasLayananController::class, 'fasilitasempat'])->name('fasilitas.empat');
 
 // Riwayat Reservasi()
+Route::get('/riwayat_reservasi', function () {
+    return view('pasien.riwayat_reservasi.index');
+})->name('riwayat_reservasi');
 
 
 // Admin
@@ -165,8 +168,6 @@ Route::middleware(['cek_session'])->group(function () {
     // Halaman Rujukan (Opsional)
     Route::get('/admin/rujukan', [AdminDashboardController::class, 'viewRujukan'])->name('admin.rujukan-digital');
 });
-
-
 
 
 require __DIR__ . '/auth.php';
