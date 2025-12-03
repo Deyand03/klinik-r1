@@ -153,10 +153,10 @@
                             Cari spesialisasi yang Anda butuhkan dan buat janji temu dengan mudah.
                         </p>
 
-                        <button
+                        <a href="{{ route('cari_dokter') }}"
                             class="btn border-none bg-[#7DD3D5] hover:bg-teal-500 text-[#0d0d1e] font-bold px-8 rounded-md shadow-lg">
                             Cari Dokter
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

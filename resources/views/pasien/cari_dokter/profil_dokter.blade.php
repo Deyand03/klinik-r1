@@ -191,9 +191,9 @@
                 <p class="text-gray-600 mb-6 leading-relaxed text-base">Kami menyediakan berbagai fasilitas medis modern
                     untuk menunjang kesehatan Anda.</p>
                 <div class="card-actions">
-                    <button
+                    <a href="{{route('pasien.fasilitas-layanan')}}"
                         class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">Lebih
-                        Lanjut</button>
+                        Lanjut</a>
                 </div>
             </div>
         </div>

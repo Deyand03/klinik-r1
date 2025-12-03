@@ -15,8 +15,11 @@
                     <label class="label"><span class="label-text text-white font-semibold">Klinik</span></label>
                     <select class="select select-bordered w-full text-gray-700 bg-white">
                         <option selected>Semua Klinik</option>
-                        <option>Klinik Gigi</option>
                         <option>Klinik Umum</option>
+                        <option>Klinik Gigi</option>
+                        <option>Klinik Mata</option>
+                        <option>Klinik Gizi</option>
+                        <option>Klinik Kulit & Kelamin</option>
                     </select>
                 </div>
             </div>
@@ -192,10 +195,10 @@
             </p>
 
             <div class="card-actions">
-                <button
+                <a href="{{ route('pasien.fasilitas-layanan') }}"
                     class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">
                     Lebih Lanjut
-                </button>
+                </a>
             </div>
         </div>
 

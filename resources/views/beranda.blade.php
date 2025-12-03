@@ -70,105 +70,124 @@
         </div>
     </section>
 
-<div class="max-w-7xl mx-auto px-4 -mt-16 lg:-mt-20 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="max-w-7xl mx-auto px-4 -mt-16 lg:-mt-20 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <div
-                class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-brand-secondary group hover:-translate-y-2 transition duration-300">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-btn transition">Jadwal
-                            Dokter</h3>
-                        <p class="text-gray-600 mb-6">Cek ketersediaan dokter umum spesialis kami hari ini.</p>
-                        <a href="{{ route('cari_dokter') }}"
-                            class="text-brand-btn font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Lihat Jadwal <span class="text-xl">→</span>
-                        </a>
-                    </div>
-                    <div class="p-4 bg-brand-secondary/10 rounded-2xl text-brand-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
+        <div
+            class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-brand-secondary group hover:-translate-y-2 transition duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-btn transition">Jadwal
+                        Dokter</h3>
+                    <p class="text-gray-600 mb-6">Cek ketersediaan dokter umum spesialis kami hari ini.</p>
+                    <a href="{{ route('cari_dokter') }}"
+                        class="text-brand-btn font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
+                        Lihat Jadwal <span class="text-xl">→</span>
+                    </a>
+                </div>
+                <div class="p-4 bg-brand-secondary/10 rounded-2xl text-brand-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
                 </div>
             </div>
+        </div>
 
-            <div
-                class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-brand-primary group hover:-translate-y-2 transition duration-300">
-                <div class="flex items-start justify-between">
-                    <div>
-                        <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-secondary transition">
-                            Pasien Baru?</h3>
-                        <p class="text-gray-600 mb-4">Daftar online sekarang untuk menghindari antrian panjang.</p>
-                        <a href="{{ route('register') }}"
-                            class="text-brand-secondary font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Daftar Sekarang <span class="text-xl">→</span>
-                        </a>
-                    </div>
-                    <div class="p-4 bg-brand-primary/10 rounded-2xl text-brand-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                        </svg>
-                    </div>
+        <div
+            class="bg-white p-8 rounded-3xl shadow-xl border-l-8 border-brand-primary group hover:-translate-y-2 transition duration-300">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-secondary transition">
+                        Pasien Baru?</h3>
+                    <p class="text-gray-600 mb-4">Daftar online sekarang untuk menghindari antrian panjang.</p>
+                    <a href="{{ route('register') }}"
+                        class="text-brand-secondary font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
+                        Daftar Sekarang <span class="text-xl">→</span>
+                    </a>
+                </div>
+                <div class="p-4 bg-brand-primary/10 rounded-2xl text-brand-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
                 </div>
             </div>
-</div>
-
-<div class="mb-20"></div>
-
-
-
-<section class="max-w-7xl mx-auto px-4 py-20">
-    <div class="text-center mb-16">
-        <h2 class="text-brand-secondary font-bold tracking-wider uppercase mb-2">KLINIK YANG TERSEDIA</h2>
-        <p class="text-3xl md:text-4xl font-bold text-brand-dark">Beberapa Klinik yang Tersedia</p>
+        </div>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
 
-        @php
-            $kliniks = [
-                ['nama' => 'Umum', 'img' => 'images/dokterumum.jpg'],
-                ['nama' => 'Gigi', 'img' => 'images/doktergigi.jpg'],
-                ['nama' => 'Mata', 'img' => 'images/doktermata.jpg'],
-                ['nama' => 'Kulit & Kelamin', 'img' => 'images/dokterkulitkelamin.jpg'],
-                ['nama' => 'Gizi', 'img' => 'images/doktergizi.jpg'],
-            ];
-        @endphp
+    <div class="mb-20"></div>
 
-        @foreach ($kliniks as $klinik)
-        <div class="bg-white rounded-xl shadow-lg border-r-8 border-brand-secondary overflow-hidden group transition duration-300 hover:shadow-xl">
 
-            <div class="flex items-center w-full">
 
-                <div class="w-1/2 aspect-4/3 shrink-0">
-                    <img src="{{ asset($klinik['img']) }}" alt="Klinik {{ $klinik['nama'] }}" class="w-full h-full object-cover">
-                </div>
+    <section class="max-w-7xl mx-auto px-4 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-brand-secondary font-bold tracking-wider uppercase mb-2">KLINIK YANG TERSEDIA</h2>
+            <p class="text-3xl md:text-4xl font-bold text-brand-dark">Beberapa Klinik yang Tersedia</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
 
-                <div class="w-1/2 flex items-center h-full">
+            @php
+                $kliniks = [
+                    [
+                        'nama' => 'Umum',
+                        'img' => 'images/dokterumum.jpg',
+                        'klinik_route' => route('fasilitas-layanan.klinik-umum'),
+                    ],
+                    [
+                        'nama' => 'Gigi',
+                        'img' => 'images/doktergigi.jpg',
+                        'klinik_route' => route('fasilitas-layanan.klinik-gigi'),
+                    ],
+                    [
+                        'nama' => 'Mata',
+                        'img' => 'images/doktermata.jpg',
+                        'klinik_route' => route('fasilitas-layanan.klinik-mata'),
+                    ],
+                    [
+                        'nama' => 'Kulit & Kelamin',
+                        'img' => 'images/dokterkulitkelamin.jpg',
+                        'klinik_route' => route('fasilitas-layanan.klinik-kulit'),
+                    ],
+                    [
+                        'nama' => 'Gizi',
+                        'img' => 'images/doktergizi.jpg',
+                        'klinik_route' => route('fasilitas-layanan.klinik-gizi'),
+                    ],
+                ];
+            @endphp
 
-                    <div class="border-l-4 border-custom-green h-full shrink-0"></div>
+            @foreach ($kliniks as $klinik)
+                <a href="{{ $klinik['klinik_route'] }}?klinik={{ urlencode($klinik['nama']) }}"
+                    class="block bg-white rounded-xl shadow-lg border-r-8 border-brand-secondary overflow-hidden transition transform hover:scale-105 hover:shadow-2xl hover:border-brand-primary focus:outline-none focus:ring-4 focus:ring-brand-primary/20 group">
+                    <div class="flex items-center w-full">
+                        <div class="w-1/2 aspect-4/3 shrink-0 overflow-hidden">
+                            <img src="{{ asset($klinik['img']) }}" alt="Klinik {{ $klinik['nama'] }}"
+                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        </div>
 
-                    <div class="p-3">
-                        <h4 class="text-sm text-gray-500 font-semibold mb-0.5">Klinik</h4>
-                        <h3 class="text-lg font-bold text-blue-600 group-hover:text-custom-green transition">{{ $klinik['nama'] }}</h3>
+                        <div class="w-1/2 flex items-center h-full">
+                            <div class="border-l-4 border-custom-green h-full shrink-0"></div>
+
+                            <div class="p-3">
+                                <h4 class="text-sm text-gray-500 font-semibold mb-0.5">Klinik</h4>
+                                <h3 class="text-lg font-bold text-blue-600 group-hover:text-custom-green transition">
+                                    {{ $klinik['nama'] }}</h3>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="absolute inset-0 border-2 border-transparent rounded-xl pointer-events-none"></div>
+                    <div class="absolute inset-0 border-2 border-transparent rounded-xl pointer-events-none"></div>
+                </a>
+            @endforeach
 
         </div>
-        @endforeach
-
-    </div>
-</section>
+    </section>
 
 
 
-<section id="layanan" class="py-24 bg-gray-50">
+    <section id="layanan" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-brand-secondary font-bold tracking-wider uppercase mb-2">Layanan Kami</h2>
@@ -205,7 +224,8 @@
                         <span class="text-3xl">📄</span>
                     </div>
                     <h4 class="text-xl font-bold mb-3">Rujukan Digital</h4>
-                    <p class="text-gray-500 group-hover:text-gray-300">Proses rujukan ke RS lebih mudah dengan surat digital
+                    <p class="text-gray-500 group-hover:text-gray-300">Proses rujukan ke RS lebih mudah dengan surat
+                        digital
                         standar.</p>
                 </div>
             </div>

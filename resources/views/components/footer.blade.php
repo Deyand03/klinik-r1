@@ -53,10 +53,10 @@
                     <li><a href="/"
                             class="text-gray-300 hover:text-white hover:translate-x-2 transition inline-block">Beranda</a>
                     </li>
-                    <li><a href="/doctors"
+                    <li><a href="{{ route('cari_dokter') }}"
                             class="text-gray-300 hover:text-white hover:translate-x-2 transition inline-block">Jadwal
                             Dokter</a></li>
-                    <li><a href="/login"
+                    <li><a href="{{ route('login') }}"
                             class="text-gray-300 hover:text-white hover:translate-x-2 transition inline-block">Masuk
                             Akun</a></li>
                 </ul>
