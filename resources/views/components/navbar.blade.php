@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-sm px-10 bg-navbar">
+<div class="navbar fixed bg-base-100 shadow-sm px-10 bg-navbar z-50">
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -34,10 +34,10 @@
                     class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
                     Cari Dokter
                     <span
-                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) {{ (request()->routeIs('cari_dokter') || request()->routeIs('profil_dokter')) || request()->routeIs('pembayaran') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform duration-300 ease-out origin-left"></span>
+                        class="absolute bottom-1.5 left-0 w-full h-0.5 bg-linear-to-r from-(--bg-primary) to-(--bg-secondary) {{ request()->routeIs('cari_dokter') || request()->routeIs('profil_dokter') || request()->routeIs('pembayaran') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100' }} transition-transform duration-300 ease-out origin-left"></span>
                     </span>
                 </a></li>
-            <li><a href="#"
+            <li><a href="{{ route('pasien.fasilitas-layanan') }}"
                     class="font-semibold text-transparent bg-clip-text bg-linear-to-r from-(--bg-secondary) text-navbar to-black/80 bg-size-[200%_auto] bg-right transition-all duration-300 ease-out hover:bg-left relative group px-3 py-2">
                     Fasilitas & Layanan
                     <span
@@ -55,13 +55,25 @@
     </div>
     <div class="navbar-end">
         @if (session()->has('api_token'))
-        <div class="flex items-center gap-2">
-            <p class="text-md font-semibold">{{ session('user_data')['staff']['nama'] }}</p>
-            <form action="{{ route('logout') }}" method="post">
-                @csrf
-                <button class="btn bg-red-400 text-red-900 px-2 py-1 rounded shadow-md transition-all duration-200 transform-gpu hover:bg-red-700 hover:shadow-red-400/50 hover:-translate-y-px hover:text-red-300">Logout</button>
-            </form>
-        </div>
+            <div class="flex items-center gap-2">
+                <p class="text-md font-semibold">
+                    @if (isset(session('user_data')['staff']))
+                        {{-- Jika yang login Staff (Dokter/Admin/dll) --}}
+                        {{ session('user_data')['staff']['nama_lengkap'] }}
+                    @elseif(isset(session('user_data')['pasien']))
+                        {{-- Jika yang login Pasien --}}
+                        {{ session('user_data')['pasien']['nama_lengkap'] }}
+                    @else
+                        {{-- Fallback jika data profil belum ada --}}
+                        {{ session('user_data')['email'] }}
+                    @endif
+                </p>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button
+                        class="btn bg-red-400 text-red-900 px-2 py-1 rounded shadow-md transition-all duration-200 transform-gpu hover:bg-red-700 hover:shadow-red-400/50 hover:-translate-y-px hover:text-red-300">Logout</button>
+                </form>
+            </div>
         @else
             <a href="{{ route('login') }}"
                 class="px-2 py-1 bg-green-500/70 font-semibold text-green-900 rounded-lg shadow-md hover:-translate-y-px hover:shadow-md hover:shadow-green-500/50 transition-all duration-200">Login</a>

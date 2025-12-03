@@ -10,29 +10,13 @@
             </h1>
             <p class="text-gray-200 mb-10">Temukan Dokter dan Informasi Jadwal Praktik Disini</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <div class="max-w-xl mx-auto">
                 <div class="form-control w-full">
                     <label class="label"><span class="label-text text-white font-semibold">Klinik</span></label>
                     <select class="select select-bordered w-full text-gray-700 bg-white">
                         <option selected>Semua Klinik</option>
                         <option>Klinik Gigi</option>
                         <option>Klinik Umum</option>
-                    </select>
-                </div>
-                <div class="form-control w-full">
-                    <label class="label"><span class="label-text text-white font-semibold">Hari</span></label>
-                    <select class="select select-bordered w-full text-gray-700 bg-white">
-                        <option selected>Semua Hari</option>
-                        <option>Senin</option>
-                        <option>Selasa</option>
-                    </select>
-                </div>
-                <div class="form-control w-full">
-                    <label class="label"><span class="label-text text-white font-semibold">Gender</span></label>
-                    <select class="select select-bordered w-full text-gray-700 bg-white">
-                        <option selected>Semua Gender</option>
-                        <option>Pria</option>
-                        <option>Wanita</option>
                     </select>
                 </div>
             </div>
