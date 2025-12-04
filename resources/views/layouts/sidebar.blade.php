@@ -112,8 +112,8 @@
                 {{-- KHUSUS ADMIN (Menu Utama Tambahan) --}}
                 @if ($role == 'admin')
                     {{-- 2. Atur Jadwal Dokter --}}
-                    <a href="{{ route('admin.jadwal-dokter') }}"
-                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.jadwal-dokter') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
+                    <a href="{{ route('admin.jadwal-dokter.index') }}"
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.jadwal-dokter.index') || request()->routeIs('admin.jadwal-dokter.create') || request()->routeIs('admin.jadwal-dokter.edit') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -123,7 +123,7 @@
                     </a>
 
                     {{-- 3. Kelola Pegawai --}}
-                    <a href="/master/staff"
+                    <a href="{{ route('kelola.pegawai') }}"
                         class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->is('master/staff*') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">

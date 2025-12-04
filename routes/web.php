@@ -113,9 +113,11 @@ Route::middleware(['cek_session'])->group(function () {
             Route::get('/rujukan', 'viewRujukan')->name('admin.rujukan-digital');
         });
 
-        Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
+        Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter.index');
         Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
-        Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
+        Route::put('/jadwal-dokter/update/{id}', [JadwalDokterController::class, 'update'])->name('admin.jadwal-dokter.update');
+        Route::get('/jadwal-dokter/create', [JadwalDokterController::class, 'create'])->name('admin.jadwal-dokter.create');
+        Route::get('/jadwal-dokter/edit/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
     });
 });
 
