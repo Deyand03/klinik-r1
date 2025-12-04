@@ -64,62 +64,67 @@
 
 
     <!-- TABEL -->
-    <div class="overflow-x-auto flex justify-center my-6 ">
-        <!-- <table class="min-w-full bg-white border border-black rounded-lg overflow-hidden"> -->
-        <table class="w-98/100 border border-black ">
-            <thead class="bg-blue-400">
-                <tr>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Nama Dokter</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Tanggal
-                        Kunjungan</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Rekam Medis</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Status</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Bukti Pembayaran
-                    </th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Surat Rujukan
-                    </th>
-                </tr>
-            </thead>
+    <div class="overflow-x-auto flex justify-center my-6">
+    <table class="w-full max-w-7xl shadow-xl rounded-lg overflow-hidden">
 
-            <tbody>
-                <tr>
-                    <td class="px-4 py-3 border border-black">dr. Benny Wijaya</td>
-                    <td class="px-4 py-3 border border-black">12 Desember 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1000</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">123123.pdf</td>
-                </tr>
+        <thead class="bg-blue-800 text-white">
+            <tr>
+                <th class="px-4 py-3 text-sm font-normal text-left tracking-wider">No. Antrian</th>
+                <th class="px-4 py-3 text-sm font-normal text-left tracking-wider">Klinik</th>
+                <th class="px-4 py-3 text-sm font-normal text-left tracking-wider">Nama Dokter</th>
+                <th class="px-4 py-3 text-sm font-normal text-left tracking-wider">Tgl Kunjungan</th>
+                <th class="px-4 py-3 text-sm font-normal text-left tracking-wider">Keluhan</th>
+                <th class="px-4 py-3 text-sm font-normal text-center tracking-wider">Status</th>
+                <th class="px-4 py-3 text-sm font-normal text-center tracking-wider">Surat Rujukan</th>
+            </tr>
+        </thead>
 
-                <tr>
-                    <td class="px-4 py-3 border border-black">drg. Deya Seprina</td>
-                    <td class="px-4 py-3 border border-black">20 November 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1001</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">234566.pdf</td>
-                </tr>
+        <tbody class="divide-y divide-gray-200 bg-white">
 
-                <tr>
-                    <td class="px-4 py-3 border border-black">dr. Medina, Sp.M</td>
-                    <td class="px-4 py-3 border border-black">30 Oktober 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1002</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">987120.pdf</td>
-                </tr>
+            <tr class="hover:bg-gray-50 transition duration-150">
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">001</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Umum</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">dr. Benny Wijaya</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">12 Des 2025</td>
+                <td class="px-4 py-3 text-sm text-gray-700">Sakit Kepala</td>
+                <td class="px-4 py-3 whitespace-nowrap text-center">
+                    <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Selesai</span>
+                </td>
+                <td class="px-4 py-3 whitespace-nowrap text-center text-blue-600 hover:text-blue-800">
+                    <a href="#" class="font-medium hover:underline">123123.pdf</a>
+                </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50 transition duration-150">
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">002</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Gigi</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">drg. Deya Seprina</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">20 Nov 2025</td>
+                <td class="px-4 py-3 text-sm text-gray-700">Sakit Gigi</td>
+                <td class="px-4 py-3 whitespace-nowrap text-center">
+                    <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Selesai</span>
+                </td>
+                <td class="px-4 py-3 whitespace-nowrap text-center text-blue-600 hover:text-blue-800">
+                    <a href="#" class="font-medium hover:underline">234566.pdf</a>
+                </td>
+            </tr>
+
+            <tr class="hover:bg-gray-50 transition duration-150">
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">003</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">Mata</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">dr. Medina, Sp.M</td>
+                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">30 Okt 2025</td>
+                <td class="px-4 py-3 text-sm text-gray-700">Mata Merah</td>
+                <td class="px-4 py-3 whitespace-nowrap text-center">
+                    <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Selesai</span>
+                </td>
+                <td class="px-4 py-3 whitespace-nowrap text-center text-blue-600 hover:text-blue-800">
+                    <a href="#" class="font-medium hover:underline">987120.pdf</a>
+                </td>
+            </tr>
             </tbody>
-        </table>
-    </div>
+    </table>
+</div>
 
 
 @endsection
