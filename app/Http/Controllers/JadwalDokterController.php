@@ -8,127 +8,92 @@ use Illuminate\Support\Facades\Session;
 
 class JadwalDokterController extends Controller
 {
-    // --- HALAMAN INDEX (DAFTAR) ---
     public function index(Request $request)
     {
         $token = session('api_token');
-        $user = session('user_data');
-        $clinicId = $user['staff']['id_klinik'] ?? null;
-        $staff = $user['staff'] ?? null;
 
-        // Ambil data jadwal dari Backend
-        // Mendukung pencarian via query param 'search' dan 'hari' dari form GET
+        // 1. Ambil List Klinik untuk Filter
+        $responseKlinik = Http::withToken($token)->get(env('API_URL') . '/admin/jadwal-dokter/list-klinik');
+        $clinics = $responseKlinik->successful() ? $responseKlinik->json()['data'] : [];
+
+        // 2. Ambil Jadwal (Kirim parameter filter klinik)
         $responseJadwal = Http::withToken($token)
             ->get(env('API_URL') . '/admin/jadwal-dokter', [
-                'clinic_id' => $clinicId,
-                'staff' => $staff,
-                'search' => $request->search, // Kirim search query
-                'hari' => $request->hari      // Kirim filter hari
+                'clinic_id' => $request->clinic_id, // Filter Klinik dari View
+                'search' => $request->search,
+                'hari' => $request->hari
             ]);
 
         $schedules = $responseJadwal->successful() ? $responseJadwal->json()['data'] : [];
 
-        return view('admin.jadwal_dokter.index', compact('schedules'));
+        return view('admin.jadwal_dokter.index', compact('schedules', 'clinics'));
     }
 
-    // --- HALAMAN CREATE (TAMBAH) ---
-    public function create()
+    public function create(Request $request)
     {
         $token = session('api_token');
-        $user = session('user_data');
-        $clinicId = $user['staff']['id_klinik'] ?? null;
-        $staff = $user['staff'] ?? null;
 
-        // Ambil list dokter buat dropdown
+        // 1. Ambil List Klinik (Buat Admin milih klinik mana yg mau ditambah jadwalnya)
+        $responseKlinik = Http::withToken($token)->get(env('API_URL') . '/admin/jadwal-dokter/list-klinik');
+        $clinics = $responseKlinik->successful() ? $responseKlinik->json()['data'] : [];
+
+        // 2. Ambil List Dokter
+        // Kalau user milih klinik di view, halaman reload bawa param ?clinic_id=X
+        // API getDoctorsList akan menyesuaikan isi dokter berdasarkan clinic_id itu.
+        $clinicId = $request->query('clinic_id');
+
         $responseDokter = Http::withToken($token)
             ->get(env('API_URL') . '/admin/jadwal-dokter/list-dokter', [
-                'clinic_id' => $clinicId,
-                'staff' => $staff,
+                'clinic_id' => $clinicId, // Kirim ID klinik yg dipilih
             ]);
 
         $doctors = $responseDokter->successful() ? $responseDokter->json()['data'] : [];
 
-        return view('admin.jadwal_dokter.create', compact('doctors'));
+        return view('admin.jadwal_dokter.create', compact('doctors', 'clinics', 'clinicId'));
     }
 
-    // --- HALAMAN EDIT (UBAH) ---
     public function edit($staffId)
     {
         $token = session('api_token');
-        $user = session('user_data');
-        $clinicId = $user['staff']['id_klinik'] ?? null;
-        $staff = $user['staff'] ?? null;
 
-        // Ambil data detail jadwal dokter ini dari Backend
-        // Kita bisa reuse endpoint index tapi difilter staff_id, atau endpoint khusus show
-        // Untuk simpelnya, kita ambil semua dan filter di PHP (atau request detail ke backend)
-
-        // Agar efisien, sebaiknya backend punya endpoint /admin/jadwal-dokter/{staffId}
-        // Tapi kita pakai cara cepat: Ambil list lalu cari.
+        // Ambil detail (bisa via index filter staff_id untuk hemat endpoint)
+        // Atau buat endpoint show khusus di backend (recommended), tapi pakai index filter ok juga.
         $responseJadwal = Http::withToken($token)
-            ->get(env('API_URL') . '/admin/jadwal-dokter', [
-                'clinic_id' => $clinicId,
-                'staff' => $staff,
-            ]);
+            ->get(env('API_URL') . '/admin/jadwal-dokter'); // Ambil semua dulu (atau filter by clinic_id user)
 
         $allSchedules = $responseJadwal->successful() ? $responseJadwal->json()['data'] : [];
-
-        // Cari data dokter yang mau diedit
         $targetSchedule = collect($allSchedules)->firstWhere('staff_id', $staffId);
 
         if (!$targetSchedule) {
-            return back()->with('error', 'Data jadwal tidak ditemukan.');
+            return back()->with('error', 'Data jadwal tidak ditemukan atau Anda tidak memiliki akses.');
         }
 
-        // Siapkan data agar mudah dibaca di View
-        // $targetSchedule['details'] isinya array per hari
         $currentSchedule = $targetSchedule['details'] ?? [];
         $dokterName = $targetSchedule['dokter'];
+        $klinikName = $targetSchedule['klinik'] ?? ''; // Nama klinik buat info
 
-        return view('admin.jadwal_dokter.edit', compact('staffId', 'currentSchedule', 'dokterName'));
+        return view('admin.jadwal_dokter.edit', compact('staffId', 'currentSchedule', 'dokterName', 'klinikName'));
     }
 
-    // --- PROSES SIMPAN (STORE) ---
-    public function store(Request $request)
-    {
+    // --- STORE & UPDATE TETAP SAMA ---
+    public function store(Request $request) {
         $token = session('api_token');
+        $payload = ['staff_id' => $request->staff_id, 'jadwal' => $request->jadwal];
 
-        $payload = [
-            'staff_id' => $request->staff_id,
-            'jadwal' => $request->jadwal,
-        ];
+        $response = Http::withToken($token)->post(env('API_URL') . '/admin/jadwal-dokter/store', $payload);
 
-        $response = Http::withToken($token)
-            ->post(env('API_URL') . '/admin/jadwal-dokter/store', $payload);
-
-        if ($response->successful()) {
-            return redirect()->route('admin.jadwal-dokter.index')->with('success', 'Jadwal baru berhasil ditambahkan!');
-        }
-
-        if ($response->status() == 422) {
-            $pesan = $response->json()['message'] ?? 'Validasi gagal.';
-            return back()->with('error', 'Gagal: ' . $pesan)->withInput();
-        }
-
-        return back()->with('error', 'Terjadi kesalahan pada server backend.')->withInput();
+        if ($response->successful()) return redirect()->route('admin.jadwal-dokter.index')->with('success', 'Jadwal baru berhasil ditambahkan!');
+        if ($response->status() == 422) return back()->with('error', 'Gagal: ' . ($response->json()['message'] ?? 'Validasi gagal'))->withInput();
+        return back()->with('error', 'Terjadi kesalahan pada server.')->withInput();
     }
 
-    // --- PROSES UPDATE ---
-    public function update(Request $request, $staffId)
-    {
+    public function update(Request $request, $staffId) {
         $token = session('api_token');
+        $payload = ['jadwal' => $request->jadwal];
 
-        $payload = [
-            'jadwal' => $request->jadwal,
-        ];
+        $response = Http::withToken($token)->put(env('API_URL') . '/admin/jadwal-dokter/update/' . $staffId, $payload);
 
-        $response = Http::withToken($token)
-            ->put(env('API_URL') . '/admin/jadwal-dokter/update/' . $staffId, $payload);
-
-        if ($response->successful()) {
-            return redirect()->route('admin.jadwal-dokter.index')->with('success', 'Jadwal berhasil diperbarui!');
-        }
-
+        if ($response->successful()) return redirect()->route('admin.jadwal-dokter.index')->with('success', 'Jadwal berhasil diperbarui!');
         return back()->with('error', 'Gagal update: ' . ($response->json()['message'] ?? 'Error server'));
     }
 }
