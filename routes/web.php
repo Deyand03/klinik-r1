@@ -91,8 +91,15 @@ Route::middleware(['cek_session'])->group(function () {
     // Semua route di bawah ini hanya untuk role: staff/admin (dibatasi oleh middleware role:staff)
     Route::prefix('staff')->middleware(['role:staff'])->group(function () {
 
+
+        Route::post('/perawat/input-vital/{id}', [DashboardController::class, 'storeVital'])
+            ->name('staff.perawat.input-vital');
+
         // A. TRAFFIC CONTROLLER & DASHBOARD (GET)
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('staff.dashboard');
+
+        Route::post('/dashboard', [DashboardController::class, 'store'])
+            ->name('staff.dashboard.store');
 
         // B. ACTIONS OPERASIONAL (POST)
         // Semua aksi diarahkan ke DashboardController (Konsolidasi)
@@ -118,6 +125,8 @@ Route::middleware(['cek_session'])->group(function () {
         Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
     });
 });
+
+
 
 
 // Note: Pastikan file 'auth.php' sudah ada di folder routes.
