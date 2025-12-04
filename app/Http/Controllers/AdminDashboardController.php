@@ -15,14 +15,14 @@ class AdminDashboardController extends Controller
         $response = Http::withToken($token)->get('http://127.0.0.1:8000/api/admin/antrian');
 
 
-        // --- TAMBAHKAN BARIS INI ---
-        // Kita cek apa jawaban asli dari Backend
-        if ($response->successful()) {
-            // dd($response->json()); // <--- UNCOMMENT INI, SAVE, LALU REFRESH HALAMAN
-        } else {
-            dd("Gagal ambil data:", $response->body());
-        }
-        // ---------------------------
+        // // --- TAMBAHKAN BARIS INI ---
+        // // Kita cek apa jawaban asli dari Backend
+        // if ($response->successful()) {
+        //     // dd($response->json()); // <--- UNCOMMENT INI, SAVE, LALU REFRESH HALAMAN
+        // } else {
+        //     dd("Gagal ambil data:", $response->body());
+        // }
+        // // ---------------------------
 
         $antrian = [];
         if ($response->successful()) {
