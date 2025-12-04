@@ -12,13 +12,13 @@
     @endphp
 
     <div x-data="{
-                                                                                                                    openModal: false,
-                                                                                                                    selectedPasien: null,
-                                                                                                                    openInput(item) {
-                                                                                                                        this.selectedPasien = item;
-                                                                                                                        this.openModal = true;
-                                                                                                                    }
-                                                                                                                }">
+        openModal: false,
+        selectedPasien: null,
+        openInput(item) {
+            this.selectedPasien = item;
+            this.openModal = true;
+        }
+    }">
 
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <div class="flex justify-between items-center mb-6">
@@ -46,7 +46,8 @@
                                 </td>
                                 <td class="border border-gray-200">
                                     <div class="font-bold text-gray-800">{{ $item['nama_lengkap'] }}</div>
-                                    <div class="text-xs text-gray-400">{{ $item['jenis_kelamin'] }} - {{ $item['usia'] }}</div>
+                                    <div class="text-xs text-gray-400">{{ $item['jenis_kelamin'] }} - {{ $item['usia'] }}
+                                    </div>
                                 </td>
                                 <td class="italic text-gray-500 max-w-xs truncate border border-gray-200">
                                     "{{ $item['keluhan'] }}"
@@ -113,7 +114,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-control">
+                            <div class="form-control pt-4">
                                 <label
                                     class="label-text text-xs font-bold text-gray-500 mb-1 text-center block w-full">Anamnesa
                                     / Detail Keluhan</label>
