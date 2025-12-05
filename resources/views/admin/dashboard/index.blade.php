@@ -11,21 +11,6 @@
             </h2>
         </div>
 
-        <div
-            class="w-full md:w-auto bg-linear-to-b from-brand-secondary to-[#81E1DD] text-white px-6 py-4 rounded-xl shadow-md flex items-center gap-4">
-            <div class="bg-white text-brand-secondary p-2 rounded-full w-10 h-10 flex items-center justify-center">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-            </div>
-
-            <div class="text-left">
-                <p class="font-bold text-sm leading-tight">{{ $data['profile']['name'] }}</p>
-                <p class="text-xs text-teal-50 opacity-90">{{ $data['profile']['email'] }}</p>
-            </div>
-        </div>
-
     </div>
 
     <div class="grid gap-6 mb-8 items-stretch">
@@ -41,36 +26,57 @@
             {{-- KARTU 2 --}}
             <div class="bg-white p-6 rounded-xl shadow-sm text-center flex-1 flex flex-col justify-center">
                 <h3 class="text-4xl font-bold text-brand-secondary">{{ $data['stats']['new_patients'] }}</h3>
-                <p class="text-brand-secondary font-medium mt-1">Pasien Baru</p>
+                <p class="text-brand-secondary font-medium mt-1">Pasien Baru Bulan Ini</p>
             </div>
         </div>
     </div>
 
     <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
-        <div class="bg-teal-500 text-white px-4 py-2 rounded-t-lg -mt-6 -mx-6 mb-4">
-            <h3 class="font-bold">Total Pemasukan</h3>
-            <span class="text-sm text-gray-500 font-bold">Tahun {{ date('Y') }}</span>
+            {{-- HEADER CHART dengan Form Filter di dalamnya --}}
+            <div class="bg-linear-to-b from-brand-secondary to-[#81E1DD] text-white px-4 py-2 rounded-t-lg -mt-6 -mx-6 mb-4 flex justify-between items-center">
+                <h3 class="font-bold">Pasien SI-Klinik</h3>
+                
+                {{-- FORM FILTER BULAN (Diselipkan di sini tanpa merusak layout luar) --}}
+                <form action="{{ route('admin.dashboard') }}" method="GET">
+                    @if(request('search'))
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                    @endif
+                    <select name="month" onchange="this.form.submit()" class="bg-white/20 text-white text-sm border-none rounded focus:ring-0 cursor-pointer font-bold">
+                        @foreach(range(1, 12) as $m)
+                            <option value="{{ $m }}" class="text-gray-800" {{ $data['filters']['month'] == $m ? 'selected' : '' }}>
+                                Bulan {{ DateTime::createFromFormat('!m', $m)->format('M') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+
+            <div class="h-64 w-full relative">
+                <canvas id="pieChart"></canvas>
+            </div>
         </div>
-        <div class="h-64">
-            <canvas id="lineChart"></canvas>
-        </div>
-    </div>
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
 
-        <div class="bg-brand-secondary px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="bg-linear-to-b from-brand-secondary to-[#81E1DD] px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <h3 class="text-white font-bold text-lg tracking-wide">Reservasi Pasien Terbaru</h3>
 
-            <div class="relative w-full md:w-64">
-                <input type="text" placeholder="Cari"
+            {{-- FORM SEARCH (Menggantikan div wrapper sebelumnya) --}}
+            <form action="{{ route('admin.dashboard') }}" method="GET" class="relative w-full md:w-64">
+                @if(request('month'))
+                    <input type="hidden" name="month" value="{{ request('month') }}">
+                @endif
+
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari"
                     class="w-full pl-4 pr-10 py-2 rounded-full text-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200 shadow-sm" />
-                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-secondary">
+                
+                <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-secondary">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                 </button>
-            </div>
+            </form>
         </div>
 
         <div class="overflow-x-auto">
@@ -80,119 +86,77 @@
                         <th class="py-4 pl-6">Nama Lengkap</th>
                         <th>Kontak</th>
                         <th>Alamat</th>
-                        <th>Status</th>
-                        <th class="text-center">Aksi</th>
+                        <th>Tanggal Daftar</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach ($data['reservations'] as $patient)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="pl-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="avatar placeholder">
-                                        <div
-                                            class="{{ $patient['color'] }} rounded-full w-10 h-10 flex items-center justify-center font-bold text-sm shadow-sm">
-                                            <span>{{ $patient['initial'] }}</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="font-bold text-gray-800">{{ $patient['name'] }}</div>
-                                        <div class="text-xs text-gray-500">{{ $patient['email'] }}</div>
+                @forelse ($data['reservations'] as $patient)
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="pl-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="avatar placeholder">
+                                    <div class="{{ $patient['color'] }} rounded-full w-10 h-10 flex items-center justify-center font-bold text-sm shadow-sm">
+                                        <span>{{ $patient['initial'] }}</span>
                                     </div>
                                 </div>
-                            </td>
+                                <div>
+                                    <div class="font-bold text-gray-800">{{ $patient['name'] }}</div>
+                                    <div class="text-xs text-gray-500 font-mono">{{ $patient['no_antrian'] ?? '-' }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-gray-600 font-medium text-sm">{{ $patient['contact'] }}</td>
+                        <td class="text-gray-600 text-sm truncate max-w-[150px]">{{ $patient['address'] }}</td>
 
-                            <td class="text-gray-600 font-medium text-sm">{{ $patient['contact'] }}</td>
-
-                            <td class="text-gray-600 text-sm truncate max-w-[150px]">{{ $patient['address'] }}</td>
-
-                            <td class="text-gray-600 font-medium text-sm">
-                                {{ $patient['status'] }}
-                            </td>
-
-                            <td class="text-center">
-                                {{-- LOGIKA: --}}
-                                {{-- 1. Kalau 'Booking' -> Muncul tombol 'Diperiksa' --}}
-                                @if ($patient['status'] == 'Booking')
-                                    <form action="{{ route('admin.reservasi.confirm', $patient['id']) }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="next_status" value="Diperiksa">
-                                        <button
-                                            class="btn btn-sm bg-brand-dark text-white hover:bg-brand-dark/90 border-none w-24 rounded-full font-normal shadow-md">
-                                            Diperiksa
-                                        </button>
-                                    </form>
-
-                                    {{-- 2. Kalau 'Diperiksa' -> Muncul tombol 'Selesai' --}}
-                                @elseif($patient['status'] == 'Diperiksa')
-                                    <form action="{{ route('admin.reservasi.confirm', $patient['id']) }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="next_status" value="Selesai">
-                                        <button
-                                            class="btn btn-sm bg-brand-dark text-white hover:bg-brand-dark/90 border-none w-24 rounded-full font-normal shadow-md">
-                                            Selesai
-                                        </button>
-                                    </form>
-
-                                    {{-- 3. Kalau 'Selesai' -> Strip (-) --}}
-                                @else
-                                    <span class="text-gray-400 font-bold">-</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        <td class="text-gray-600 font-medium text-sm">
+                            {{ \Carbon\Carbon::parse($patient['registered_at'])->format('d M Y, H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                     <tr>
+                        <td colspan="5" class="text-center py-8 text-gray-400">
+                            Tidak ada data pasien yang ditemukan.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
         </div>
     </div>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <script>
-    // Ambil Data dari Controller (Dinamis dari DB)
-    // Object.keys untuk Label (Gigi, Mata)
-    // Object.values untuk Angka (10, 5)
+    // PERBAIKAN LOGIKA JS DI SINI, TRAINER!
+    // Controller ngirim struktur: { labels: [...], values: [...], colors: [...] }
+    // Jadi kita langsung ambil property-nya, JANGAN pakai Object.keys lagi.
+    
+     const chartConfig = @json($data['chart_pie']);
+    
+    console.log("Data Chart Masuk:", chartConfig);
 
-    const lineData = @json($data['chart_line']);
-
-    // LINE CHART CONFIG
-    const ctxLine = document.getElementById('lineChart').getContext('2d');
-    const gradient = ctxLine.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(20, 184, 166, 0.2)');
-    gradient.addColorStop(1, 'rgba(20, 184, 166, 0)');
-
-    new Chart(ctxLine, {
-        type: 'line',
+    new Chart(document.getElementById('pieChart').getContext('2d'), {
+        type: 'doughnut',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
+            // Kita langsung ambil dari properti JSON. JANGAN pakai Object.keys()
+            labels: chartConfig.labels, 
             datasets: [{
-                data: lineData,
-                borderColor: '#14b8a6',
-                backgroundColor: gradient,
-                borderWidth: 3,
-                tension: 0,
-                fill: true,
-                pointRadius: 0,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#1e1b4b'
+                data: chartConfig.values, 
+                backgroundColor: chartConfig.colors, 
+                borderWidth: 0,
+                hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            interaction: { mode: 'index', intersect: false },
-            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e1b4b', padding: 12 } },
-            scales: {
-                x: { grid: { display: false }, ticks: { display: true }, border: { display: false } },
-                y: { grid: { color: '#f3f4f6' }, border: { display: false }, ticks: { display: true } }
+            cutout: '0%', 
+            plugins: {
+                legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 8 } }
             }
         }
-    });
+    });
 </script>
 
 @endsection
