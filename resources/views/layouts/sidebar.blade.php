@@ -124,7 +124,7 @@
 
                     {{-- 3. Kelola Pegawai --}}
                     <a href="{{ route('admin.staff.index') }}"
-                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->is('master/staff*') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.staff.index') || request()->routeIs('admin.staff.create') || request()->routeIs('admin.staff.edit') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

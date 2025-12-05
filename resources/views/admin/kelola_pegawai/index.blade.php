@@ -62,7 +62,7 @@
                             <div class="flex items-center gap-3">
                                 <div class="avatar placeholder">
                                     <div class="bg-brand-secondary/10 text-brand-secondary rounded-xl w-10 h-10 flex flex-col justify-center items-center">
-                                        <span class="text-lg font-bold">{{ substr($staff['nama_lengkap'], 0, 1) }}</span>
+                                        <img src="{{ !empty($staff['foto_profil']) ? str_replace('/api', '', env('API_URL')) . '/storage/' . $staff['foto_profil'] : 'https://ui-avatars.com/api/?name=' . urlencode($staff['nama_lengkap']) . '&background=A8FBD3&color=31326F' }}" alt="Foto Profil" class="object-cover w-full h-full">
                                     </div>
                                 </div>
                                 <div>

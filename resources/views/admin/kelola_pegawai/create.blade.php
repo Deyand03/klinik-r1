@@ -19,8 +19,7 @@
     </div>
 
     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
-        <!-- x-data untuk kontrol form dinamis -->
-        <form action="{{ route('admin.staff.store') }}" method="POST" class="p-8" x-data="{ role: '{{ old('peran', 'admin') }}' }">
+        <form action="{{ route('admin.staff.store') }}" method="POST" class="p-8" x-data="{ role: '{{ old('peran', 'admin') }}' }" enctype="multipart/form-data">
             @csrf
 
             <!-- INFORMASI DASAR -->
@@ -60,7 +59,6 @@
                 </div>
                 <div class="form-control">
                     <label class="label"><span class="label-text font-semibold">Peran / Jabatan</span></label>
-                    <!-- x-model binding ke role -->
                     <select name="peran" x-model="role" class="select select-bordered w-full rounded-xl bg-gray-50 focus:bg-white" required>
                         <option value="admin">Admin</option>
                         <option value="dokter">Dokter</option>
@@ -77,6 +75,55 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     Detail Profil Dokter
                 </h3>
+
+                <!-- UPLOAD FOTO PROFIL (CUSTOM UI) -->
+                <div class="form-control mb-5" x-data="{ photoName: null, photoPreview: null }">
+                    <label class="label"><span class="label-text font-semibold text-gray-700">Foto Profil</span></label>
+
+                    <!-- Hidden File Input -->
+                    <input type="file" name="foto_profil" id="foto_profil" class="hidden" x-ref="photo"
+                        x-on:change="
+                            photoName = $refs.photo.files[0].name;
+                            const reader = new FileReader();
+                            reader.onload = (e) => { photoPreview = e.target.result; };
+                            reader.readAsDataURL($refs.photo.files[0]);
+                        ">
+
+                    <!-- Custom Drag & Drop Area -->
+                    <div class="relative group cursor-pointer" x-on:click="$refs.photo.click()">
+                        <!-- Area Kotak Putus-putus -->
+                        <div class="mt-2 flex justify-center rounded-2xl border-2 border-dashed border-gray-300 px-6 pt-10 pb-10 transition-all hover:border-brand-secondary hover:bg-blue-50/50"
+                             :class="photoPreview ? 'border-brand-secondary bg-blue-50/30' : ''">
+
+                            <!-- Placeholder Content (Saat belum ada foto) -->
+                            <div class="space-y-1 text-center" x-show="!photoPreview">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-gray-600 justify-center">
+                                    <span class="relative cursor-pointer rounded-md font-medium text-brand-secondary focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-secondary focus-within:ring-offset-2 hover:text-brand-secondary/80">
+                                        <span>Klik untuk upload gambar</span>
+                                    </span>
+                                </div>
+                                <p class="text-xs text-gray-500">JPG, PNG, Max 2MB</p>
+                            </div>
+
+                            <!-- Preview Content (Saat foto dipilih) -->
+                            <div class="text-center" x-show="photoPreview" style="display: none;">
+                                <div class="relative inline-block">
+                                    <span class="block h-32 w-32 rounded-2xl overflow-hidden shadow-md bg-gray-100 ring-2 ring-white">
+                                        <img :src="photoPreview" class="h-full w-full object-cover" alt="Preview Foto">
+                                    </span>
+                                    <!-- Tombol Silang Kecil untuk Ganti -->
+                                    <div class="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-md cursor-pointer hover:bg-gray-100 text-gray-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-brand-secondary font-bold mt-3" x-text="photoName"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-control mb-4">
                     <label class="label"><span class="label-text font-semibold text-gray-700">Spesialisasi</span></label>
