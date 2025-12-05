@@ -40,10 +40,26 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $token = session('api_token');
-        $response = Http::withToken($token)->post(env('API_URL') . '/admin/staff', $request->all());
+
+        // Siapkan Request HTTP
+        $http = Http::withToken($token);
+
+        // Cek apakah ada file foto yang diupload
+        if ($request->hasFile('foto_profil')) {
+            $file = $request->file('foto_profil');
+            // Attach file ke request (seperti multipart/form-data)
+            $http->attach(
+                'foto_profil',
+                file_get_contents($file),
+                $file->getClientOriginalName()
+            );
+        }
+
+        // Kirim sisa data (text inputs)
+        $response = $http->post(env('API_URL') . '/admin/staff', $request->except('foto_profil'));
 
         if ($response->successful()) {
-            return redirect()->route('admin.staff.index')->with('success', 'Pegawai baru berhasil ditambahkan!');
+            return redirect()->route('admin.staff.index')->with('success', 'Pegawai berhasil ditambahkan!');
         }
 
         return back()->with('error', 'Gagal: ' . ($response->json()['message'] ?? 'Validasi Gagal'))->withInput();
@@ -72,7 +88,28 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
         $token = session('api_token');
-        $response = Http::withToken($token)->put(env('API_URL') . '/admin/staff/' . $id, $request->all());
+        $http = Http::withToken($token);
+
+        // Cek file update
+        if ($request->hasFile('foto_profil')) {
+            $file = $request->file('foto_profil');
+            $http->attach(
+                'foto_profil',
+                file_get_contents($file),
+                $file->getClientOriginalName()
+            );
+        }
+
+        // Kalau update, API biasanya pakai PUT.
+        // Tapi Laravel Client Multipart kadang error di PUT, lebih aman pakai POST dengan method spoofing
+        // ATAU tetap PUT jika attach support (versi terbaru support). Kita coba standard PUT dulu.
+        // Jika error, ganti jadi ->post(..., array_merge($request->all(), ['_method' => 'PUT']))
+
+        // Tips: Untuk update file via API Laravel, paling aman pakai POST dengan _method = PUT
+        $data = $request->except('foto_profil');
+        $data['_method'] = 'PUT'; // Trik biar backend baca sebagai PUT
+
+        $response = $http->post(env('API_URL') . '/admin/staff/' . $id, $data);
 
         if ($response->successful()) {
             return redirect()->route('admin.staff.index')->with('success', 'Data pegawai diperbarui!');
