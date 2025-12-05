@@ -5,33 +5,34 @@
 @section('content')
     <div class="bg-white min-h-screen pt-18">
 
-        <div class="bg-[#6379AA] md:p-4 mb-8">
-            <div class="grid grid-cols-3 gap-2 md:h-64 lg:h-80 w-80%">
+        <div class="bg-[#6379AA] p-4 md:p-6 lg:p-8 mb-8">
+            <div class="container mx-auto px-4 md:px-12 lg:px-24">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-auto md:h-64 lg:h-80">
                 <div
-                    class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
-                    <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
-                        Gambar tidak tersedia
-                    </span>
-                    <img src="{{ asset('img/foto1.jpg') }}" alt="Tensi"
-                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
+                class="relative w-full h-48 md:h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
+                <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
+                    Gambar tidak tersedia
+                </span>
+                <img src="{{ asset('img/foto1.jpg') }}" alt="Tensi"
+                    class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
                 <div
-                    class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
-                    <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
-                        Gambar tidak tersedia
-                    </span>
-                    <img src="{{ asset('img/foto2.jpg') }}" alt="Mata"
-                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
+                class="relative w-full h-48 md:h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
+                <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
+                    Gambar tidak tersedia
+                </span>
+                <img src="{{ asset('img/foto2.jpg') }}" alt="Mata"
+                    class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
-
                 <div
-                    class="relative w-full h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
-                    <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
-                        Gambar tidak tersedia
-                    </span>
-                    <img src="{{ asset('img/foto3.jpg') }}" alt="Gigi"
-                        class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
+                class="relative w-full h-48 md:h-full rounded-2xl overflow-hidden bg-gray-200 flex items-center justify-center group">
+                <span class="text-gray-500 text-sm md:text-base font-medium text-center px-2 absolute z-0">
+                    Gambar tidak tersedia
+                </span>
+                <img src="{{ asset('img/foto3.jpg') }}" alt="Gigi"
+                    class="w-full h-full object-cover z-10 relative rounded-2xl" onerror="this.style.display='none'">
                 </div>
+            </div>
             </div>
         </div>
 
