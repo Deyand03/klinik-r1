@@ -36,15 +36,16 @@ class DashboardController extends Controller
         switch ($role) {
             case 'resepsionis':
                 $request = request();
-
+                
                 $token = session('api_token');
                 $user  = session('user_data');
-
+                $klinikIdStaf = $user['staff']['id_klinik'] ?? null;
                 // Ambil antrian dari API dengan filter
                 $response = Http::withToken($token)->get(env('API_URL') . '/admin/antrian', [
                     'staff_id'      => $user['id'],
                     'search'        => $request->input('search'),
                     'status_filter' => 'booking',
+                    'klinik_id_filter' => $klinikIdStaf,
                 ]);
 
                 if ($response->failed()) {
