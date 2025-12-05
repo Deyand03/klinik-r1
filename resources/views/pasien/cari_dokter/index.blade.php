@@ -55,6 +55,7 @@
                                 </svg>
                                 Ada Jadwal Praktik Hari Ini
                             </p>
+                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
                         </div>
                         <div class="card-actions justify-end mt-auto">
                             <a href="{{ route('profil_dokter') }}"
@@ -125,6 +126,7 @@
                                 </svg>
                                 Ada Jadwal Praktik Hari Ini
                             </p>
+                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
                         </div>
                         <div class="card-actions justify-end mt-auto">
                             <button
