@@ -8,57 +8,94 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdminDashboardController extends Controller
 {
+    // HALAMAN 1: DASHBOARD (PASIEN)
     public function index(Request $request = null)
+    {
+        return $this->fetchData($request, 'patients', 'admin.dashboard.index');
+    }
+
+    // HALAMAN 2: RIWAYAT KUNJUNGAN
+    public function riwayat(Request $request = null)
+    {
+        return $this->fetchData($request, 'antrian', 'admin.dashboard.riwayat');
+    }
+
+    // LOGIKA UTAMA
+    private function fetchData($request, $type, $view)
     {
         $request = $request ?: request();
         $token = session('api_token');
 
-        // Ambil filter dari input user, default bulan sekarang kalau kosong
-        $bulanTerpilih = $request->input('month', date('n'));
+        // Ambil semua parameter filter
+        $bulanChart = $request->input('month', date('n'));
+        $bulanTable = $request->input('month_table');
         $searchKeyword = $request->input('search');
+        $klinikId = $request->input('klinik_id'); 
+        $dokterId = $request->input('dokter_id'); 
         $page = $request->input('page', 1);
-        // 1. Ambil Data Antrian Hari Ini dari Backend
-        // Kita kirim parameter search dan month ke API backend (OperasionalController)
-        // $request->all() akan mengirim ?search=...&month=...
+
         $response = Http::withToken($token)->get(
             'http://127.0.0.1:8000/api/admin/antrian',
             [
-                'search' => $searchKeyword,
-                'month'  => $bulanTerpilih,
-                'page'   => $page
+                'type'        => $type,
+                'search'      => $searchKeyword,
+                'month'       => $bulanChart,
+                'month_table' => $bulanTable,
+                'klinik_id'   => $klinikId,
+                'dokter_id'   => $dokterId,
+                'page'        => $page
             ]
         );
 
-        // --- TAMBAHKAN BARIS INI ---
-        // Kita cek apa jawaban asli dari Backend
-        if ($response->successful()) {
-            //dd($response->json()); // <--- UNCOMMENT INI, SAVE, LALU REFRESH HALAMAN
-        } else {
-            dd("Gagal ambil data:", $response->body());
-        }
-        // ---------------------------
-        
         $reservationsPaginator = new LengthAwarePaginator([], 0, 10, 1);
         $chartSource = [];
+        $filterOptions = ['clinics' => [], 'doctors' => []]; 
         $totalAllTime = 0;
+        $chartLabels = ['Data Kosong']; $chartValues = [1]; $chartColors = ['#e5e7eb'];
+
         if ($response->successful()) {
             $json = $response->json();
-            
-            // 1. AMBIL DATA TABEL (PAGINATED)
             $tableJson = $json['table']; 
             
-            $mappedItems = collect($tableJson['data'])->map(function ($item) {
-                return [
-                    'id' => $item['id'],
-                    'initial' => substr($item['pasien']['nama_lengkap'] ?? 'X', 0, 2),
-                    'color' => 'bg-blue-100 text-blue-600',
-                    'name' => $item['pasien']['nama_lengkap'] ?? 'Tanpa Nama',
-                    'no_antrian' => $item['no_antrian'],
-                    'contact' => $item['pasien']['no_hp'] ?? '-',
-                    'address' => $item['pasien']['alamat_domisili'] ?? '-',
-                    'registered_at' => $item['created_at'],
-                    
-                ];
+            if (isset($json['options'])) {
+                $filterOptions = $json['options'];
+            }
+
+            // MAPPING DATA
+            $mappedItems = collect($tableJson['data'])->map(function ($item) use ($type) {
+                if ($type == 'patients') {
+                    // Mapping Pasien
+                    return [
+                        'id' => $item['id'],
+                        'initial' => substr($item['nama_lengkap'] ?? 'X', 0, 2),
+                        'color' => 'bg-emerald-100 text-emerald-600',
+                        'name' => $item['nama_lengkap'] ?? 'Tanpa Nama',
+                        'nik' => $item['nik'] ?? '-',
+                        'contact' => $item['no_hp'] ?? '-',
+                        'address' => $item['alamat_domisili'] ?? '-',
+                        'registered_at' => $item['created_at'],
+                    ];
+                } else {
+                    // Mapping Kunjungan
+                    return [
+                        'id' => $item['id'],
+                        'initial' => substr($item['pasien']['nama_lengkap'] ?? 'X', 0, 2),
+                        'color' => 'bg-blue-100 text-blue-600',
+                        'name' => $item['pasien']['nama_lengkap'] ?? 'Tanpa Nama',
+                        'no_antrian' => $item['no_antrian'],
+                        'status' => $item['status'],
+                        'klinik' => $item['klinik']['nama'] ?? '-',
+                        
+                        // --- FIX DI SINI TRAINER! ---
+                        // Backend kirim objek Staff, kolomnya 'nama_lengkap', bukan 'nama'.
+                        'dokter' => $item['dokter']['nama_lengkap'] ?? 'Belum dipilih', 
+                        // ----------------------------
+
+                        'contact' => $item['pasien']['no_hp'] ?? '-',
+                        'address' => $item['pasien']['alamat_domisili'] ?? '-',
+                        'registered_at' => $item['tgl_kunjungan'] ?? $item['created_at'],
+                    ];
+                }
             });
 
             $reservationsPaginator = new LengthAwarePaginator(
@@ -68,92 +105,53 @@ class AdminDashboardController extends Controller
                 $tableJson['current_page'], 
                 ['path' => url()->current()]
             );
+
             $reservationsPaginator->appends([
                 'search' => $searchKeyword,
-                'month' => $bulanTerpilih
+                'month' => $bulanChart,
+                'month_table' => $bulanTable,
+                'klinik_id' => $klinikId,
+                'dokter_id' => $dokterId
             ]);
 
-            // 2. AMBIL DATA CHART
+            // Chart Data
             $chartSource = $json['chart_source'];
             $totalAllTime = $json['meta']['total_all_time'];
-        }
 
-        // 3. Logika Pie Chart (Sederhana berdasarkan data yg ditarik)
-        // Kita hitung jumlah kunjungan per Klinik (Poli) dari data yang didapat
-        // Kalau data kosong (karena filter), chart akan kosong/default
-        $colorMap = [
-            'Klinik X Subhan'  => '#1e1b4b', // Navy Gelap
-            'Klinik Mata Sehat'=> '#4338ca', // Ungu/Biru
-            'Poli Gigi'        => '#0d9488', // Teal
-            'Poli Umum'        => '#f59e0b', // Orange
-            // Tambahkan klinik lain di sini...
-        ];
-        
-        // Warna cadangan kalau nama kliniknya gak ada di kamus
-        $fallbackColors = ['#ef4444', '#14b8a6', '#ccfbf1', '#64748b'];
-
-        // Kelompokkan data
-        $grouped = collect($chartSource)->groupBy('klinik.nama');
-        
-        $chartLabels = [];
-        $chartValues = [];
-        $chartColors = [];
-        $index = 0;
-
-        foreach ($grouped as $klinikName => $group) {
-            // Nama Klinik (Label)
-            $label = $klinikName ?: 'Lainnya'; 
-            $chartLabels[] = $label;
+            $colorMap = ['Klinik X Subhan' => '#1e1b4b', 'Klinik Mata Sehat'=> '#4338ca', 'Poli Gigi'=> '#0d9488', 'Poli Umum'=> '#f59e0b'];
+            $fallbackColors = ['#ef4444', '#14b8a6', '#ccfbf1', '#64748b'];
+            $grouped = collect($chartSource)->groupBy('klinik.nama');
             
-            // Jumlah Pasien (Value)
-            $chartValues[] = $group->count();
-            
-            // Tentukan Warna (Color)
-            // Cek kamus dulu, kalau gak ada ambil warna cadangan
-            if (isset($colorMap[$label])) {
-                $chartColors[] = $colorMap[$label];
-            } else {
-                // Ambil warna cadangan secara berurutan (modulo) biar gak error
-                $chartColors[] = $fallbackColors[$index % count($fallbackColors)];
-                $index++;
+            $chartLabels = []; $chartValues = []; $chartColors = []; $index = 0;
+            foreach ($grouped as $klinikName => $group) {
+                $label = $klinikName ?: 'Lainnya'; 
+                $chartLabels[] = $label;
+                $chartValues[] = $group->count();
+                $chartColors[] = isset($colorMap[$label]) ? $colorMap[$label] : $fallbackColors[$index++ % 4];
             }
-        }
-
-        // Fallback chart kosong
-        if (empty($chartValues)) {
-            $chartLabels = ['Tidak ada data'];
-            $chartValues = [1];
-            $chartColors = ['#e5e7eb']; // Abu-abu
+            if (empty($chartValues)) { $chartLabels = ['Data Kosong']; $chartValues = [1]; $chartColors = ['#e5e7eb']; }
         }
 
         $data = [
             'profile' => ['name' => session('user_data')['staff']['nama_lengkap'] ?? 'Admin'],
             'stats' => [
-                // LOGIKA BARU: 
-                // registered_patients = Total Seumur Hidup (dari meta backend)
                 'registered_patients' => $totalAllTime, 
-                
-                // new_patients = Total Bulan Ini (hasil filter count($antrian))
                 'new_patients' => count($chartSource), 
             ],
-            // Kita kirim data chart lengkap (Label, Value, Warna)
             'chart_pie' => [
-                'labels' => $chartLabels,
-                'values' => $chartValues,
-                'colors' => $chartColors
+                'labels' => $chartLabels, 'values' => $chartValues, 'colors' => $chartColors
             ],
-            'reservations' => $reservationsPaginator,
+            'table_data' => $reservationsPaginator,
+            'options' => $filterOptions, 
             'filters' => [
-                'month' => $bulanTerpilih,
+                'month' => $bulanChart,
+                'month_table' => $bulanTable,
+                'klinik_id' => $klinikId,
+                'dokter_id' => $dokterId,
                 'search' => $searchKeyword
             ]
         ];
-        return view('admin.dashboard.index', compact('data'));
-    }
-
-    // Fungsi untuk Tombol Aksi (Check-In / Next Status)
-    public function confirm(Request $request, $id)
-    {
-    
+        
+        return view($view, compact('data'));
     }
 }
