@@ -46,20 +46,6 @@
 
         <!-- BAGIAN KANAN: Form Login -->
         <div class="w-full lg:w-1/2 flex items-center justify-center p-8 relative bg-white">
-            <!-- Tombol Balik -->
-            <a href="/"
-                class="absolute top-8 left-8 text-gray-400 hover:text-brand-secondary transition flex items-center gap-2 font-medium group">
-                <div
-                    class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-brand-primary/20 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 transform group-hover:-translate-x-1 transition" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                </div>
-                Kembali ke Beranda
-            </a>
 
             <div class="w-full max-w-md">
                 <!-- Header Mobile Only -->
@@ -194,6 +180,10 @@
                         Masuk Sekarang
                     </button>
                 </form>
+                <a href="{{route('beranda')}}"
+                    class="btn btn-block bg-gray-500 hover:bg-brand-dark text-white border-none h-12 rounded-xl text-lg font-bold shadow-lg shadow-brand-secondary/30 hover:shadow-brand-secondary/50 transition-all transform hover:-translate-y-1 mt-4">
+                    Kembali ke beranda
+                </a>
 
                 <div class="text-center pt-6 border-t border-gray-100">
                     <p class="text-gray-600 mb-2">Belum punya akun pasien?</p>
