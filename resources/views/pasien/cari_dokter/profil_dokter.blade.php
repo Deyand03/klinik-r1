@@ -34,7 +34,7 @@
     }">
 
         {{-- BAGIAN 1: HEADER PROFIL (Tidak Berubah) --}}
-        <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-28 pb-20 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-6 md:mb-8">
                     <a href="{{ route('cari_dokter') }}"
@@ -191,7 +191,7 @@
                 <p class="text-gray-600 mb-6 leading-relaxed text-base">Kami menyediakan berbagai fasilitas medis modern
                     untuk menunjang kesehatan Anda.</p>
                 <div class="card-actions">
-                    <a href="{{route('pasien.fasilitas-layanan')}}"
+                    <a href="{{ route('pasien.fasilitas-layanan') }}"
                         class="btn btn-md bg-brand-secondary hover:bg-[#2f7e72] text-white border-none px-6 rounded-full normal-case text-base shadow-md">Lebih
                         Lanjut</a>
                 </div>
@@ -298,4 +298,6 @@
         </div>
 
     </div>
+
+    @vite('resources/js/utility/navbar_beranda.js')
 @endsection

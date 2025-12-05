@@ -106,4 +106,6 @@
             </div>
         </div>
     </div>
+
+    @vite('resources/js/utility/navbar_beranda.js')
 @endsection
