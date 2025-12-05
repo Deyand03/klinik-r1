@@ -35,7 +35,25 @@ class DashboardController extends Controller
 
         switch ($role) {
             case 'resepsionis':
-                $antrian = $this->getDataAntrian('booking');
+                $request = request();
+
+                $token = session('api_token');
+                $user  = session('user_data');
+
+                // Ambil antrian dari API dengan filter
+                $response = Http::withToken($token)->get(env('API_URL') . '/admin/antrian', [
+                    'staff_id'      => $user['id'],
+                    'search'        => $request->input('search'),
+                    'status_filter' => 'booking',
+                ]);
+
+                if ($response->failed()) {
+                    return back()->with('error', 'Gagal mengambil data antrian');
+                }
+
+                $antrian = $response->json()['data'] ?? [];
+                
+
                 return view('staff.resepsionis.index', compact('antrian'));
 
             case 'perawat':
@@ -64,11 +82,13 @@ class DashboardController extends Controller
 
     // Helper untuk update status di Backend
     private function updateBackendStatus($id, $nextStatus)
-    {
+    {   
+        $api = env('API_URL');
         $token = session('api_token');
-        return Http::withToken($token)->post("http://127.0.0.0/api/admin/antrian/{$id}/status", [
+        return Http::withToken($token)->post("$api/admin/antrian/{$id}/status", [
             'status' => $nextStatus
         ]);
+        
     }
 
     // 1. Aksi Resepsionis (Check-In)
