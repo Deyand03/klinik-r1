@@ -109,6 +109,21 @@
                     </span>
                 </a>
 
+                @if ($role == 'resepsionis')
+                    {{-- 2. Atur Jadwal Dokter --}}
+                    <a href="{{ route('staff.register-pasien') }}"
+                        class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group {{ request()->routeIs('staff.register-pasien') ? 'bg-brand-btn text-white shadow-lg shadow-brand-btn/20' : 'text-gray-400 hover:bg-white/10 hover:text-white' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="font-medium">Register Pasien</span>
+                    </a>
+                @endif
+
+
+
                 {{-- KHUSUS ADMIN (Menu Utama Tambahan) --}}
                 @if ($role == 'admin')
                     {{-- 2. Atur Jadwal Dokter --}}
