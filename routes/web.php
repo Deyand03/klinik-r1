@@ -121,6 +121,7 @@ Route::middleware(['cek_session'])->group(function () {
         Route::controller(AdminDashboardController::class)->prefix('admin')->group(function () {
 
             Route::get('/dashboard', 'index')->name('admin.dashboard'); // Dashboard Statistik
+            Route::get('/riwayat', 'riwayat')->name('admin.riwayat'); 
             Route::get('/rekam-medis', 'viewRekamMedis')->name('admin.rekam-medis');
             Route::get('/rujukan', 'viewRujukan')->name('admin.rujukan-digital');
         });
