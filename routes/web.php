@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\KelolaPegawaiController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\PembayaranAdminController;
@@ -92,8 +95,15 @@ Route::middleware(['cek_session'])->group(function () {
     // Semua route di bawah ini hanya untuk role: staff/admin (dibatasi oleh middleware role:staff)
     Route::prefix('staff')->middleware(['role:staff'])->group(function () {
 
+
+        Route::post('/perawat/input-vital/{id}', [DashboardController::class, 'storeVital'])
+            ->name('staff.perawat.input-vital');
+
         // A. TRAFFIC CONTROLLER & DASHBOARD (GET)
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('staff.dashboard');
+
+        Route::post('/dashboard', [DashboardController::class, 'store'])
+            ->name('staff.dashboard.store');
 
         // B. ACTIONS OPERASIONAL (POST)
         // Semua aksi diarahkan ke DashboardController (Konsolidasi)
@@ -106,21 +116,56 @@ Route::middleware(['cek_session'])->group(function () {
         });
         Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])
         ->name('staff.kasir.store');
+        Route::get('/register-pasien', [RegisterPasienController::class, 'index'])->name('staff.register-pasien');
+        Route::post('/register-pasien/store', [RegisterPasienController::class, 'storePasien'])->name('staff.register-pasien.store');
+        Route::post('/register-pasien/kunjungan/store', [RegisterPasienController::class, 'storeKunjungan'])->name('staff.register-pasien.kunjungan.store');
 
         // D. ADMIN MASTER DATA & REPORTING
         Route::controller(AdminDashboardController::class)->prefix('admin')->group(function () {
 
             Route::get('/dashboard', 'index')->name('admin.dashboard'); // Dashboard Statistik
-            Route::get('/master/staff', 'viewPegawai')->name('master.staff');
+            Route::get('/riwayat', 'riwayat')->name('admin.riwayat'); 
             Route::get('/rekam-medis', 'viewRekamMedis')->name('admin.rekam-medis');
             Route::get('/rujukan', 'viewRujukan')->name('admin.rujukan-digital');
         });
 
-        Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter');
-        Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
-        Route::put('/admin/jadwal-dokter/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
+        Route::prefix('admin')->name('admin.')->group(function () {
+
+            // --- MANAJEMEN PEGAWAI (STAFF) ---
+            Route::resource('pegawai', StaffController::class)->names([
+                'index' => 'staff.index',
+                'create' => 'staff.create',
+                'store' => 'staff.store',
+                'edit' => 'staff.edit',
+                'update' => 'staff.update',
+                'destroy' => 'staff.destroy',
+            ]);
+
+            // --- MANAJEMEN JADWAL DOKTER ---
+            Route::controller(JadwalDokterController::class)->prefix('jadwal-dokter')->name('jadwal-dokter.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/store', 'store')->name('store');
+                Route::get('/edit/{id}', 'edit')->name('edit'); // {id} = staff_id
+                Route::put('/update/{id}', 'update')->name('update');
+            });
+
+        });
+        // Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter.index');
+        // Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
+        // Route::put('/jadwal-dokter/update/{id}', [JadwalDokterController::class, 'update'])->name('admin.jadwal-dokter.update');
+        // Route::get('/jadwal-dokter/create', [JadwalDokterController::class, 'create'])->name('admin.jadwal-dokter.create');
+        // Route::get('/jadwal-dokter/edit/{id}', [JadwalDokterController::class, 'edit'])->name('admin.jadwal-dokter.edit');
+
+        // Route::get('/admin/kelola-pegawai', [StaffController::class, 'index'])->name('kelola.pegawai');
+        // Route::post('/admin/kelola-pegawai/store', [StaffController::class, 'store'])->name('kelola.pegawai.store');
+        // Route::get('/admin/kelola-pegawai/create', [StaffController::class, 'create'])->name('kelola.pegawai.create');
+        // Route::get('/admin/kelola-pegawai/edit/{id}', [StaffController::class, 'edit'])->name('kelola.pegawai.edit');
+        // Route::delete('/admin/kelola-pegawai/{id}', [StaffController::class, 'destroy'])->name('kelola.pegawai.destroy');
     });
 });
+
+
 
 
 // Note: Pastikan file 'auth.php' sudah ada di folder routes.

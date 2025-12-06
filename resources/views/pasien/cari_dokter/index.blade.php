@@ -3,7 +3,7 @@
 @section('title', 'KlinikR1')
 
 @section('content')
-    <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+    <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] py-32 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-4xl font-bold text-white mb-2">
                 Cari <span class="text-[#4cd6c0]">Dokter</span>
@@ -55,6 +55,7 @@
                                 </svg>
                                 Ada Jadwal Praktik Hari Ini
                             </p>
+                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
                         </div>
                         <div class="card-actions justify-end mt-auto">
                             <a href="{{ route('profil_dokter') }}"
@@ -125,6 +126,7 @@
                                 </svg>
                                 Ada Jadwal Praktik Hari Ini
                             </p>
+                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
                         </div>
                         <div class="card-actions justify-end mt-auto">
                             <button
@@ -203,4 +205,5 @@
         </div>
 
     </div>
+    @vite('resources/js/utility/navbar_beranda.js')
 @endsection

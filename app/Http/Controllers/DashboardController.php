@@ -8,13 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+
+
+
 class DashboardController extends Controller
 {
     // Helper: Ambil data dari Backend API
     private function getDataAntrian($status)
     {
         $token = session('api_token');
-        $url = 'http://127.0.0.1:8000/api/admin/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+        // $url = 'http://127.0.0.1:8000/api/admin/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+        $url = 'http://127.0.0.1:8000/api/perawat/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
 
         try {
             $response = Http::withToken($token)->get($url);
@@ -24,6 +28,7 @@ class DashboardController extends Controller
             return []; // Return kosong jika API mati
         }
     }
+
 
     // =========================================================
     // I. VIEW REDIRECTER (GET /staff/dashboard)
@@ -35,12 +40,32 @@ class DashboardController extends Controller
 
         switch ($role) {
             case 'resepsionis':
-                $antrian = $this->getDataAntrian('booking');
+                $request = request();
+                
+                $token = session('api_token');
+                $user  = session('user_data');
+                $klinikIdStaf = $user['staff']['id_klinik'] ?? null;
+                // Ambil antrian dari API dengan filter
+                $response = Http::withToken($token)->get(env('API_URL') . '/admin/antrian', [
+                    'staff_id'      => $user['id'],
+                    'search'        => $request->input('search'),
+                    'status_filter' => 'booking',
+                    'klinik_id_filter' => $klinikIdStaf,
+                ]);
+
+                if ($response->failed()) {
+                    return back()->with('error', 'Gagal mengambil data antrian');
+                }
+
+                $antrian = $response->json()['data'] ?? [];
+                
+
                 return view('staff.resepsionis.index', compact('antrian'));
 
             case 'perawat':
                 $antrian = $this->getDataAntrian('menunggu_perawat');
                 return view('staff.perawat.index', compact('antrian'));
+
 
             case 'dokter':
                 $antrian = $this->getDataAntrian('menunggu_dokter');
@@ -58,17 +83,27 @@ class DashboardController extends Controller
         }
     }
 
+    public function store(Request $request)
+    {
+        return back()->with('success', 'Berhasil disimpan');
+
+        
+    }
+
+
     // =========================================================
     // II. OPERASIONAL ACTIONS (POST Methods)
     // =========================================================
 
     // Helper untuk update status di Backend
     private function updateBackendStatus($id, $nextStatus)
-    {
+    {   
+        $api = env('API_URL');
         $token = session('api_token');
-        return Http::withToken($token)->post("http://127.0.0.0/api/admin/antrian/{$id}/status", [
+        return Http::withToken($token)->post("$api/admin/antrian/{$id}/status", [
             'status' => $nextStatus
         ]);
+        
     }
 
     // 1. Aksi Resepsionis (Check-In)
@@ -83,24 +118,25 @@ class DashboardController extends Controller
     }
 
     // 2. Aksi Perawat (Simpan Vital Signs & Anamnesa)
-    public function storePerawat(Request $request, $id)
+    public function storeVital(Request $request, $id)
     {
-        $token = session('api_token');
+        $apiUrl = "http://127.0.0.1:8000/api/perawat/input-vital/" . $id;
 
-        // Note: Backend API harus punya endpoint: POST /api/medis/perawat/store
-        $response = Http::withToken($token)->post("http://127.0.0.0/api/medis/perawat/store", [
-            'id_kunjungan' => $id,
+        $response = Http::post($apiUrl, [
             'berat_badan' => $request->berat_badan,
             'tensi_darah' => $request->tensi_darah,
+            'suhu_badan' => $request->suhu_badan,
             'anamnesa' => $request->anamnesa,
-            'next_status' => 'menunggu_dokter'
         ]);
 
         if ($response->successful()) {
-            return back()->with('success', 'Data vital berhasil disimpan. Pasien diteruskan ke Dokter.');
+            return redirect()->back()->with('success', 'Berhasil disimpan');
         }
-        return back()->with('error', 'Gagal menyimpan data: ' . ($response->json()['message'] ?? 'Error API'));
+
+        return redirect()->back()->with('error', 'Gagal menyimpan');
     }
+
+
 
     // 3. Aksi Dokter (Simpan Diagnosa & Resep)
     public function storeDokter(Request $request, $id)
@@ -128,4 +164,11 @@ class DashboardController extends Controller
         }
         return back()->with('error', 'Gagal konfirmasi pembayaran.');
     }
+
+
+
+
+
 }
+
+
