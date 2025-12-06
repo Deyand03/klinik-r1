@@ -32,6 +32,88 @@ class DashboardController extends Controller
     // =========================================================
     // I. VIEW REDIRECTER (GET /staff/dashboard)
     // =========================================================
+    private function getDataKunjunganFromAPi()
+    {
+        $idDokter = session('user_data')['staff']['id'];
+        $apiToken = session('api_token');
+        
+        if (!$idDokter) {
+            Log::warning('Percobaan akses API Kunjungan tanpa ID atau Token yang valid.');
+            return null; 
+        }
+
+        $response = Http::withToken($apiToken)
+                        ->get("http://localhost:8000/api/kunjungan/index", [
+                            'id_dokter' => $idDokter
+                        ]);
+        $antrian = [];
+        if ($response->successful()) {
+            $antrian = [
+                'antrian' => $response->json()['data'],
+                'obat' => $response->json()['obat']
+            ];
+        }
+        return $antrian;
+    }
+    public function detail(Request $request){
+        $apiToken = session('api_token');
+        $response = Http::withToken($apiToken)
+                    ->get("http://localhost:8000/api/kunjungan/detail", [
+                        'id' => $request->id
+                    ]);
+        $data = $response->json()['data'];
+
+      
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
+    public function addResep(Request $request)
+    {
+        $apiToken = session('api_token');
+        $diagnosa = $request->diagnosa;
+        $idKunjungan = $request->id;
+        $obat = $request->obat;
+        $jumlah = $request->jumlah;
+        $harga = $request->harga;
+        $rekam_medis_id = $request->rekam_medis_id;
+        $catatan_dokter = $request->catatan_dokter;
+        $id_staff = $request->id_staff;
+        $poli = $request->poli ?? '';
+        $tujuan = $request->tujuan ?? '';
+        $alasan = $request->alasan ?? '';
+
+
+        $data = [
+            'diagnosa' => $diagnosa,
+            'id_kunjungan' => $idKunjungan,
+            'jumlah' => $jumlah,
+            'harga' => $harga,
+            'rekam_medis_id' => $rekam_medis_id,
+            'obat' => $obat,
+            'catatan' => $catatan_dokter,
+            'id_staff' => $id_staff,
+            'poli' => $poli,
+            'tujuan' => $tujuan,
+            'alasan' => $alasan
+        ];
+        $apiToken = session('api_token');
+        $response = Http::withToken($apiToken)->post("http://localhost:8000/api/kunjungan/resep/add", $data);
+        if ($response->successful()) {
+            return redirect()->back()->with([
+                'status' => 'success',
+        
+                'message' => 'Berhasil menginsert data',
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'status' => 'error',
+             
+                'message' => 'Gagal menginsert data terdapat kesalahan, silahkan diulangi!',
+            ]);
+        }
+    }
 
     public function index()
     {
@@ -48,8 +130,9 @@ class DashboardController extends Controller
 
 
             case 'dokter':
+               $dataKunjungan = $this->getDataKunjunganFromAPi() ?? ['antrian' => [], 'obat' => []];
                 $antrian = $this->getDataAntrian('menunggu_dokter');
-                return view('staff.dokter.index', compact('antrian'));
+                return view('staff.dokter.index', compact('antrian', 'dataKunjungan'));
 
             case 'kasir':
                 $antrian = $this->getDataAntrian('menunggu_pembayaran');

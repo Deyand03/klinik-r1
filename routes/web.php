@@ -99,6 +99,8 @@ Route::middleware(['cek_session'])->group(function () {
 
         // A. TRAFFIC CONTROLLER & DASHBOARD (GET)
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('staff.dashboard');
+        Route::get('/kunjungan/detail', [DashboardController::class, 'detail']);
+        Route::post('/kunjungan/resep/{id}', [DashboardController::class, 'addResep']);
 
         Route::post('/dashboard', [DashboardController::class, 'store'])
             ->name('staff.dashboard.store');
