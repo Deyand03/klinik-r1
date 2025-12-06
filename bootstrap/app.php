@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Middleware\CekSession;
 use App\Http\Middleware\GuestOnly;
-use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CekSession;
+use App\Http\Middleware\GuestOrPasien;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'guest.custom' => GuestOnly::class,
             'cek_session' => CekSession::class,
+            'guestorpasien' => GuestOrPasien::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
