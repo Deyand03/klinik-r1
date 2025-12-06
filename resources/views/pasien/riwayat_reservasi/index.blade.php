@@ -1,124 +1,229 @@
 @extends('layouts.index')
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
+@section('title', 'Riwayat Reservasi - KlinikR1')
 
-@section('title', 'KlinikR1')
 @section('content')
-    <section class="bg-gradient-to-r from-indigo-900 to-sky-700 text-white px-6 md:px-20 mb-4 pt-5 pb-15 relative">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div>
-                <span class="bg-green-300 text-green-900 px-3 py-1 rounded-full text-sm font-semibold">
-                    Mitra kesehatan terpercaya anda
-                </span>
-
-                <h1 class="text-4xl font-bold mt-4 leading-tight">
-                    Catatan <br>
-                    <span class="text-green-300">Kunjungan dan</span> <br>
-                    Perawatan Anda
-                </h1>
-
-                <p class="mt-4 text-gray-100">
-                    Semua catatan kunjungan, rekam medis, dan dokumen penting tersimpan aman. Cek kembali detail layanan
-                    kesehatan Anda kapan pun dibutuhkan..
-                </p>
-            </div>
-
-            <div class="flex justify-end">
-                <img src="{{ asset('images/foto_riwayat_reservasi.png') }}" class="w-80 md:w-96"
-                    alt="History Reservation Clinic">
-            </div>
-        </div>
-    </section>
-
-    <div class="max-xl -mt-14 z-20 relative mx-3">
-
-        <div class="bg-white shadow-xl rounded-xl flex items-center justify-between py-6 px-10">
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-2xl">
-                    filter_alt
-                </span>
-                <span class="text-gray-700 font-medium">
-                    Filter Berdasarkan Klinik
-                </span>
-            </div>
-            <x-dropdown align="right" width="48">
-                <x-slot name="trigger">
-                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded flex items-center gap-2">
-
-                        <span class="material-symbols-outlined">
-                            arrow_drop_down
-                        </span>
-                    </button>
-                </x-slot>
-
-                <x-slot name="content">
-                    <x-dropdown-link href="#">Klinik A</x-dropdown-link>
-                    <x-dropdown-link href="#">Klinik B</x-dropdown-link>
-                    <x-dropdown-link href="#">Klinik C</x-dropdown-link>
-                </x-slot>
-            </x-dropdown>
-
-
+    {{-- 1. HERO SECTION (Mirip Cari Dokter) --}}
+    {{-- Menggunakan gradient dan style text yang konsisten --}}
+    <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] py-32 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl font-bold text-white mb-2">
+                Riwayat <span class="text-[#4cd6c0]">Reservasi</span>
+            </h1>
+            <p class="text-gray-200 mb-10 text-lg">
+                Catatan kunjungan, rekam medis, dan dokumen penting Anda tersimpan aman di sini.
+            </p>
         </div>
     </div>
 
+    {{-- 2. MAIN CONTENT CONTAINER (Overlapping effect) --}}
+    <div class="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 -mt-12 rounded-t-3xl min-h-screen">
+        <div class="max-w-7xl mx-auto">
 
-    <!-- TABEL -->
-    <div class="overflow-x-auto flex justify-center my-6 ">
-        <!-- <table class="min-w-full bg-white border border-black rounded-lg overflow-hidden"> -->
-        <table class="w-98/100 border border-black ">
-            <thead class="bg-blue-400">
-                <tr>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Nama Dokter</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Tanggal
-                        Kunjungan</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Rekam Medis</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Status</th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Bukti Pembayaran
-                    </th>
-                    <th class="px-4 py-3 text-center font-bold text-gray-700 border border-black">Surat Rujukan
-                    </th>
-                </tr>
-            </thead>
+            {{-- Card Putih Pembungkus Tabel --}}
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
 
-            <tbody>
-                <tr>
-                    <td class="px-4 py-3 border border-black">dr. Benny Wijaya</td>
-                    <td class="px-4 py-3 border border-black">12 Desember 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1000</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">123123.pdf</td>
-                </tr>
+                {{-- Header Tools (Filter) --}}
+                <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="flex items-center gap-2 text-[#2C3753]">
+                        <span class="material-symbols-outlined text-2xl">history_edu</span>
+                        <h2 class="text-xl font-bold">Daftar Kunjungan</h2>
+                    </div>
 
-                <tr>
-                    <td class="px-4 py-3 border border-black">drg. Deya Seprina</td>
-                    <td class="px-4 py-3 border border-black">20 November 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1001</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">234566.pdf</td>
-                </tr>
+                    {{-- Filter Dropdown (Styled) --}}
+                    <div class="flex items-center gap-3">
+                        <span class="text-gray-500 text-sm font-medium hidden md:block">Filter Klinik:</span>
+                        <select
+                            class="select select-bordered select-sm w-full md:w-48 bg-gray-50 border-gray-300 focus:border-[#4cd6c0] focus:ring-[#4cd6c0]">
+                            <option selected>Semua Klinik</option>
+                            <option>Klinik Umum</option>
+                            <option>Klinik Gigi</option>
+                            <option>Klinik Mata</option>
+                        </select>
+                    </div>
+                </div>
 
-                <tr>
-                    <td class="px-4 py-3 border border-black">dr. Medina, Sp.M</td>
-                    <td class="px-4 py-3 border border-black">30 Oktober 2025</td>
-                    <td class="px-4 py-3 border border-black">INV–1002</td>
-                    <td class="px-4 py-3 border border-black">
-                        <span
-                            class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Selesai</span>
-                    </td>
-                    <td class="px-4 py-3 border border-black text-blue-600 cursor-pointer">Lihat Nota</td>
-                    <td class="px-4 py-3 border border-black">987120.pdf</td>
-                </tr>
-            </tbody>
-        </table>
+                {{-- 3. TABEL DATA (Update Kolom) --}}
+                <div class="overflow-x-auto">
+                    <table class="table w-full">
+                        {{-- Head --}}
+                        <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider font-bold">
+                            <tr>
+                                <th class="py-4 px-4 text-center">No. Antrian</th>
+                                <th class="py-4 px-4 text-left">Klinik</th>
+                                <th class="py-4 px-4 text-left">Nama Dokter</th>
+                                <th class="py-4 px-4 text-center">Tanggal Kunjungan</th>
+                                <th class="py-4 px-4 text-left w-1/5">Keluhan</th> {{-- w-1/5 agar kolom keluhan agak lebar --}}
+                                <th class="py-4 px-4 text-center">Status</th>
+                                <th class="py-4 px-4 text-center">Surat Rujukan</th>
+                            </tr>
+                        </thead>
+
+                        {{-- Body --}}
+                        <tbody class="text-gray-700">
+
+                            {{-- Baris 1 --}}
+                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
+                                {{-- Kolom 1: No Antrian --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="font-mono font-bold text-lg text-[#2C3753]">A-012</div>
+                                </td>
+
+                                {{-- Kolom 2: Klinik --}}
+                                <td class="py-4 px-4">
+                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Umum</div>
+                                </td>
+
+                                {{-- Kolom 3: Nama Dokter --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="avatar placeholder">
+                                            <div class="bg-blue-100 text-blue-700 rounded-full w-8 h-8">
+                                                <span class="text-xs font-bold">BW</span>
+                                            </div>
+                                        </div>
+                                        <div class="font-bold text-[#2C3753]">dr. Benny Wijaya</div>
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 4: Tanggal --}}
+                                <td class="py-4 px-4 text-center text-sm font-medium">
+                                    12 Des 2025
+                                </td>
+
+                                {{-- Kolom 5: Keluhan --}}
+                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
+                                    Demam tinggi naik turun sejak 3 hari lalu, disertai pusing.
+                                </td>
+
+                                {{-- Kolom 6: Status --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="badge badge-success gap-1 text-white text-xs py-3 px-3">
+                                        Selesai
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 7: Surat Rujukan --}}
+                                <td class="py-4 px-4 text-center">
+                                    <button class="btn btn-xs btn-outline btn-info gap-1 normal-case group">
+                                        <span
+                                            class="material-symbols-outlined text-[14px] group-hover:text-white">description</span>
+                                        Unduh PDF
+                                    </button>
+                                </td>
+                            </tr>
+
+                            {{-- Baris 2 --}}
+                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
+                                {{-- Kolom 1: No Antrian --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="font-mono font-bold text-lg text-[#2C3753]">G-005</div>
+                                </td>
+
+                                {{-- Kolom 2: Klinik --}}
+                                <td class="py-4 px-4">
+                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Gigi</div>
+                                </td>
+
+                                {{-- Kolom 3: Nama Dokter --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="avatar placeholder">
+                                            <div class="bg-purple-100 text-purple-700 rounded-full w-8 h-8">
+                                                <span class="text-xs font-bold">DS</span>
+                                            </div>
+                                        </div>
+                                        <div class="font-bold text-[#2C3753]">drg. Deya Seprina</div>
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 4: Tanggal --}}
+                                <td class="py-4 px-4 text-center text-sm font-medium">
+                                    20 Nov 2025
+                                </td>
+
+                                {{-- Kolom 5: Keluhan --}}
+                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
+                                    Pembersihan karang gigi dan kontrol rutin.
+                                </td>
+
+                                {{-- Kolom 6: Status --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="badge badge-success gap-1 text-white text-xs py-3 px-3">
+                                        Selesai
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 7: Surat Rujukan --}}
+                                <td class="py-4 px-4 text-center">
+                                    <span class="text-xs text-gray-400 italic">Tidak ada</span>
+                                </td>
+                            </tr>
+
+                            {{-- Baris 3 --}}
+                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
+                                {{-- Kolom 1: No Antrian --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="font-mono font-bold text-lg text-[#2C3753]">M-021</div>
+                                </td>
+
+                                {{-- Kolom 2: Klinik --}}
+                                <td class="py-4 px-4">
+                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Mata</div>
+                                </td>
+
+                                {{-- Kolom 3: Nama Dokter --}}
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="avatar placeholder">
+                                            <div class="bg-green-100 text-green-700 rounded-full w-8 h-8">
+                                                <span class="text-xs font-bold">MD</span>
+                                            </div>
+                                        </div>
+                                        <div class="font-bold text-[#2C3753]">dr. Medina, Sp.M</div>
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 4: Tanggal --}}
+                                <td class="py-4 px-4 text-center text-sm font-medium">
+                                    30 Okt 2025
+                                </td>
+
+                                {{-- Kolom 5: Keluhan --}}
+                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
+                                    Penglihatan kabur saat melihat jarak jauh.
+                                </td>
+
+                                {{-- Kolom 6: Status --}}
+                                <td class="py-4 px-4 text-center">
+                                    <div class="badge badge-warning gap-1 text-white text-xs py-3 px-3">
+                                        Menunggu
+                                    </div>
+                                </td>
+
+                                {{-- Kolom 7: Surat Rujukan --}}
+                                <td class="py-4 px-4 text-center">
+                                    <span class="text-xs text-gray-400 italic">Diproses</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- Pagination (Optional Look) --}}
+                <div class="p-4 border-t border-gray-100 flex justify-end">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-ghost">«</button>
+                        <button class="btn btn-sm bg-[#2C3753] text-white hover:bg-blue-900 border-none">1</button>
+                        <button class="btn btn-sm btn-ghost">2</button>
+                        <button class="btn btn-sm btn-ghost">»</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     @vite('resources/js/utility/navbar_beranda.js')
