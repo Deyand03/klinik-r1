@@ -125,9 +125,6 @@
                         <label class="label pl-0 flex justify-between">
                             <span
                                 class="label-text font-bold text-brand-dark group-focus-within:text-brand-secondary transition text-base">Password</span>
-                            <a href="#"
-                                class="label-text-alt link link-hover text-brand-secondary font-medium hover:text-brand-dark transition">Lupa
-                                Password?</a>
                         </label>
                         <div class="relative">
                             <!-- Icon Gembok -->
@@ -164,15 +161,6 @@
                                 </svg>
                             </button>
                         </div>
-                    </div>
-
-                    <!-- Ingat Saya -->
-                    <div class="flex items-center pt-2">
-                        <label class="label cursor-pointer justify-start gap-3 pl-0 hover:opacity-80 transition">
-                            <input type="checkbox" name="remember"
-                                class="checkbox checkbox-sm rounded border-gray-300 text-white focus:ring-brand-secondary checked:bg-brand-secondary checked:border-brand-secondary" />
-                            <span class="label-text text-gray-600 font-medium">Ingat saya di perangkat ini</span>
-                        </label>
                     </div>
 
                     <button type="submit"
