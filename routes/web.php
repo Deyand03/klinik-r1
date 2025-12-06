@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\PembayaranAdminController;
 use App\Http\Controllers\FasilitasLayananController;
 use App\Http\Controllers\StaffOperasionalController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -111,8 +112,10 @@ Route::middleware(['cek_session'])->group(function () {
             Route::post('/resepsionis/{id}/checkin', 'checkIn')->name('staff.resepsionis.checkin');
             Route::post('/perawat/{id}/store', 'storePerawat')->name('staff.perawat.store');
             Route::post('/dokter/{id}/store', 'storeDokter')->name('staff.dokter.store');
-            Route::post('/kasir/{id}/bayar', 'storeKasir')->name('staff.kasir.store');
+            // Route::post('/kasir/{id}/bayar', 'storeKasir')->name('staff.kasir.store');
         });
+        Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])
+        ->name('staff.kasir.store');
         Route::get('/register-pasien', [RegisterPasienController::class, 'index'])->name('staff.register-pasien');
         Route::post('/register-pasien/store', [RegisterPasienController::class, 'storePasien'])->name('staff.register-pasien.store');
         Route::post('/register-pasien/kunjungan/store', [RegisterPasienController::class, 'storeKunjungan'])->name('staff.register-pasien.kunjungan.store');

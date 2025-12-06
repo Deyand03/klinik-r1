@@ -17,6 +17,7 @@ class DashboardController extends Controller
     private function getDataAntrian($status)
     {
         $token = session('api_token');
+        // $url = 'http://127.0.0.1:8000/api/admin/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
         $url = 'http://127.0.0.1:8000/api/perawat/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
 
         try {
