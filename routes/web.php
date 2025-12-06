@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\KelolaPegawaiController;
-use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\KelolaPegawaiController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\PembayaranAdminController;
 use App\Http\Controllers\FasilitasLayananController;
+use App\Http\Controllers\RiwayatReservasiController;
 use App\Http\Controllers\StaffOperasionalController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -23,7 +24,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 // Route Landing Page
 Route::get('/', function () {
     return view('beranda');
-})->name('beranda');
+})->name('beranda')->middleware(['guestorpasien']);
 
 // --- Pendaftaran (Register) ---
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
@@ -32,18 +33,18 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->middleware
 // Booking Views
 Route::get('/cari_dokter', function () {
     return view('pasien.cari_dokter.index');
-})->name('cari_dokter');
+})->name('cari_dokter')->middleware(['guestorpasien']);
 Route::get('/profil_dokter', function () {
     return view('pasien.cari_dokter.profil_dokter');
-})->name('profil_dokter');
+})->name('profil_dokter')->middleware(['guestorpasien']);
 
 // --- FASILITAS & LAYANAN (Total 13 Views) ---
 Route::controller(FasilitasLayananController::class)->group(function () {
 
-    Route::get('/pasien/fasilitas-layanan', 'index')->name('pasien.fasilitas-layanan'); // Main index page
+    Route::get('/pasien/fasilitas-layanan', 'index')->name('pasien.fasilitas-layanan')->middleware(['guestorpasien']); // Main index page
 
     // I. KLINIK DETAILS (5 POLI)
-    Route::prefix('pasien/klinik')->name('fasilitas-layanan.')->group(function () {
+    Route::prefix('pasien/klinik')->name('fasilitas-layanan.')->middleware(['guestorpasien'])->group(function () {
         Route::get('/umum', 'klinik_umum')->name('klinik-umum');
         Route::get('/gigi', 'klinik_gigi')->name('klinik-gigi');
         Route::get('/mata', 'klinik_mata')->name('klinik-mata');
@@ -52,7 +53,7 @@ Route::controller(FasilitasLayananController::class)->group(function () {
     });
 
     // II. LAYANAN DETAIL (4 SERVICES)
-    Route::prefix('pasien/layanan')->name('layanan.')->group(function () {
+    Route::prefix('pasien/layanan')->name('layanan.')->middleware(['guestorpasien'])->group(function () {
         Route::get('/ambulans', 'layanansatu')->name('satu'); //
         Route::get('/pemeriksaan-mata', 'layanandua')->name('dua'); //
         Route::get('/pemeriksaan-gigi', 'layanantiga')->name('tiga'); //
@@ -60,7 +61,7 @@ Route::controller(FasilitasLayananController::class)->group(function () {
     });
 
     // III. FASILITAS DETAIL (4 FACILITIES)
-    Route::prefix('pasien/fasilitas')->name('fasilitas.')->group(function () {
+    Route::prefix('pasien/fasilitas')->name('fasilitas.')->middleware(['guestorpasien'])->group(function () {
         Route::get('/ruang-tunggu', 'fasilitassatu')->name('satu'); //
         Route::get('/laboratorium', 'fasilitasdua')->name('dua'); //
         Route::get('/ruang-tindakan', 'fasilitastiga')->name('tiga'); //
@@ -78,13 +79,11 @@ Route::middleware(['cek_session'])->group(function () {
     // --- 1. PASIEN FLOW & VIEWS ---
     Route::get('/tiket_antrian', function () {
         return view('pasien.cari_dokter.tiket_antrian');
-    })->name('tiket_antrian');
-    Route::get('/riwayat_reservasi', function () {
-        return view('pasien.riwayat_reservasi.index');
-    })->name('riwayat_reservasi');
+    })->name('tiket_antrian')->middleware(['guestorpasien']);
+    Route::get('/riwayat_reservasi', [RiwayatReservasiController::class, 'index'])->name('riwayat_reservasi')->middleware(['guestorpasien']);
 
     // Booking Action (Membuat Kunjungan)
-    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store')->middleware(['guestorpasien']);
 
     // Profile Settings (Breeze Default)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -115,7 +114,7 @@ Route::middleware(['cek_session'])->group(function () {
             // Route::post('/kasir/{id}/bayar', 'storeKasir')->name('staff.kasir.store');
         });
         Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])
-        ->name('staff.kasir.store');
+            ->name('staff.kasir.store');
         Route::get('/register-pasien', [RegisterPasienController::class, 'index'])->name('staff.register-pasien');
         Route::post('/register-pasien/store', [RegisterPasienController::class, 'storePasien'])->name('staff.register-pasien.store');
         Route::post('/register-pasien/kunjungan/store', [RegisterPasienController::class, 'storeKunjungan'])->name('staff.register-pasien.kunjungan.store');
@@ -124,7 +123,7 @@ Route::middleware(['cek_session'])->group(function () {
         Route::controller(AdminDashboardController::class)->prefix('admin')->group(function () {
 
             Route::get('/dashboard', 'index')->name('admin.dashboard'); // Dashboard Statistik
-            Route::get('/riwayat', 'riwayat')->name('admin.riwayat'); 
+            Route::get('/riwayat', 'riwayat')->name('admin.riwayat');
             Route::get('/rekam-medis', 'viewRekamMedis')->name('admin.rekam-medis');
             Route::get('/rujukan', 'viewRujukan')->name('admin.rujukan-digital');
         });
@@ -149,7 +148,6 @@ Route::middleware(['cek_session'])->group(function () {
                 Route::get('/edit/{id}', 'edit')->name('edit'); // {id} = staff_id
                 Route::put('/update/{id}', 'update')->name('update');
             });
-
         });
         // Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter.index');
         // Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
