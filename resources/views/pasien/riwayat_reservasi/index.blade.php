@@ -62,152 +62,92 @@
 
                         {{-- Body --}}
                         <tbody class="text-gray-700">
+                            @forelse($riwayat as $item)
+                                <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
 
-                            {{-- Baris 1 --}}
-                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
-                                {{-- Kolom 1: No Antrian --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="font-mono font-bold text-lg text-[#2C3753]">A-012</div>
-                                </td>
+                                    {{-- 1. No Antrian --}}
+                                    <td class="py-4 px-4 text-center">
+                                        <div class="font-mono font-bold text-lg text-[#2C3753]">
+                                            {{ $item['no_antrian'] }}
+                                        </div>
+                                    </td>
 
-                                {{-- Kolom 2: Klinik --}}
-                                <td class="py-4 px-4">
-                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Umum</div>
-                                </td>
+                                    {{-- 2. Klinik --}}
+                                    <td class="py-4 px-4">
+                                        <div class="badge badge-outline text-gray-600 font-medium">
+                                            {{ $item['klinik']['nama'] ?? 'Klinik Umum' }}
+                                        </div>
+                                    </td>
 
-                                {{-- Kolom 3: Nama Dokter --}}
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="avatar placeholder">
-                                            <div class="bg-blue-100 text-blue-700 rounded-full w-8 h-8">
-                                                <span class="text-xs font-bold">BW</span>
+                                    {{-- 3. Nama Dokter --}}
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="avatar placeholder">
+                                                <div class="bg-blue-100 text-blue-700 rounded-full w-8 h-8">
+                                                    <span class="text-xs font-bold">
+                                                        {{ substr($item['dokter']['nama_lengkap'] ?? 'Dr', 0, 2) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="font-bold text-[#2C3753]">
+                                                {{ $item['dokter']['nama_lengkap'] ?? '-' }}
                                             </div>
                                         </div>
-                                        <div class="font-bold text-[#2C3753]">dr. Benny Wijaya</div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                {{-- Kolom 4: Tanggal --}}
-                                <td class="py-4 px-4 text-center text-sm font-medium">
-                                    12 Des 2025
-                                </td>
+                                    {{-- 4. Tanggal Kunjungan --}}
+                                    <td class="py-4 px-4 text-center text-sm font-medium">
+                                        {{ \Carbon\Carbon::parse($item['tgl_kunjungan'])->translatedFormat('d M Y') }}
+                                    </td>
 
-                                {{-- Kolom 5: Keluhan --}}
-                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
-                                    Demam tinggi naik turun sejak 3 hari lalu, disertai pusing.
-                                </td>
+                                    {{-- 5. Keluhan --}}
+                                    <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
+                                        {{ Str::limit($item['keluhan'], 50) }}
+                                    </td>
 
-                                {{-- Kolom 6: Status --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="badge badge-success gap-1 text-white text-xs py-3 px-3">
-                                        Selesai
-                                    </div>
-                                </td>
-
-                                {{-- Kolom 7: Surat Rujukan --}}
-                                <td class="py-4 px-4 text-center">
-                                    <button class="btn btn-xs btn-outline btn-info gap-1 normal-case group">
-                                        <span
-                                            class="material-symbols-outlined text-[14px] group-hover:text-white">description</span>
-                                        Unduh PDF
-                                    </button>
-                                </td>
-                            </tr>
-
-                            {{-- Baris 2 --}}
-                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
-                                {{-- Kolom 1: No Antrian --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="font-mono font-bold text-lg text-[#2C3753]">G-005</div>
-                                </td>
-
-                                {{-- Kolom 2: Klinik --}}
-                                <td class="py-4 px-4">
-                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Gigi</div>
-                                </td>
-
-                                {{-- Kolom 3: Nama Dokter --}}
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="avatar placeholder">
-                                            <div class="bg-purple-100 text-purple-700 rounded-full w-8 h-8">
-                                                <span class="text-xs font-bold">DS</span>
-                                            </div>
+                                    {{-- 6. Status --}}
+                                    <td class="py-4 px-4 text-center">
+                                        @php
+                                            $statusClass = match ($item['status']) {
+                                                'selesai' => 'badge-success text-white',
+                                                'batal' => 'badge-error text-white',
+                                                'menunggu_pembayaran' => 'badge-warning text-white',
+                                                'menunggu_dokter' => 'badge-info text-white',
+                                                'menunggu_perawat' => 'badge-info text-white',
+                                                'booking'
+                                                    => 'badge-ghost text-gray-600', // Status 'booking' from seeder
+                                                default => 'badge-ghost text-gray-600',
+                                            };
+                                            $statusLabel = ucwords(str_replace('_', ' ', $item['status']));
+                                        @endphp
+                                        <div class="badge {{ $statusClass }} gap-1 text-xs py-3 px-3">
+                                            {{ $statusLabel }}
                                         </div>
-                                        <div class="font-bold text-[#2C3753]">drg. Deya Seprina</div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                {{-- Kolom 4: Tanggal --}}
-                                <td class="py-4 px-4 text-center text-sm font-medium">
-                                    20 Nov 2025
-                                </td>
-
-                                {{-- Kolom 5: Keluhan --}}
-                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
-                                    Pembersihan karang gigi dan kontrol rutin.
-                                </td>
-
-                                {{-- Kolom 6: Status --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="badge badge-success gap-1 text-white text-xs py-3 px-3">
-                                        Selesai
-                                    </div>
-                                </td>
-
-                                {{-- Kolom 7: Surat Rujukan --}}
-                                <td class="py-4 px-4 text-center">
-                                    <span class="text-xs text-gray-400 italic">Tidak ada</span>
-                                </td>
-                            </tr>
-
-                            {{-- Baris 3 --}}
-                            <tr class="hover:bg-blue-50 transition-colors border-b border-gray-100">
-                                {{-- Kolom 1: No Antrian --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="font-mono font-bold text-lg text-[#2C3753]">M-021</div>
-                                </td>
-
-                                {{-- Kolom 2: Klinik --}}
-                                <td class="py-4 px-4">
-                                    <div class="badge badge-outline text-gray-600 font-medium">Klinik Mata</div>
-                                </td>
-
-                                {{-- Kolom 3: Nama Dokter --}}
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="avatar placeholder">
-                                            <div class="bg-green-100 text-green-700 rounded-full w-8 h-8">
-                                                <span class="text-xs font-bold">MD</span>
-                                            </div>
+                                    {{-- 7. Surat Rujukan / Aksi --}}
+                                    <td class="py-4 px-4 text-center">
+                                        @if ($item['status'] == 'selesai')
+                                            <button class="btn btn-xs btn-outline btn-info gap-1 normal-case group">
+                                                <span class="material-symbols-outlined text-[14px]">description</span>
+                                                Unduh
+                                            </button>
+                                        @else
+                                            <span class="text-xs text-gray-400 italic">Diproses</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                {{-- Empty State --}}
+                                <tr>
+                                    <td colspan="7" class="text-center py-10">
+                                        <div class="flex flex-col items-center justify-center text-gray-400">
+                                            <span class="material-symbols-outlined text-4xl mb-2">history_toggle_off</span>
+                                            <p>Belum ada riwayat kunjungan.</p>
                                         </div>
-                                        <div class="font-bold text-[#2C3753]">dr. Medina, Sp.M</div>
-                                    </div>
-                                </td>
-
-                                {{-- Kolom 4: Tanggal --}}
-                                <td class="py-4 px-4 text-center text-sm font-medium">
-                                    30 Okt 2025
-                                </td>
-
-                                {{-- Kolom 5: Keluhan --}}
-                                <td class="py-4 px-4 text-sm text-gray-600 leading-snug">
-                                    Penglihatan kabur saat melihat jarak jauh.
-                                </td>
-
-                                {{-- Kolom 6: Status --}}
-                                <td class="py-4 px-4 text-center">
-                                    <div class="badge badge-warning gap-1 text-white text-xs py-3 px-3">
-                                        Menunggu
-                                    </div>
-                                </td>
-
-                                {{-- Kolom 7: Surat Rujukan --}}
-                                <td class="py-4 px-4 text-center">
-                                    <span class="text-xs text-gray-400 italic">Diproses</span>
-                                </td>
-                            </tr>
-
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

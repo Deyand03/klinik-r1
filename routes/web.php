@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\KelolaPegawaiController;
-use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\KelolaPegawaiController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\RegisterPasienController;
 use App\Http\Controllers\PembayaranAdminController;
 use App\Http\Controllers\FasilitasLayananController;
+use App\Http\Controllers\RiwayatReservasiController;
 use App\Http\Controllers\StaffOperasionalController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -79,9 +80,7 @@ Route::middleware(['cek_session'])->group(function () {
     Route::get('/tiket_antrian', function () {
         return view('pasien.cari_dokter.tiket_antrian');
     })->name('tiket_antrian');
-    Route::get('/riwayat_reservasi', function () {
-        return view('pasien.riwayat_reservasi.index');
-    })->name('riwayat_reservasi');
+    Route::get('/riwayat_reservasi', [RiwayatReservasiController::class, 'index'])->name('riwayat_reservasi');
 
     // Booking Action (Membuat Kunjungan)
     Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
@@ -115,7 +114,7 @@ Route::middleware(['cek_session'])->group(function () {
             // Route::post('/kasir/{id}/bayar', 'storeKasir')->name('staff.kasir.store');
         });
         Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])
-        ->name('staff.kasir.store');
+            ->name('staff.kasir.store');
         Route::get('/register-pasien', [RegisterPasienController::class, 'index'])->name('staff.register-pasien');
         Route::post('/register-pasien/store', [RegisterPasienController::class, 'storePasien'])->name('staff.register-pasien.store');
         Route::post('/register-pasien/kunjungan/store', [RegisterPasienController::class, 'storeKunjungan'])->name('staff.register-pasien.kunjungan.store');
@@ -124,7 +123,7 @@ Route::middleware(['cek_session'])->group(function () {
         Route::controller(AdminDashboardController::class)->prefix('admin')->group(function () {
 
             Route::get('/dashboard', 'index')->name('admin.dashboard'); // Dashboard Statistik
-            Route::get('/riwayat', 'riwayat')->name('admin.riwayat'); 
+            Route::get('/riwayat', 'riwayat')->name('admin.riwayat');
             Route::get('/rekam-medis', 'viewRekamMedis')->name('admin.rekam-medis');
             Route::get('/rujukan', 'viewRujukan')->name('admin.rujukan-digital');
         });
@@ -149,7 +148,6 @@ Route::middleware(['cek_session'])->group(function () {
                 Route::get('/edit/{id}', 'edit')->name('edit'); // {id} = staff_id
                 Route::put('/update/{id}', 'update')->name('update');
             });
-
         });
         // Route::get('/admin/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('admin.jadwal-dokter.index');
         // Route::post('/admin/jadwal-dokter/store', [JadwalDokterController::class, 'store'])->name('admin.jadwal-dokter.store');
