@@ -11,20 +11,28 @@ class BookingController extends Controller
     {
         $token = session('api_token');
 
-        // Kirim data booking ke Backend
         $response = Http::withToken($token)->post('http://127.0.0.1:8000/api/booking/store', [
             'id_dokter' => $request->id_dokter,
-            'keluhan' => $request->keluhan,
-            'tanggal' => $request->tanggal, // Input baru yang wajib ada
+            'keluhan'   => $request->keluhan,
+            'tanggal'   => $request->tanggal,
         ]);
 
         if ($response->successful()) {
             $tiket = $response->json()['data'];
-            // Redirect ke halaman tiket sambil bawa datanya
             return redirect()->route('tiket_antrian')->with('tiket', $tiket);
         }
 
-        return back()->with('error', 'Gagal booking: ' . ($response->json()['message'] ?? 'Terjadi kesalahan'));
+        // --- DEBUGGING START ---
+        // Jika error validasi (422), ambil pesannya
+        if ($response->status() === 422) {
+            $msg = $response->json()['message'] ?? 'Validasi gagal';
+            return back()->with('error', 'Gagal: ' . $msg);
+        }
+
+        // Jika Error Server (500), tampilkan body response-nya biar ketahuan
+        // JANGAN DIBIARKAN "Terjadi Kesalahan" SAJA
+        return back()->with('error', 'Server Error: ' . $response->body());
+        // --- DEBUGGING END ---
     }
 
     public function showTiket()
