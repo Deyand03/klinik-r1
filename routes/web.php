@@ -24,7 +24,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 // Route Landing Page
 Route::get('/', function () {
     return view('beranda');
-})->name('beranda')->middleware(['guestorpasien']);
+})->name('beranda');
 
 // --- Pendaftaran (Register) ---
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
