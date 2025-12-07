@@ -93,7 +93,9 @@ Route::middleware(['cek_session'])->group(function () {
     // --- 2. STAFF OPERASIONAL & ADMIN ---
     // Semua route di bawah ini hanya untuk role: staff/admin (dibatasi oleh middleware role:staff)
     Route::prefix('staff')->middleware(['role:staff'])->group(function () {
-
+        // kunjungan dan rekam medis
+        Route::get('/kunjungan/detail', [DashboardController::class, 'detail']);
+        Route::post('/kunjungan/resep/{id}', [DashboardController::class, 'addResep']);
 
         Route::post('/perawat/input-vital/{id}', [DashboardController::class, 'storeVital'])
             ->name('staff.perawat.input-vital');
