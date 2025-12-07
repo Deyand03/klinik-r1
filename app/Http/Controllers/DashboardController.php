@@ -137,8 +137,7 @@ class DashboardController extends Controller
                     return back()->with('error', 'Gagal mengambil data antrian');
                 }
 
-                $antrian = $response->json()['data'] ?? [];
-                
+                $antrian = $response->json()['table']['data'] ?? [];
 
                 return view('staff.resepsionis.index', compact('antrian'));
 
