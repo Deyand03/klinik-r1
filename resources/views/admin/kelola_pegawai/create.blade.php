@@ -76,7 +76,7 @@
                     <!-- No HP -->
                     <div class="form-control">
                         <label class="label"><span class="label-text font-semibold">No. HP</span></label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp') }}"
+                        <input type="number" name="no_hp" value="{{ old('no_hp') }}"
                             class="input input-bordered w-full rounded-xl bg-gray-50 focus:bg-white @error('no_hp') input-error bg-red-50 @enderror"
                             placeholder="0812..." required>
                         @error('no_hp')
