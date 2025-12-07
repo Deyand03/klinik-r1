@@ -4,172 +4,69 @@
 
 @section('content')
     <div class="bg-linear-to-b from-brand-tertiary to-[#2C3753] py-32 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto text-center">
-            <h1 class="text-4xl font-bold text-white mb-2">
-                Cari <span class="text-[#4cd6c0]">Dokter</span>
-            </h1>
-            <p class="text-gray-200 mb-10">Temukan Dokter dan Informasi Jadwal Praktik Disini</p>
-
-            <div class="max-w-xl mx-auto">
+        <div class="max-w-xl mx-auto">
+            <form action="{{ route('cari_dokter') }}" method="GET">
                 <div class="form-control w-full">
-                    <label class="label"><span class="label-text text-white font-semibold">Klinik</span></label>
-                    <select class="select select-bordered w-full text-gray-700 bg-white">
-                        <option selected>Semua Klinik</option>
-                        <option>Klinik Umum</option>
-                        <option>Klinik Gigi</option>
-                        <option>Klinik Mata</option>
-                        <option>Klinik Gizi</option>
-                        <option>Klinik Kulit & Kelamin</option>
+                    <label class="label"><span class="label-text text-white font-semibold">Filter Klinik</span></label>
+                    {{-- onchange="this.form.submit()" membuat form otomatis kirim saat dipilih --}}
+                    <select name="klinik" onchange="this.form.submit()"
+                        class="select select-bordered w-full text-gray-700 bg-white">
+                        <option value="">Semua Klinik</option>
+                        @foreach ($clinics as $c)
+                            <option value="{{ $c['id'] }}" {{ request('klinik') == $c['id'] ? 'selected' : '' }}>
+                                {{ $c['nama'] }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 -mt-8 rounded-t-3xl">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div
-                    class="card card-side bg-white shadow-lg border border-gray-100 rounded-xl overflow-hidden flex flex-col sm:flex-row">
-                    <figure class="sm:w-1/3 h-64 sm:h-auto relative">
-                        <img src="https://placehold.co/300x400/png?text=Dokter+Wanita" alt="Dokter"
-                            class="h-full w-full object-cover" />
-                    </figure>
-                    <div class="card-body sm:w-2/3 p-6">
-                        <div class="block sm:hidden mb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">drg. Eugene Ahn</h2>
-                            <hr class="border-gray-300 mt-2">
-                        </div>
-                        <div
-                            class="hidden sm:block w-[calc(100%+24px)] border-b-2 border-l-2 border-[#2C3753] rounded-bl-4xl pl-5 mb-4 -mr-6 pr-6 -mt-6 pt-4 pb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">drg. Eugene Ahn</h2>
-                        </div>
-                        <div class="space-y-2 mb-4 px-0 sm:px-2">
-                            <p class="flex items-center text-[#2C3753] font-bold text-lg"><span
-                                    class="font-bold mr-1">Klinik:</span> Gigi</p>
-                            <p class="text-green-500 font-bold flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                Ada Jadwal Praktik Hari Ini
-                            </p>
-                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
-                        </div>
-                        <div class="card-actions justify-end mt-auto">
-                            <a href="{{ route('profil_dokter') }}"
-                                class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
-                                & Jadwal Praktik</a>
+                @forelse($doctors as $doc)
+                    <div
+                        class="card card-side bg-white shadow-lg border border-gray-100 rounded-xl overflow-hidden flex flex-col sm:flex-row">
+                        <figure class="sm:w-1/3 h-64 sm:h-auto relative">
+                            <img src="{{ $doc['foto_profil'] ?? 'https://placehold.co/300x400/png?text=Dokter' }}" alt="{{ $doc['nama_lengkap'] }}"
+                                class="h-full w-full object-cover" />
+                        </figure>
+                        <div class="card-body sm:w-2/3 p-6">
+                            <div class="block sm:hidden mb-4">
+                                <h2 class="text-xl font-bold text-[#2C3753]">{{ $doc['nama_lengkap'] }}</h2>
+                                <hr class="border-gray-300 mt-2">
+                            </div>
+                            <div
+                                class="hidden sm:block w-[calc(100%+24px)] border-b-2 border-l-2 border-[#2C3753] rounded-bl-4xl pl-5 mb-4 -mr-6 pr-6 -mt-6 pt-4 pb-4">
+                                <h2 class="text-xl font-bold text-[#2C3753]">{{ $doc['nama_lengkap'] }}</h2>
+                            </div>
+                            <div class="space-y-2 mb-4 px-0 sm:px-2">
+                                <p class="flex items-center text-[#2C3753] font-bold text-lg"><span
+                                        class="font-bold mr-1">{{ $doc['klinik']['nama'] ?? '-' }}</p>
+                                <p class="text-red-500 font-bold flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    Tidak Ada Jadwal Praktik Hari Ini
+                                </p>
+                            </div>
+                            <div class="card-actions justify-end mt-auto">
+                                <a href="{{ route('profil_dokter', $doc['id']) }}"
+                                    class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
+                                    & Jadwal Praktik</a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div
-                    class="card card-side bg-white shadow-lg border border-gray-100 rounded-xl overflow-hidden flex flex-col sm:flex-row">
-                    <figure class="sm:w-1/3 h-64 sm:h-auto relative">
-                        <img src="https://placehold.co/300x400/333/fff?text=Dokter+Pria" alt="Dokter"
-                            class="h-full w-full object-cover" />
-                    </figure>
-                    <div class="card-body sm:w-2/3 p-6">
-                        <div class="block sm:hidden mb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">dr. Evan Lee</h2>
-                            <hr class="border-gray-300 mt-2">
-                        </div>
-                        <div
-                            class="hidden sm:block w-[calc(100%+24px)] border-b-2 border-l-2 border-[#2C3753] rounded-bl-4xl pl-5 mb-4 -mr-6 pr-6 -mt-6 pt-4 pb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">dr. Evan Lee</h2>
-                        </div>
-                        <div class="space-y-2 mb-4 px-0 sm:px-2">
-                            <p class="flex items-center text-[#2C3753] font-bold text-lg"><span
-                                    class="font-bold mr-1">Klinik:</span> Umum</p>
-                            <p class="text-red-500 font-bold flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                Tidak Ada Jadwal Praktik Hari Ini
-                            </p>
-                        </div>
-                        <div class="card-actions justify-end mt-auto">
-                            <button
-                                class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
-                                & Jadwal Praktik</button>
-                        </div>
+                @empty
+                    <div class="col-span-2 text-center py-10">
+                        <p class="text-gray-500 text-lg">Tidak ada dokter yang ditemukan.</p>
                     </div>
-                </div>
-
-                <div
-                    class="card card-side bg-white shadow-lg border border-gray-100 rounded-xl overflow-hidden flex flex-col sm:flex-row">
-                    <figure class="sm:w-1/3 h-64 sm:h-auto relative">
-                        <img src="https://placehold.co/300x400/png?text=Dokter+Wanita" alt="Dokter"
-                            class="h-full w-full object-cover" />
-                    </figure>
-                    <div class="card-body sm:w-2/3 p-6">
-                        <div class="block sm:hidden mb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">drg. Eugene Ahn</h2>
-                            <hr class="border-gray-300 mt-2">
-                        </div>
-                        <div
-                            class="hidden sm:block w-[calc(100%+24px)] border-b-2 border-l-2 border-[#2C3753] rounded-bl-4xl pl-5 mb-4 -mr-6 pr-6 -mt-6 pt-4 pb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">drg. Eugene Ahn</h2>
-                        </div>
-                        <div class="space-y-2 mb-4 px-0 sm:px-2">
-                            <p class="flex items-center text-[#2C3753] font-bold text-lg"><span
-                                    class="font-bold mr-1">Klinik:</span> Gigi</p>
-                            <p class="text-green-500 font-bold flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7" />
-                                </svg>
-                                Ada Jadwal Praktik Hari Ini
-                            </p>
-                            <p class="font-bold text-brand-tertiary text-sm">Jam Praktik: 09:00 - 17:00</p>
-                        </div>
-                        <div class="card-actions justify-end mt-auto">
-                            <button
-                                class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
-                                & Jadwal Praktik</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    class="card card-side bg-white shadow-lg border border-gray-100 rounded-xl overflow-hidden flex flex-col sm:flex-row">
-                    <figure class="sm:w-1/3 h-64 sm:h-auto relative">
-                        <img src="https://placehold.co/300x400/333/fff?text=Dokter+Pria" alt="Dokter"
-                            class="h-full w-full object-cover" />
-                    </figure>
-                    <div class="card-body sm:w-2/3 p-6">
-                        <div class="block sm:hidden mb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">dr. Evan Lee</h2>
-                            <hr class="border-gray-300 mt-2">
-                        </div>
-                        <div
-                            class="hidden sm:block w-[calc(100%+24px)] border-b-2 border-l-2 border-[#2C3753] rounded-bl-4xl pl-5 mb-4 -mr-6 pr-6 -mt-6 pt-4 pb-4">
-                            <h2 class="text-xl font-bold text-[#2C3753]">dr. Evan Lee</h2>
-                        </div>
-                        <div class="space-y-2 mb-4 px-0 sm:px-2">
-                            <p class="flex items-center text-[#2C3753] font-bold text-lg"><span
-                                    class="font-bold mr-1">Klinik:</span> Umum</p>
-                            <p class="text-red-500 font-bold flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                Tidak Ada Jadwal Praktik Hari Ini
-                            </p>
-                        </div>
-                        <div class="card-actions justify-end mt-auto">
-                            <button
-                                class="btn bg-brand-tertiary hover:bg-[#5b78eb] text-white border-none w-full sm:w-auto btn-sm h-10 px-6 rounded-md normal-case font-medium text-base">Profil
-                                & Jadwal Praktik</button>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
         </div>

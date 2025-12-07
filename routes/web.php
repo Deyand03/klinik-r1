@@ -5,6 +5,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CariDokterController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\KelolaPegawaiController;
 use App\Http\Controllers\AdminDashboardController;
@@ -31,12 +32,8 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->middleware
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
 // Booking Views
-Route::get('/cari_dokter', function () {
-    return view('pasien.cari_dokter.index');
-})->name('cari_dokter')->middleware(['guestorpasien']);
-Route::get('/profil_dokter', function () {
-    return view('pasien.cari_dokter.profil_dokter');
-})->name('profil_dokter')->middleware(['guestorpasien']);
+Route::get('/cari_dokter', [CariDokterController::class, 'index'])->name('cari_dokter');
+Route::get('/profil_dokter/{id}', [CariDokterController::class, 'show'])->name('profil_dokter');
 
 // --- FASILITAS & LAYANAN (Total 13 Views) ---
 Route::controller(FasilitasLayananController::class)->group(function () {
@@ -77,14 +74,10 @@ Route::controller(FasilitasLayananController::class)->group(function () {
 // Grup Utama: Memastikan token API tersedia di session
 Route::middleware(['cek_session'])->group(function () {
     // --- 1. PASIEN FLOW & VIEWS ---
-    Route::get('/tiket_antrian', function () {
-        return view('pasien.cari_dokter.tiket_antrian');
-    })->name('tiket_antrian')->middleware(['guestorpasien']);
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/tiket_antrian', [BookingController::class, 'showTiket'])->name('tiket_antrian');
+
     Route::get('/riwayat_reservasi', [RiwayatReservasiController::class, 'index'])->name('riwayat_reservasi')->middleware(['guestorpasien']);
-
-    // Booking Action (Membuat Kunjungan)
-    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store')->middleware(['guestorpasien']);
-
     // Profile Settings (Breeze Default)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

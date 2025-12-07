@@ -28,9 +28,10 @@
                     <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
 
                     {{-- GANTI BAGIAN NOMOR ANTRIAN --}}
+                    {{-- NOMOR ANTRIAN --}}
                     <h2 class="text-lg font-semibold tracking-widest uppercase opacity-90">Nomor Antrian</h2>
                     <div class="mt-2 text-6xl font-extrabold font-mono tracking-tighter">
-                        {{ $tiket['no_antrian'] ?? 'A-???' }}
+                        {{ $tiket['no_antrian'] }}
                     </div>
 
                     <p class="text-sm mt-2 font-medium bg-white/20 inline-block px-3 py-1 rounded-full">
@@ -44,30 +45,37 @@
                 {{-- Bagian Bawah: Detail --}}
                 <div class="p-8 space-y-6">
 
-                    {{-- Info Pasien --}}
-                    <div class="flex justify-between items-center pb-4 border-b border-gray-100">
-                        <div>
-                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider">Pasien</p>
-                            <p class="text-brand-dark font-bold text-lg">Andi Pratama</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider">Tanggal</p>
-                            <p class="text-brand-dark font-bold text-lg">{{ date('d M Y') }}</p>
-                        </div>
-                    </div>
+                    {{-- INFO PASIEN --}}
+                    <p class="text-xs text-gray-400 uppercase font-bold tracking-wider">Pasien</p>
+                    {{-- Nama Pasien diambil dari session user data karena tiket usually saves ID --}}
+                    <p class="text-brand-dark font-bold text-lg">
+                        {{ session('user_data')['pasien']['nama_lengkap'] ?? 'Pasien' }}</p>
+
+                    {{-- TANGGAL --}}
+                    <p class="text-xs text-gray-400 uppercase font-bold tracking-wider">Tanggal</p>
+                    <p class="text-brand-dark font-bold text-lg">
+                        {{ \Carbon\Carbon::parse($tiket['tgl_kunjungan'])->translatedFormat('d M Y') }}
+                    </p>
 
                     {{-- Info Dokter --}}
                     <div class="bg-gray-50 p-4 rounded-xl flex items-center gap-4">
                         <div class="avatar placeholder">
                             <div class="bg-brand-tertiary text-white rounded-full w-12">
-                                <span class="text-lg font-bold">EA</span>
+                                {{-- Ambil Inisial Dokter --}}
+                                <span class="text-lg font-bold">
+                                    {{ substr($tiket['dokter']['nama_lengkap'] ?? 'Dr', 0, 2) }}
+                                </span>
                             </div>
                         </div>
                         <div>
                             <p class="text-xs text-gray-400 font-bold uppercase">Dokter</p>
-                            {{-- GANTI BAGIAN NAMA PASIEN & DOKTER --}}
-                            <p class="text-brand-dark font-bold text-lg">{{ session('user_data')['name'] ?? 'Pasien' }}</p>
-                            <p class="text-xs text-brand-secondary font-semibold">Klinik Gigi</p>
+                            {{-- Tampilkan Nama Dokter dari Data Tiket --}}
+                            <p class="text-brand-dark font-bold text-lg">
+                                {{ $tiket['dokter']['nama_lengkap'] ?? 'Nama Dokter' }}
+                            </p>
+                            <p class="text-xs text-brand-secondary font-semibold">
+                                {{ $tiket['dokter']['spesialisasi'] ?? 'Dokter Umum' }}
+                            </p>
                         </div>
                     </div>
 
