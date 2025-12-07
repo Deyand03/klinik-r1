@@ -10,12 +10,12 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         // 1. Ambil Token
-        $token = session('api_token'); 
+        $token = session('api_token');
 
         // 2. Tembak API Backend
-        $response = Http::withToken($token)->post('http://127.0.0.1:8000/api/booking', [
-            'id_dokter' => $request->id_dokter, 
-            'id_jadwal' => 1, 
+        $response = Http::withToken($token)->post(env('API_URL') .'booking', [
+            'id_dokter' => $request->id_dokter,
+            'id_jadwal' => 1,
             'tgl_kunjungan' => date('Y-m-d'), // Hari ini
             'keluhan' => $request->keluhan,
         ]);
@@ -29,7 +29,7 @@ class BookingController extends Controller
             // GAGAL -> Balikin ke form + Pesan Error
             // Ambil pesan error dari JSON backend
             $pesan = $response->json()['message'] ?? 'Gagal memproses booking';
-            
+
             return back()->with('error', $pesan);
         }
     }

@@ -30,12 +30,12 @@ class AdminDashboardController extends Controller
         $bulanChart = $request->input('month', date('n'));
         $bulanTable = $request->input('month_table');
         $searchKeyword = $request->input('search');
-        $klinikId = $request->input('klinik_id'); 
-        $dokterId = $request->input('dokter_id'); 
+        $klinikId = $request->input('klinik_id');
+        $dokterId = $request->input('dokter_id');
         $page = $request->input('page', 1);
 
         $response = Http::withToken($token)->get(
-            'http://127.0.0.1:8000/api/admin/antrian',
+            env('API_URL') . '/admin/antrian',
             [
                 'type'        => $type,
                 'search'      => $searchKeyword,
@@ -49,14 +49,14 @@ class AdminDashboardController extends Controller
 
         $reservationsPaginator = new LengthAwarePaginator([], 0, 10, 1);
         $chartSource = [];
-        $filterOptions = ['clinics' => [], 'doctors' => []]; 
+        $filterOptions = ['clinics' => [], 'doctors' => []];
         $totalAllTime = 0;
         $chartLabels = ['Data Kosong']; $chartValues = [1]; $chartColors = ['#e5e7eb'];
 
         if ($response->successful()) {
             $json = $response->json();
-            $tableJson = $json['table']; 
-            
+            $tableJson = $json['table'];
+
             if (isset($json['options'])) {
                 $filterOptions = $json['options'];
             }
@@ -85,10 +85,10 @@ class AdminDashboardController extends Controller
                         'no_antrian' => $item['no_antrian'],
                         'status' => $item['status'],
                         'klinik' => $item['klinik']['nama'] ?? '-',
-                        
+
                         // --- FIX DI SINI TRAINER! ---
                         // Backend kirim objek Staff, kolomnya 'nama_lengkap', bukan 'nama'.
-                        'dokter' => $item['dokter']['nama_lengkap'] ?? 'Belum dipilih', 
+                        'dokter' => $item['dokter']['nama_lengkap'] ?? 'Belum dipilih',
                         // ----------------------------
 
                         'contact' => $item['pasien']['no_hp'] ?? '-',
@@ -99,10 +99,10 @@ class AdminDashboardController extends Controller
             });
 
             $reservationsPaginator = new LengthAwarePaginator(
-                $mappedItems, 
-                $tableJson['total'], 
-                $tableJson['per_page'], 
-                $tableJson['current_page'], 
+                $mappedItems,
+                $tableJson['total'],
+                $tableJson['per_page'],
+                $tableJson['current_page'],
                 ['path' => url()->current()]
             );
 
@@ -121,10 +121,10 @@ class AdminDashboardController extends Controller
             $colorMap = ['Klinik Umum' => '#0d9488', 'Klinik Mata Sehat'=> '#3d6281', 'Klinik Gigi'=> '#64748b', 'Klinik Kulit dan Kelamin'=> '#ccfbf1'];
             $fallbackColors = ['#ef4444', '#14b8a6', '#f59e0b', '#1e1b4b'];
             $grouped = collect($chartSource)->groupBy('klinik.nama');
-            
+
             $chartLabels = []; $chartValues = []; $chartColors = []; $index = 0;
             foreach ($grouped as $klinikName => $group) {
-                $label = $klinikName ?: 'Lainnya'; 
+                $label = $klinikName ?: 'Lainnya';
                 $chartLabels[] = $label;
                 $chartValues[] = $group->count();
                 $chartColors[] = isset($colorMap[$label]) ? $colorMap[$label] : $fallbackColors[$index++ % 4];
@@ -135,14 +135,14 @@ class AdminDashboardController extends Controller
         $data = [
             'profile' => ['name' => session('user_data')['staff']['nama_lengkap'] ?? 'Admin'],
             'stats' => [
-                'registered_patients' => $totalAllTime, 
-                'new_patients' => count($chartSource), 
+                'registered_patients' => $totalAllTime,
+                'new_patients' => count($chartSource),
             ],
             'chart_pie' => [
                 'labels' => $chartLabels, 'values' => $chartValues, 'colors' => $chartColors
             ],
             'table_data' => $reservationsPaginator,
-            'options' => $filterOptions, 
+            'options' => $filterOptions,
             'filters' => [
                 'month' => $bulanChart,
                 'month_table' => $bulanTable,
@@ -151,7 +151,7 @@ class AdminDashboardController extends Controller
                 'search' => $searchKeyword
             ]
         ];
-        
+
         return view($view, compact('data'));
     }
 }

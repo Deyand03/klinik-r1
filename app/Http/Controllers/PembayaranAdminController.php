@@ -43,7 +43,7 @@ class PembayaranAdminController extends Controller
 
         // PERUBAHAN 1: Endpoint & Payload
         $response = Http::withToken($token)
-            ->post(env('API_URL', 'http://127.0.0.1:8000') . '/pembayaran/store', [ // <--- Endpoint khusus pembayaran
+            ->post(env('API_URL') . '/pembayaran/store', [ // <--- Endpoint khusus pembayaran
                 'id_kunjungan' => $id,                 // <--- ID dari URL
                 'id_staff' => $staffId,            // <--- ID Kasir yg login
                 'total_biaya' => $request->total_biaya, // <--- Dari Input Hidden Form
