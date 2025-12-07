@@ -25,13 +25,13 @@
                 <form method="GET" action="{{ route('staff.register-pasien') }}">
                     <input type="text" name="search" placeholder="Cari nama atau NIK pasien..."
                         value="{{ request('search') }}" 
-                        class="input h-10 input-bordered border border-gray-300 rounded-xl shadow-md input-sm w-full sm:w-64 transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-lg focus:border-blue-400 hover:shadow-md" />
+                        class="input h-10 input-bordered border border-gray-300 rounded-xl shadow-md input-sm w-full sm:w-64 transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-lg focus:border-brand-secondary hover:shadow-md" />
                 </form>
 
                 <!-- Button Tambah Pasien -->
                 <button 
                     @click="openTambahPasien=true"
-                    class="btn  px-4 bg-blue-600 border border-blue-600 hover:bg-blue-700 rounded-xl active:scale-95 text-white shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center gap-2">
+                    class="btn  px-4 bg-brand-secondary border border-brand-secondary hover:bg-brand-secondary-hover rounded-xl active:scale-95 text-white shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -44,7 +44,7 @@
         <!-- TABLE -->
         <div class="overflow-x-auto">
             <table class="table w-full">
-                <thead class="bg-blue-50 text-blue-800 uppercase text-xs font-bold sticky top-0">
+                <thead class="bg-teal-50 text-brand-secondary uppercase text-xs font-bold sticky top-0">
                     <tr>
                         <th class="py-4 pl-4">No.</th>
                         <th>Identitas Pasien</th>
@@ -58,9 +58,9 @@
 
                 <tbody class="divide-y divide-gray-100">
                     @forelse($pasienData['data'] ?? [] as $index => $item)
-                    <tr class="hover:bg-blue-50/40 transition">
+                    <tr class="hover:bg-teal-50/40 transition">
                         
-                        <td class="pl-4 font-mono font-bold text-lg text-blue-600">{{ ($pasienData['from'] ?? 0) + $index }}</td>
+                        <td class="pl-4 font-mono font-bold text-lg text-brand-secondary">{{ ($pasienData['from'] ?? 0) + $index }}</td>
                         <td>
                             <div class="font-bold text-gray-800">{{ $item['nama_lengkap'] }}</div>
                             <div class="text-xs text-gray-400">NIK: {{ $item['nik'] }}</div>
@@ -75,8 +75,12 @@
                             <button
                             data-patient='@json($item)'
                             @click="openModal(JSON.parse($event.currentTarget.dataset.patient))"
-                            class="btn btn-sm border-none py-2 bg-blue-600 hover:bg-blue-800 rounded-xl text-white shadow-md">
-                            Antrian
+                            class="btn btn-sm border-none py-2 bg-brand-secondary hover:bg-teal-600 rounded-xl text-white shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                Antrian
                             </button>
                         </td>
                     </tr>
@@ -117,12 +121,13 @@
     <div 
         x-show="open"
         x-transition
+        x-cloak
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
     >
         <div @click.away="resetForm()" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
 
             <!-- Header -->
-            <div class="bg-blue-800 px-6 py-4 shadow flex justify-between items-center">
+            <div class="bg-brand-secondary px-6 py-4 shadow flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white">Tambah Antrian Kunjungan</h3>
                 <button @click="resetForm()" class="text-white text-xl">&times;</button>
             </div>
@@ -157,12 +162,12 @@
                     <select
                         name="dokter_jadwal_combo"
                         x-model="selectedDokterJadwal"
-                        class="select bg-white input select-bordered rounded-md border border-gray-300 w-full mb-4"
+                        class="cursor-pointer select bg-white input select-bordered rounded-md border border-gray-300 w-full mb-4"
                     >
                         <option value="" disabled selected>-- Pilih Dokter dan Jadwal --</option>
 
                         <template x-for="dok in dokterList" :key="dok.id_jadwal">
-                            <option 
+                            <option class="hover:bg-brand-secondary/20 cursor-pointer"
                                 :value="dok.id_dokter + '|' + dok.id_jadwal"
                                 x-text="dok.nama_dokter + ' - ' + dok.hari + ' (' + dok.waktu + ')'"
                             ></option>
@@ -182,7 +187,7 @@
                         <button 
                             type="submit"
                             :disabled="!selected || !selectedDokterJadwal || !keluhan"
-                            class="btn rounded-xl bg-blue-700 hover:bg-blue-900 text-white disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="btn rounded-xl bg-brand-secondary hover:bg-brand-secondary-hover text-white disabled:opacity-50 disabled:cursor-not-allowed">
                             Simpan Antrian (Booking)
                         </button>
                     </div>
@@ -197,17 +202,18 @@
     <div 
         x-show="openTambahPasien"
         x-transition
+        x-cloak
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
         >
         <div @click.away="resetTambahPasien()" 
             class="bg-white rounded-2xl shadow-2xl w-full max-w-xl overflow-hidden">
 
-                <div class="bg-blue-800 px-6 py-4 border-b border-blue-200 flex justify-between items-center">
+                <div class="bg-brand-secondary px-6 py-4 border-b border-brand-secondary flex justify-between items-center">
                     <h3 class="text-lg font-bold text-white">Tambah Pasien Baru</h3>
                     <button @click="resetTambahPasien()" class="text-white text-xl">&times;</button>
                 </div>
 
-            <form method="POST" action="{{ route('staff.register-pasien.store') }}" class="p-6 pt-0 space-y-5">
+            <form method="POST" action="{{ route('staff.register-pasien.store') }}" class="p-6 pt-0 space-y-5" x-on:submit.prevent="submitPasienForm()">
             @csrf
             
             <div class="bg-gray-100 p-3 -mx-6">
@@ -217,26 +223,60 @@
             <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Email <span class="text-red-500">*</span></label>
-                    <input name="email" type="email" required x-model="newPasien.email"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <input name="email" type="email" required x-model="newPasien.email" placeholder="example@gmail.com"
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
-                <div class="w-full md:w-1/2 px-2">
+                <div class="w-full md:w-1/2 px-2" x-data="{ showPassword: false }">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="password" required x-model="newPasien.password"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    
+                    <div class="relative">
+                        <input 
+                            :type="showPassword ? 'text' : 'password'" 
+                            name="password" 
+                            required 
+                            x-model="newPasien.password" 
+                            class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005] pr-10"
+                        >
+
+                            <span 
+                                @click="showPassword = !showPassword"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-brand-secondary transition duration-150 ease-in-out z-10"
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="opacity-0 scale-90"
+                                x-transition:enter-end="opacity-100 scale-100"
+                            >
+                                <template x-if="showPassword">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </template>
+                                
+                                <template x-if="!showPassword">
+                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </template>
+                            </span>
+                    </div>
                 </div>
+                    
             </div>
 
             <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Nama Lengkap <span class="text-red-500">*</span></label>
-                    <input name="nama_lengkap" required x-model="newPasien.nama_lengkap"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <input name="nama_lengkap" required x-model="newPasien.nama_lengkap" placeholder="Masukkan Nama Lengkap"
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
                 <div class="w-full md:w-1/2 px-2">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">NIK (Nomor Induk Kependudukan) <span class="text-red-500">*</span></label>
-                    <input name="nik" required x-model="newPasien.nik"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <input name="nik" required x-model="newPasien.nik" placeholder=""
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
             </div>
 
@@ -244,27 +284,27 @@
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Tanggal Lahir <span class="text-red-500">*</span></label>
                     <input type="date" name="tgl_lahir" required x-model="newPasien.tgl_lahir"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
                 <div class="w-full md:w-1/3 px-2 mb-4 md:mb-0">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Jenis Kelamin <span class="text-red-500">*</span></label>
                     <select name="jenis_kelamin" required x-model="newPasien.jenis_kelamin"
-                        class="select select-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
-                        <option value="Laki-laki">Laki-laki</option> 
-                        <option value="Perempuan">Perempuan</option>  
+                        class="cursor-pointer bg-white select select-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005] cursor-pointer">
+                        <option class="cursor-pointer hover:bg-brand-secondary/20" value="Laki-laki">Laki-laki</option> 
+                        <option class="cursor-pointer hover:bg-brand-secondary/20" value="Perempuan">Perempuan</option>  
                     </select>
                 </div>
                 <div class="w-full md:w-1/3 px-2">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">No HP <span class="text-red-500">*</span></label>
-                    <input name="no_hp" required placeholder="Contoh: 08123456789" x-model="newPasien.no_hp"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <input name="no_hp" required placeholder="Cth: 08123456789" x-model="newPasien.no_hp"
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
             </div>
 
             <div>
                 <label class="text-xs font-bold text-gray-500 mb-1 block">Alamat Domisili <span class="text-red-500">*</span></label>
                 <textarea name="alamat_domisili" required placeholder="Masukkan alamat lengkap pasien saat ini..." x-model="newPasien.alamat_domisili"
-                    class="textarea border border-gray-300 rounded-xl w-full h-24 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]"></textarea>
+                    class="textarea border border-gray-300 rounded-xl w-full h-24 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]"></textarea>
             </div>
 
             <div class="bg-gray-100 p-3 -mx-6">
@@ -274,13 +314,20 @@
             <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                     <label class="text-xs font-bold text-gray-500 mb-1 block">Golongan Darah</label>
-                    <input name="golongan_darah" placeholder="Cth: A, B, AB, atau O" x-model="newPasien.golongan_darah"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <select name="golongan_darah" x-model="newPasien.golongan_darah"
+                        class="cursor-pointer bg-white select select-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                        <option value="">-- Pilih Golongan Darah --</option>
+                        <option value="A" class="hover:bg-brand-secondary/20 cursor-pointer">A</option>
+                        <option value="B" class="hover:bg-brand-secondary/20 cursor-pointer">B</option>
+                        <option value="AB" class="hover:bg-brand-secondary/20 cursor-pointer">AB</option>
+                        <option value="O" class="hover:bg-brand-secondary/20 cursor-pointer">O</option>
+                    </select>
                 </div>
                 <div class="w-full md:w-1/2 px-2">
-                    <label class="text-xs font-bold text-gray-500 mb-1 block">Riwayat Alergi</label>
-                    <input name="riwayat_alergi" placeholder="Contoh: Udang, Obat tertentu (jika ada)" x-model="newPasien.riwayat_alergi"
-                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
+                    <label class="text-xs font-bold text-gray-500 mb-1 block">Riwayat Alergi (Jika Ada)
+                    </label>
+                    <input name="riwayat_alergi" placeholder="Cth: Udang, Obat tertentu" x-model="newPasien.riwayat_alergi"
+                        class="input input-bordered w-full rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-secondary focus:border-brand-secondary transition duration-300 ease-in-out hover:shadow-md hover:scale-[1.005]">
                 </div>
             </div>
             
@@ -292,7 +339,7 @@
                 <button 
                     type="submit"
                     :disabled="!isPasienFormValid()" 
-                    class="btn px-6 rounded-xl bg-blue-600 hover:bg-blue-800 border border-gray-300 text-white shadow-xl transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="btn px-6 rounded-xl bg-brand-secondary hover:bg-brand-secondary-dark border border-gray-300 text-white shadow-xl transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
                     Simpan Data Pasien
                 </button>
             </div>
@@ -352,6 +399,15 @@
 
         newAntrianNumber() {
             return '{{ $nextNomor }}';
+        },
+
+        submitPasienForm() {
+            // Cek apakah riwayat_alergi kosong atau hanya spasi
+            if (!this.newPasien.riwayat_alergi.trim()) {
+                this.newPasien.riwayat_alergi = 'Tidak ada';
+            }
+            
+            this.$root.submit(); 
         },
 
         resetForm() {
