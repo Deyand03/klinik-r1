@@ -118,8 +118,8 @@ class AdminDashboardController extends Controller
             $chartSource = $json['chart_source'];
             $totalAllTime = $json['meta']['total_all_time'];
 
-            $colorMap = ['Klinik X Subhan' => '#1e1b4b', 'Klinik Mata Sehat'=> '#4338ca', 'Poli Gigi'=> '#0d9488', 'Poli Umum'=> '#f59e0b'];
-            $fallbackColors = ['#ef4444', '#14b8a6', '#ccfbf1', '#64748b'];
+            $colorMap = ['Klinik Umum' => '#0d9488', 'Klinik Mata Sehat'=> '#3d6281', 'Klinik Gigi'=> '#64748b', 'Klinik Kulit dan Kelamin'=> '#ccfbf1'];
+            $fallbackColors = ['#ef4444', '#14b8a6', '#f59e0b', '#1e1b4b'];
             $grouped = collect($chartSource)->groupBy('klinik.nama');
             
             $chartLabels = []; $chartValues = []; $chartColors = []; $index = 0;
