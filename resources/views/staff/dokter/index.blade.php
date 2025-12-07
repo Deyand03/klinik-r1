@@ -107,7 +107,7 @@ $antrian = [
     </div>
 
     {{-- MODAL PERIKSA --}}
-    <div x-data="{ isRujuk: false }" x-show="openModal" style="display: none;"
+   <div x-data="{ isRujuk: false }" x-show="openModal" style="display: none;"
     class="fixed inset-0 z-50 overflow-y-auto" aria-modal="true">
     {{-- Latar belakang gelap --}}
     <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" @click="openModal = false"></div>
@@ -115,10 +115,10 @@ $antrian = [
     {{-- Kontainer Utama Modal --}}
     <div class="flex min-h-full items-center justify-center p-4" id="container-modal">
         <div
-            class="relative bg-white w-full max-w-3xl rounded-xl shadow-2xl transform transition-all duration-300 overflow-hidden">
+            class="relative bg-white w-full max-w-3xl rounded-xl shadow-2xl transform transition-all duration-300 overflow-hidden max-h-[90vh] flex flex-col">
 
-            {{-- Header Modal yang Dipercantik --}}
-            <div class="bg-purple-700 px-6 py-4 flex justify-between items-center text-white">
+            {{-- Header Modal yang Dipercantik (Akan tetap di atas) --}}
+            <div class="bg-purple-700 px-6 py-4 flex justify-between items-center text-white flex-shrink-0">
                 <div class="flex items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -137,8 +137,8 @@ $antrian = [
                 </button>
             </div>
 
-            {{-- Isi Modal --}}
-            <div class="p-6 space-y-6">
+            {{-- Isi Modal (Akan di-scroll) --}}
+            <div class="p-6 space-y-6 overflow-y-auto flex-grow">
 
                 {{-- Review Data Perawat (Card Style) --}}
                 <div class="bg-blue-50 p-5 rounded-xl border border-blue-200 shadow-inner">
@@ -150,7 +150,7 @@ $antrian = [
                                 d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h.01a1 1 100-2H10zm3 0a1 1 0 000 2h.01a1 1 100-2H13z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <p class="font-extrabold text-blue-800 uppercase text-sm">📝 Data dari Perawat</p>
+                        <p class="font-extrabold text-blue-800 uppercase text-sm">Data dari Perawat</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
                         <div>
@@ -184,6 +184,16 @@ $antrian = [
                             placeholder="Contoh: Hypertensi Grade 1, Common Cold..." required>
                     </div>
 
+                    {{-- Tindakan yang Dianjurkan oleh Dokter (NEW INPUT) --}}
+                    <div class="form-control">
+                        <label class="label mb-2">
+                            <span class="label-text font-bold text-gray-700">💉 Tindakan yang Dianjurkan (Rencana Tatalaksana)</span>
+                        </label>
+                        <textarea name="tindakan"
+                            class="textarea textarea-bordered h-24 w-full border border-purple-400 rounded-sm"
+                            placeholder="Contoh: Nebulisasi, Injeksi Ketorolac, Pemasangan IV line, Observasi 6 jam, dll." required></textarea>
+                    </div>
+
                     {{-- OPSI RUJUKAN --}}
                     <div class="flex items-center">
                         <input type="checkbox" id="checkbox-rujuk" x-model="isRujuk" name="is_rujuk"
@@ -213,8 +223,7 @@ $antrian = [
                                         Tujuan</span></label>
                                 <input type="text" name="poli"
                                     class="input input-bordered w-full border-amber-400 rounded-sm"
-                                    placeholder="Contoh: Spesialis Jantung"> 
-                                    {{-- ATRIBUT :required="isRujuk" DIHAPUS --}}
+                                    placeholder="Contoh: Spesialis Jantung">
                             </div>
 
                             {{-- Input Rumah Sakit Tujuan --}}
@@ -223,19 +232,17 @@ $antrian = [
                                         Tujuan</span></label>
                                 <input type="text" name="tujuan"
                                     class="input input-bordered w-full border-amber-400 rounded-sm"
-                                    placeholder="Contoh: RSUD Dr. Soetomo"> 
-                                    {{-- ATRIBUT :required="isRujuk" DIHAPUS --}}
+                                    placeholder="Contoh: RSUD Dr. Soetomo">
                             </div>
                         </div>
 
                         {{-- Input Alasan Rujukan --}}
                         <div class="form-control">
                             <label class="label"><span class="label-text text-gray-700">Alasan
-                                    Rujukan</span></label>
+                                        Rujukan</span></label>
                             <textarea name="alasan"
                                 class="textarea textarea-bordered h-20 w-full border-amber-400 rounded-sm"
                                 placeholder="Tulis alasan medis singkat kenapa pasien perlu dirujuk..."></textarea>
-                                {{-- ATRIBUT :required="isRujuk" DIHAPUS --}}
                         </div>
                     </div>
 
@@ -246,13 +253,13 @@ $antrian = [
                         <label class="label">
                             <span class="label-text font-bold text-gray-700">💊 Resep Obat</span>
                         </label>
-                        {{-- ... (lanjutan kode Resep Obat Anda) ... --}}
+                        
                         <div class="space-y-3">
                             {{-- Baris Obat 1 (Ulangi ini untuk item obat tambahan) --}}
                             <div class="flex gap-3 items-end">
                                 <div class="w-full">
                                     <label class="label-text text-xs text-gray-500 mb-0.5 block">Nama Obat</label>
-                                    {{-- Menggunakan class select-bordered dan select-sm untuk tampilan yang lebih rapi --}}
+                                    
                                     <select name="obat"
                                         class="select select-bordered w-full rounded-sm border-purple-400 border">
                                         <option disabled selected class="bg-indigo-400 text-white fw-semibold p-4">
@@ -280,9 +287,8 @@ $antrian = [
                             <span class="label-text font-bold text-gray-700">💊 Harga</span>
                         </label>
                         <div class="space-y-3">
-                            {{-- Baris Obat 1 (Ulangi ini untuk item obat tambahan) --}}
+                            {{-- Baris Harga --}}
                             <div class="flex gap-3 items-end">
-
                                 <div class="w-full">
                                     <label class="label-text text-xs text-gray-500 mb-0.5 block">Harga obat</label>
                                     <input type="number" name="harga"
@@ -305,8 +311,8 @@ $antrian = [
                             placeholder="Istirahat cukup, kurangi makanan berminyak, kontrol seminggu lagi..."></textarea>
                     </div>
 
-                    {{-- Aksi Modal --}}
-                    <div class="modal-action flex justify-end pt-4 border-t border-gray-100">
+                    {{-- Aksi Modal (Akan tetap di bawah) --}}
+                    <div class="modal-action flex justify-end pt-4 border-t border-gray-100 flex-shrink-0">
                         <button type="button" @click="openModal = false"
                             class="btn btn-ghost hover:bg-gray-100 px-6">Batal</button>
                         <button id="btn-selesai" type="submit"
@@ -318,7 +324,6 @@ $antrian = [
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <script src="{{asset('js/kunjungan.js')}}"></script>

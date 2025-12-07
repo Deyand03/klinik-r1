@@ -2,7 +2,6 @@ const btnPeriksa = document.getElementsByClassName("btn-periksa");
 const url = "http://localhost:8001";
 const container = document.getElementById("container-modal");
 const idDokter = document.getElementById("id-dokter").innerText;
-console.log(idDokter);
 
 async function getDetailKunjunganFromApi(id){
     // Perbaikan: Menggunakan backtick (`) untuk template literal
@@ -20,13 +19,14 @@ for(let i = 0; i < btnPeriksa.length; i++)
         try{
             const response = await getDetailKunjunganFromApi(btnPeriksa[i].dataset.id);
             const formDiagnosa = document.getElementById("form-diagnosa");
+            console.log(formDiagnosa);
             const rekamMedis = document.getElementById("rekam_medis");
             rekamMedis.value = response.data.id;
             
             // Perbaikan: Menggunakan backtick (`) untuk template literal
             formDiagnosa.setAttribute("action", `${url}/staff/kunjungan/resep/${btnPeriksa[i].dataset.id}`);
 
-
+            console.log(formDiagnosa);
             const anamnesa = document.getElementById("anamnesa");
             const vital = document.getElementById("vital-signs");
             anamnesa.innerText = response.data.anamnesa;
@@ -36,6 +36,6 @@ for(let i = 0; i < btnPeriksa.length; i++)
 
         } catch(error) {
             console.error(error);
-        } // Perbaikan: Menambahkan kurung kurawal penutup untuk try/catch
-    }); // Perbaikan: Menambahkan kurung tutup untuk addEventListener
+        } 
+    });
 }

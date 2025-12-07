@@ -81,6 +81,7 @@ class DashboardController extends Controller
         $rekam_medis_id = $request->rekam_medis_id;
         $catatan_dokter = $request->catatan_dokter;
         $id_staff = $request->id_staff;
+        $tindakan = $request->tindakan;
         $poli = $request->poli ?? '';
         $tujuan = $request->tujuan ?? '';
         $alasan = $request->alasan ?? '';
@@ -97,7 +98,8 @@ class DashboardController extends Controller
             'id_staff' => $id_staff,
             'poli' => $poli,
             'tujuan' => $tujuan,
-            'alasan' => $alasan
+            'alasan' => $alasan,
+            'tindakan' => $tindakan
         ];
         $apiToken = session('api_token');
         $response = Http::withToken($apiToken)->post("http://localhost:8000/api/kunjungan/resep/add", $data);
