@@ -213,7 +213,8 @@
                     <button @click="resetTambahPasien()" class="text-white text-xl">&times;</button>
                 </div>
 
-            <form method="POST" action="{{ route('staff.register-pasien.store') }}" class="p-6 pt-0 space-y-5" x-on:submit.prevent="submitPasienForm()">
+           <form method="POST" action="{{ route('staff.register-pasien.store') }}" 
+      class="p-6 pt-0 space-y-5" x-on:submit.prevent="submitPasienForm($event)">
             @csrf
             
             <div class="bg-gray-100 p-3 -mx-6">
@@ -354,80 +355,89 @@
     function registerPasien() {
         return {
             open: false, 
-        selected: null,
-        keluhan: '',
-        selectedDokterJadwal: '',
-        selectedDokterId: '',
-        selectedJadwalId: '',
-        dokterList: @json($dokterJadwal),
-        idKlinik: '{{ $idKlinik }}',
-        tglKunjungan: '{{ date('Y-m-d') }}',
+            selected: null,
+            keluhan: '',
+            selectedDokterJadwal: '',
+            selectedDokterId: '',
+            selectedJadwalId: '',
+            dokterList: @json($dokterJadwal),
+            idKlinik: '{{ $idKlinik }}',
+            tglKunjungan: '{{ date('Y-m-d') }}',
 
-        openTambahPasien: false, 
-        newPasien: { 
-            nama_lengkap: '',
-            nik: '',
-            tgl_lahir: '',
-            jenis_kelamin: 'Laki-laki', 
-            alamat_domisili: '',
-            no_hp: '',
-            email: '',
-            password: '',
-            golongan_darah: '',
-            riwayat_alergi: '',
-        },
-
-        resetTambahPasien() {
-            this.openTambahPasien = false;
-            this.newPasien = {
+            openTambahPasien: false, 
+            newPasien: { 
                 nama_lengkap: '',
                 nik: '',
                 tgl_lahir: '',
-                jenis_kelamin: 'Laki-laki',
+                jenis_kelamin: 'Laki-laki', 
                 alamat_domisili: '',
                 no_hp: '',
                 email: '',
                 password: '',
-                golongan_darah:'',
+                golongan_darah: '',
                 riwayat_alergi: '',
-            };
-        },
-        openModal(pasien) {
-            this.selected = pasien;
-            this.open = true;
-        },
+            },
 
-        newAntrianNumber() {
-            return '{{ $nextNomor }}';
-        },
+            // FIX 1: Add the missing validation function
+            isPasienFormValid() {
+                const p = this.newPasien;
+                // Check all required fields (marked with *)
+                return p.nama_lengkap && p.nik && p.tgl_lahir && p.jenis_kelamin && p.alamat_domisili && p.no_hp && p.email && p.password;
+            },
 
-        submitPasienForm() {
-            // Cek apakah riwayat_alergi kosong atau hanya spasi
-            if (!this.newPasien.riwayat_alergi.trim()) {
-                this.newPasien.riwayat_alergi = 'Tidak ada';
+            resetTambahPasien() {
+                this.openTambahPasien = false;
+                this.newPasien = {
+                    nama_lengkap: '',
+                    nik: '',
+                    tgl_lahir: '',
+                    jenis_kelamin: 'Laki-laki',
+                    alamat_domisili: '',
+                    no_hp: '',
+                    email: '',
+                    password: '',
+                    golongan_darah:'',
+                    riwayat_alergi: '',
+                };
+            },
+            openModal(pasien) {
+                this.selected = pasien;
+                this.open = true;
+            },
+
+            newAntrianNumber() {
+                return '{{ $nextNomor }}';
+            },
+
+            // FIX 2: Change this.$root.submit() to $event.target.submit() 
+            // This is valid inside an x-on:submit.prevent handler
+            submitPasienForm($event) { 
+                // Cek apakah riwayat_alergi kosong atau hanya spasi
+                if (!this.newPasien.riwayat_alergi.trim()) {
+                    this.newPasien.riwayat_alergi = 'Tidak ada';
+                }
+                
+                $event.target.submit(); // Submit the form element
+            },
+
+            resetForm() {
+                this.open = false;
+                this.selected = null;
+                this.keluhan = '';
+                this.selectedDokterJadwal = '';
+                this.selectedDokterId = '';
+                this.selectedJadwalId = '';
+            },
+
+            init() {
+                this.$watch('selectedDokterJadwal', value => {
+                    if (!value) return;
+                    const [dok, jadwal] = value.split('|');
+                    this.selectedDokterId = dok;
+                    this.selectedJadwalId = jadwal;
+                });
             }
-            
-            this.$root.submit(); 
-        },
-
-        resetForm() {
-            this.open = false;
-            this.selected = null;
-            this.keluhan = '';
-            this.selectedDokterJadwal = '';
-            this.selectedDokterId = '';
-            this.selectedJadwalId = '';
-        },
-
-        init() {
-            this.$watch('selectedDokterJadwal', value => {
-                if (!value) return;
-                const [dok, jadwal] = value.split('|');
-                this.selectedDokterId = dok;
-                this.selectedJadwalId = jadwal;
-            });
         }
     }
-}
 </script>
 @endsection
