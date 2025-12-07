@@ -202,7 +202,7 @@
                                 class="label-text font-semibold text-gray-700">Spesialisasi</span></label>
                         <input type="text" name="spesialisasi" value="{{ old('spesialisasi') }}"
                             class="input input-bordered w-full rounded-xl bg-white @error('spesialisasi') input-error bg-red-50 @enderror"
-                            placeholder="Cth: Spesialis Anak, Umum, Gigi" required>
+                            placeholder="Cth: Spesialis Anak, Umum, Gigi">
                         @error('spesialisasi')
                             <span class="text-red-500 text-xs mt-1 flex items-center gap-1">{{ $message }}</span>
                         @enderror
@@ -226,7 +226,7 @@
                                 (Tahun/Deskripsi)</span></label>
                         <input type="text" name="pengalaman" value="{{ old('pengalaman') }}"
                             class="input input-bordered w-full rounded-xl bg-white @error('pengalaman') input-error bg-red-50 @enderror"
-                            placeholder="Cth: 10 Tahun di RS Pusat" required>
+                            placeholder="Cth: 10 Tahun di RS Pusat">
                         @error('pengalaman')
                             <span class="text-red-500 text-xs mt-1 flex items-center gap-1">{{ $message }}</span>
                         @enderror
