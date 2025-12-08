@@ -28,6 +28,19 @@ class DashboardController extends Controller
             return []; // Return kosong jika API mati
         }
     }
+    private function getDataAntrianKasir($status)
+    {
+        $token = session('api_token');
+        $url = 'http://127.0.0.1:8000/api/kasir/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+
+        try {
+            $response = Http::withToken($token)->get($url);
+            return $response->successful() ? $response->json()['data'] : [];
+        } catch (\Exception $e) {
+            // Log::error('API Error in Dashboard: ' . $e->getMessage());
+            return []; // Return kosong jika API mati
+        }
+    }
 
 
 
@@ -152,7 +165,7 @@ class DashboardController extends Controller
                 return view('staff.dokter.index', compact('antrian', 'dataKunjungan'));
 
             case 'kasir':
-                $antrian = $this->getDataAntrian('menunggu_pembayaran');
+                $antrian = $this->getDataAntrianKasir('menunggu_pembayaran');
                 return view('staff.kasir.index', compact('antrian'));
 
             case 'admin':
