@@ -115,8 +115,7 @@ Route::middleware(['cek_session'])->group(function () {
             Route::post('/dokter/{id}/store', 'storeDokter')->name('staff.dokter.store');
             // Route::post('/kasir/{id}/bayar', 'storeKasir')->name('staff.kasir.store');
         });
-        Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])
-            ->name('staff.kasir.store');
+        Route::post('/kasir/{id}/bayar', [PembayaranAdminController::class, 'store'])->name('staff.kasir.store');
         Route::get('/register-pasien', [RegisterPasienController::class, 'index'])->name('staff.register-pasien');
         Route::post('/register-pasien/store', [RegisterPasienController::class, 'storePasien'])->name('staff.register-pasien.store');
         Route::post('/register-pasien/kunjungan/store', [RegisterPasienController::class, 'storeKunjungan'])->name('staff.register-pasien.kunjungan.store');
