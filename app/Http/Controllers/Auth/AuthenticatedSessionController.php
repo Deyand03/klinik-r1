@@ -76,7 +76,7 @@ class AuthenticatedSessionController extends Controller
         // Logout dari API Backend juga (Opsional, tapi bagus)
         $token = session('api_token');
         if ($token) {
-            Http::withToken($token)->post('http://127.0.0.1:8000/api/logout');
+            Http::withToken($token)->post(env('API_URL') . '/logout');
         }
 
         // Hapus Session Lokal
