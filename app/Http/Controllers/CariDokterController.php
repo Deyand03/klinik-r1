@@ -28,7 +28,7 @@ class CariDokterController extends Controller
     public function show($id)
     {
         // Ambil detail dokter by ID
-        $response = Http::get(env('API_URL') . '/public/doctors/{$id});
+        $response = Http::get(env('API_URL') . '/public/doctors/{$id}');
 
         if ($response->failed()) {
             return redirect()->route('cari_dokter')->with('error', 'Dokter tidak ditemukan.');
