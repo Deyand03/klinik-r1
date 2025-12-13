@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Kirim ke API Backend
-        $response = Http::post(env('API_URL') . '/api/register', [
+        $response = Http::post(env('API_URL') . '/register', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
