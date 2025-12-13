@@ -1,0 +1,29 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-CHt3Vwpn.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CJy8ASEk.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/utility/calendar_jadwal_admin.js": {
+    "file": "assets/calendar_jadwal_admin-l0sNRNKZ.js",
+    "name": "calendar_jadwal_admin",
+    "src": "resources/js/utility/calendar_jadwal_admin.js",
+    "isEntry": true
+  },
+  "resources/js/utility/navbar_beranda.js": {
+    "file": "assets/navbar_beranda-BA_NcYoZ.js",
+    "name": "navbar_beranda",
+    "src": "resources/js/utility/navbar_beranda.js",
+    "isEntry": true
+  }
+}

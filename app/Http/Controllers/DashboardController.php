@@ -18,7 +18,20 @@ class DashboardController extends Controller
     {
         $token = session('api_token');
         // $url = 'http://127.0.0.1:8000/api/admin/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
-        $url = 'http://127.0.0.1:8000/api/perawat/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+        $url = env('API_URL') . '/perawat/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+
+        try {
+            $response = Http::withToken($token)->get($url);
+            return $response->successful() ? $response->json()['data'] : [];
+        } catch (\Exception $e) {
+            // Log::error('API Error in Dashboard: ' . $e->getMessage());
+            return []; // Return kosong jika API mati
+        }
+    }
+    private function getDataAntrianKasir($status)
+    {
+        $token = session('api_token');
+        $url = 'http://127.0.0.1:8000/api/kasir/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
 
         try {
             $response = Http::withToken($token)->get($url);
@@ -38,14 +51,14 @@ class DashboardController extends Controller
     {
         $idDokter = session('user_data')['staff']['id'];
         $apiToken = session('api_token');
-        
+
         if (!$idDokter) {
             Log::warning('Percobaan akses API Kunjungan tanpa ID atau Token yang valid.');
-            return null; 
+            return null;
         }
 
         $response = Http::withToken($apiToken)
-                        ->get("http://localhost:8000/api/kunjungan/index", [
+                        ->get(env('API_URL') . "/kunjungan/index", [
                             'id_dokter' => $idDokter
                         ]);
         $antrian = [];
@@ -60,12 +73,12 @@ class DashboardController extends Controller
     public function detail(Request $request){
         $apiToken = session('api_token');
         $response = Http::withToken($apiToken)
-                    ->get("http://localhost:8000/api/kunjungan/detail", [
+                    ->get(env('API_URL') . "/kunjungan/detail", [
                         'id' => $request->id
                     ]);
         $data = $response->json()['data'];
 
-      
+
         return response()->json([
             'data' => $data
         ]);
@@ -81,6 +94,7 @@ class DashboardController extends Controller
         $rekam_medis_id = $request->rekam_medis_id;
         $catatan_dokter = $request->catatan_dokter;
         $id_staff = $request->id_staff;
+        $tindakan = $request->tindakan;
         $poli = $request->poli ?? '';
         $tujuan = $request->tujuan ?? '';
         $alasan = $request->alasan ?? '';
@@ -97,10 +111,11 @@ class DashboardController extends Controller
             'id_staff' => $id_staff,
             'poli' => $poli,
             'tujuan' => $tujuan,
-            'alasan' => $alasan
+            'alasan' => $alasan,
+            'tindakan' => $tindakan
         ];
         $apiToken = session('api_token');
-        $response = Http::withToken($apiToken)->post("http://localhost:8000/api/kunjungan/resep/add", $data);
+        $response = Http::withToken($apiToken)->post(env('API_URL') . "/kunjungan/resep/add", $data);
         if ($response->successful()) {
             return redirect()->back()->with([
                 'status' => 'success',
@@ -121,7 +136,7 @@ class DashboardController extends Controller
         switch ($role) {
             case 'resepsionis':
                 $request = request();
-                
+
                 $token = session('api_token');
                 $user  = session('user_data');
                 $klinikIdStaf = $user['staff']['id_klinik'] ?? null;
@@ -152,7 +167,7 @@ class DashboardController extends Controller
                 return view('staff.dokter.index', compact('antrian', 'dataKunjungan'));
 
             case 'kasir':
-                $antrian = $this->getDataAntrian('menunggu_pembayaran');
+                $antrian = $this->getDataAntrianKasir('menunggu_pembayaran');
                 return view('staff.kasir.index', compact('antrian'));
 
             case 'admin':
@@ -167,7 +182,7 @@ class DashboardController extends Controller
     {
         return back()->with('success', 'Berhasil disimpan');
 
-        
+
     }
 
 
@@ -177,13 +192,13 @@ class DashboardController extends Controller
 
     // Helper untuk update status di Backend
     private function updateBackendStatus($id, $nextStatus)
-    {   
+    {
         $api = env('API_URL');
         $token = session('api_token');
         return Http::withToken($token)->post("$api/admin/antrian/{$id}/status", [
             'status' => $nextStatus
         ]);
-        
+
     }
 
     // 1. Aksi Resepsionis (Check-In)
@@ -200,9 +215,7 @@ class DashboardController extends Controller
     // 2. Aksi Perawat (Simpan Vital Signs & Anamnesa)
     public function storeVital(Request $request, $id)
     {
-        $apiUrl = "http://127.0.0.1:8000/api/perawat/input-vital/" . $id;
-
-        $response = Http::post($apiUrl, [
+        $response = Http::post(env('API_URL') . "/perawat/input-vital/" . $id, [
             'berat_badan' => $request->berat_badan,
             'tensi_darah' => $request->tensi_darah,
             'suhu_badan' => $request->suhu_badan,

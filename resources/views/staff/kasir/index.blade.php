@@ -13,11 +13,17 @@
         actionUrlTemplate: '{{ route('staff.kasir.store', 'id_antrian') }}',
     
         openBayar(item) {
-            // Simulasi total tagihan (karena backend OperasionalController belum kirim data tagihan)
-            // Nanti bisa dihapus jika backend sudah mengirim field 'total_tagihan'
-            if (!item.total_biaya) item.total_biaya = 150000;
+            // SEBELUMNYA (Dummy):
+            // if (!item.total_biaya) item.total_biaya = 150000;
     
+            // SESUDAHNYA (Real Data):
+            // Ambil dari relasi pembayaran, jika null (belum ada record) default 0 atau hitung manual
             this.selectedPasien = item;
+    
+            // Inject total_biaya ke object utama agar mudah dibaca form
+            // Menggunakan Optional Chaining (?.) jaga-jaga kalau pembayaran belum dibuat
+            this.selectedPasien.total_biaya = item.pembayaran?.total_biaya || 0;
+    
             this.openModal = true;
         },
     
@@ -80,12 +86,12 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($antrian as $item)
-                            {{-- Logic Filter Search di Client Side (AlpineJS) --}}
                             <tr class="hover:bg-green-50/30 transition"
                                 x-show="searchTerm === '' || 
-                                        '{{ strtolower($item['pasien']['nama_lengkap'] ?? '') }}'.includes(searchTerm.toLowerCase()) || 
-                                        '{{ strtolower($item['no_antrian'] ?? '') }}'.includes(searchTerm.toLowerCase())">
+                    '{{ strtolower($item['pasien']['nama_lengkap'] ?? '') }}'.includes(searchTerm.toLowerCase()) || 
+                    '{{ strtolower($item['no_antrian'] ?? '') }}'.includes(searchTerm.toLowerCase())">
 
+                                {{-- Isi tabel sama seperti sebelumnya --}}
                                 <td class="pl-4 font-mono font-bold text-lg text-green-600">
                                     {{ $item['no_antrian'] }}
                                 </td>
@@ -115,11 +121,13 @@
                                         Proses Pembayaran
                                     </button>
                                 </td>
+
+
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="5" class="text-center py-8 text-gray-400">
-                                    Tidak ada antrian pembayaran saat ini.
+                                    Tidak ada antrian pembayaran.
                                 </td>
                             </tr>
                         @endforelse
@@ -147,7 +155,8 @@
                         <div class="space-y-2 mb-6 border-b border-gray-100 pb-4">
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-500">Jasa Pelayanan</span>
-                                <span class="font-semibold text-gray-800">Rp 150.000</span>
+                                <span class="font-semibold text-gray-800"
+                                    x-text="'Rp' + (selectedPasien?.total_biaya || 0).toLocaleString('id-ID')"></span>
                             </div>
                         </div>
 

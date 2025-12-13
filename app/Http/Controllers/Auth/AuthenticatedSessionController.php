@@ -24,46 +24,47 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // 1. Tembak API Login di Backend (BaaS)
-        // Pastikan port 8000 (Backend) menyala
         try {
-            $response = Http::post('http://127.0.0.1:8000/api/login', [
-                'email' => $request->email,
-                'password' => $request->password,
-            ]);
+            // 1. Tambahkan Header 'Accept: application/json'
+            // Ini HUKUM WAJIB antar Laravel biar backend gak nge-redirect kalau error
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])->post(env('API_URL') . '/login', [ // rtrim jaga-jaga kalau ada double slash
+                        'email' => $request->email,
+                        'password' => $request->password,
+                    ]);
+
         } catch (\Exception $e) {
-            return back()->withErrors(['email' => 'Gagal terhubung ke server Backend.']);
+            return back()->withErrors(['email' => 'Koneksi ke server Backend terputus: ' . $e->getMessage()]);
         }
 
-        // 2. Cek Apakah Login Berhasil?
+        // 3. Cek Login
         if ($response->successful()) {
             $data = $response->json();
 
-            // 3. Simpan Token & Data User ke Session Browser
-            // Ini pengganti Auth::login()
+            // Validasi struktur JSON sebelum akses
+            if (!isset($data['access_token'])) {
+                return back()->withErrors(['email' => 'Respon server tidak valid (Token hilang).']);
+            }
+
             session([
                 'api_token' => $data['access_token'],
-                'user_data' => $data['user'], // Berisi data user + profil (staff/pasien)
+                'user_data' => $data['user'] ?? [],
             ]);
 
-            // Regenerate session ID untuk keamanan
             $request->session()->regenerate();
 
-            // 4. Redirect Sesuai Role
             $role = $data['user']['role'] ?? 'pasien';
 
-            if ($role === 'staff') {
-                // Kalau Staff -> Masuk ke Dashboard Staff
-                return redirect()->route('staff.dashboard');
-            } else {
-                // Kalau Pasien -> Masuk ke Beranda
-                return redirect()->route('beranda');
-            }
+            return redirect()->route($role === 'staff' ? 'staff.dashboard' : 'beranda');
         }
 
-        // 5. Jika Gagal (Password Salah / User Tidak Ada)
+        // 4. Handle Error (401, 422, dll)
+        // Ambil pesan error dari JSON backend, kalau null default ke string
+        $errorMessage = $response->json()['message'] ?? 'Login gagal. Cek kredensial Anda.';
+
         return back()->withErrors([
-            'email' => $response->json()['message'] ?? 'Email atau password salah.',
+            'email' => $errorMessage,
         ])->onlyInput('email');
     }
 
@@ -75,7 +76,7 @@ class AuthenticatedSessionController extends Controller
         // Logout dari API Backend juga (Opsional, tapi bagus)
         $token = session('api_token');
         if ($token) {
-            Http::withToken($token)->post('http://127.0.0.1:8000/api/logout');
+            Http::withToken($token)->post(env('API_URL') . '/logout');
         }
 
         // Hapus Session Lokal

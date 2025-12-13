@@ -11,17 +11,16 @@ class PembayaranAdminController extends Controller
     {
         $token = session('api_token');
 
-        // PERUBAHAN 1: Endpoint & Parameter
-        // Kasir butuh antrian dengan status 'menunggu_pembayaran'
+        // PERUBAHAN: Tembak ke endpoint baru '/api/kasir/antrian-all'
         $response = Http::withToken($token)
-            ->get(env('API_URL') . '/admin/antrian', [
-                'status_filter' => 'menunggu_pembayaran' // <--- Filter khusus kasir
+            ->get(env('API_URL') . '/api/kasir/antrian', [
+                'status_filter' => 'menunggu_pembayaran' 
+                // Kita tidak perlu kirim 'page' lagi karena sudah get() semua
             ]);
 
-        // PERUBAHAN 2: Nama Variabel
+        // Karena backend baru mengirim key 'data' (bukan 'table'), sesuaikan disini:
         $antrian = $response->successful() ? $response->json()['data'] : [];
 
-        // PERUBAHAN 3: View Target
         return view('staff.kasir.index', compact('antrian'));
     }
 
@@ -30,7 +29,7 @@ class PembayaranAdminController extends Controller
     {
         $request->validate([
             'total_biaya' => 'required|numeric',
-            'metode' => 'required|in:cash,qris,transfer,ewallet',
+            'metode' => 'required|in:cash,qris,transfer',
         ]);
 
         $token = session('api_token');
@@ -43,7 +42,7 @@ class PembayaranAdminController extends Controller
 
         // PERUBAHAN 1: Endpoint & Payload
         $response = Http::withToken($token)
-            ->post(env('API_URL', 'http://127.0.0.1:8000') . '/pembayaran/store', [ // <--- Endpoint khusus pembayaran
+            ->post(env('API_URL') . '/pembayaran/store', [ // <--- Endpoint khusus pembayaran
                 'id_kunjungan' => $id,                 // <--- ID dari URL
                 'id_staff' => $staffId,            // <--- ID Kasir yg login
                 'total_biaya' => $request->total_biaya, // <--- Dari Input Hidden Form

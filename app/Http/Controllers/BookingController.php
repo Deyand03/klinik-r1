@@ -11,7 +11,7 @@ class BookingController extends Controller
     {
         $token = session('api_token');
 
-        $response = Http::withToken($token)->post('localhost:8000/api/booking/store', [
+        $response = Http::withToken($token)->post(env('API_URL') . '/booking/store', [
             'id_dokter' => $request->id_dokter,
             'keluhan'   => $request->keluhan,
             'tanggal'   => $request->tanggal,

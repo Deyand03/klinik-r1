@@ -14,7 +14,7 @@ class RegisterPasienController extends Controller
         $token = session('api_token');
         $user  = session('user_data');
         $currentPage = $request->get('page');
-
+        
         /**
          * -----------------------------------------
          * 1) Ambil seluruh antrian dari backend
@@ -22,8 +22,7 @@ class RegisterPasienController extends Controller
          */
         $all = Http::withToken($token)->get(env('API_URL') . '/admin/antrian', [
             'staff_id' => $user['id'],
-        ])->json()['data'] ?? [];
-
+        ])->json()['table']['data'] ?? [];
         /**
          * -----------------------------------------
          * 2) Ambil nomor antrian terakhir "A-XXX"

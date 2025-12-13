@@ -16,7 +16,7 @@ class RiwayatReservasiController extends Controller
         if ($token) {
             try {
                 // Ensure the port matches your backend (usually 8000)
-                $response = Http::withToken($token)->get('http://127.0.0.1:8000/api/pasien/riwayat');
+                $response = Http::withToken($token)->get(env('API_URL') . '/pasien/riwayat');
 
                 if ($response->successful()) {
                     $riwayat = $response->json()['data'];
