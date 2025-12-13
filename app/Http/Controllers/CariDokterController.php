@@ -11,10 +11,10 @@ class CariDokterController extends Controller
     public function index(Request $request)
     {
         // 1. Ambil Data Klinik (Dropdown)
-        $clinics = Http::get('http://127.0.0.1:8000/api/public/clinics')->json()['data'] ?? [];
+        $clinics = Http::get(env('API_URL') . '/public/clinics')->json()['data'] ?? [];
 
         // 2. Ambil Data Dokter (Filter jika ada input klinik)
-        $url = 'http://127.0.0.1:8000/api/public/doctors';
+        $url = env('API_URL') . '/public/doctors';
         if ($request->has('klinik') && $request->klinik != 'Semua Klinik') {
             $url .= '?klinik_id=' . $request->klinik;
         }
@@ -28,7 +28,7 @@ class CariDokterController extends Controller
     public function show($id)
     {
         // Ambil detail dokter by ID
-        $response = Http::get("http://127.0.0.1:8000/api/public/doctors/{$id}");
+        $response = Http::get(env('API_URL') . '/public/doctors/{$id});
 
         if ($response->failed()) {
             return redirect()->route('cari_dokter')->with('error', 'Dokter tidak ditemukan.');
