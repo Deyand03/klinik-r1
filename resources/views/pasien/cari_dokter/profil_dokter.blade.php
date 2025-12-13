@@ -5,7 +5,15 @@
 @section('content')
 
     @if (session('error'))
-        <div class="fixed top-20 right-4 z-50 animate-bounce">
+        {{-- Tambahkan x-data, x-init, x-show, dan x-transition --}}
+        <div x-data="{ show: true }" 
+             x-init="setTimeout(() => show = false, 5000)" 
+             x-show="show"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90"
+             class="fixed top-20 right-4 z-50 animate-bounce">
+            
             <div class="alert alert-error shadow-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6 text-white" fill="none"
                     viewBox="0 0 24 24">
