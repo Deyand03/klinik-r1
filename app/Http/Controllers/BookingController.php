@@ -9,28 +9,41 @@ class BookingController extends Controller
 {
     public function store(Request $request)
     {
-        // 1. Ambil Token
         $token = session('api_token');
 
-        // 2. Tembak API Backend
-        $response = Http::withToken($token)->post(env('API_URL') .'booking', [
+        $response = Http::withToken($token)->post(env('API_URL') . '/booking/store', [
             'id_dokter' => $request->id_dokter,
-            'id_jadwal' => 1,
-            'tgl_kunjungan' => date('Y-m-d'), // Hari ini
-            'keluhan' => $request->keluhan,
+            'keluhan'   => $request->keluhan,
+            'tanggal'   => $request->tanggal,
         ]);
 
-        // 3. Cek Hasil
         if ($response->successful()) {
-            // SUKSES -> Tampilkan Tiket
             $tiket = $response->json()['data'];
-            return view('pasien.cari_dokter.tiket_antrian', compact('tiket'));
-        } else {
-            // GAGAL -> Balikin ke form + Pesan Error
-            // Ambil pesan error dari JSON backend
-            $pesan = $response->json()['message'] ?? 'Gagal memproses booking';
-
-            return back()->with('error', $pesan);
+            return redirect()->route('tiket_antrian')->with('tiket', $tiket);
         }
+
+        // --- DEBUGGING START ---
+        // Jika error validasi (422), ambil pesannya
+        if ($response->status() === 422) {
+            $msg = $response->json()['message'] ?? 'Validasi gagal';
+            return back()->with('error', 'Gagal: ' . $msg);
+        }
+
+        // Jika Error Server (500), tampilkan body response-nya biar ketahuan
+        // JANGAN DIBIARKAN "Terjadi Kesalahan" SAJA
+        return back()->with('error', 'Server Error: ' . $response->body());
+        // --- DEBUGGING END ---
+    }
+
+    public function showTiket()
+    {
+        // Ambil data tiket dari session (flash data)
+        $tiket = session('tiket');
+
+        if (!$tiket) {
+            return redirect()->route('beranda'); // Kalau direfresh hilang, balik ke beranda
+        }
+
+        return view('pasien.cari_dokter.tiket_antrian', compact('tiket'));
     }
 }
