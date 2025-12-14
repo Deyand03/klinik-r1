@@ -115,7 +115,7 @@
     {{-- Bagian Bawah (Fasilitas) Tetap Sama --}}
     <div class="card lg:card-side bg-white w-full rounded-none border-none flex flex-col lg:flex-row">
         <figure class="lg:w-1/2 min-h-[250px] lg:min-h-[350px] relative m-0 p-0">
-            <img src="https://placehold.co/800x600/e2e8f0/888888?text=Fasilitas+Rumah+Sakit" alt="Fasilitas RS"
+            <img src="{{ asset('img/Fasilitas_dan_Layanan.png') }}" alt="Fasilitas RS"
                 class="absolute inset-0 w-full h-full object-cover" />
         </figure>
 
