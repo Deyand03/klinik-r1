@@ -11,14 +11,23 @@ class PembayaranAdminController extends Controller
     {
         $token = session('api_token');
 
-        // PERUBAHAN: Tembak ke endpoint baru '/api/kasir/antrian-all'
+        // DEBUGGING: Cek apakah URL API sudah benar
+        // dd(env('API_URL')); 
+
         $response = Http::withToken($token)
-            ->get(env('API_URL') . '/kasir/antrian', [
-                'status_filter' => 'menunggu_pembayaran' 
-                // Kita tidak perlu kirim 'page' lagi karena sudah get() semua
+            ->get(env('API_URL') . '/api/kasir/antrian', [
+                'status_filter' => 'menunggu_pembayaran'
             ]);
 
-        // Karena backend baru mengirim key 'data' (bukan 'table'), sesuaikan disini:
+        // DEBUGGING: Tampilkan error jika request gagal
+        if ($response->failed()) {
+            dd([
+                'Status' => $response->status(),
+                'Error Body' => $response->body(),
+                'URL yang ditembak' => env('API_URL') . '/api/kasir/antrian'
+            ]);
+        }
+
         $antrian = $response->successful() ? $response->json()['data'] : [];
 
         return view('staff.kasir.index', compact('antrian'));
