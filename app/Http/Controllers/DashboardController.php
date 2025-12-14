@@ -31,7 +31,7 @@ class DashboardController extends Controller
     private function getDataAntrianKasir($status)
     {
         $token = session('api_token');
-        $url = 'http://127.0.0.1:8000/api/kasir/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
+        $url = env('API_URL') . '/kasir/antrian?status_filter=' . $status; // Gunakan IP 0.0.0.0 untuk host jika port berbeda
 
         try {
             $response = Http::withToken($token)->get($url);

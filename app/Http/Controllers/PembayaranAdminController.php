@@ -13,7 +13,7 @@ class PembayaranAdminController extends Controller
 
         // PERUBAHAN: Tembak ke endpoint baru '/api/kasir/antrian-all'
         $response = Http::withToken($token)
-            ->get(env('API_URL') . '/kasir/antrian', [
+            ->get(env('API_URL') . '/api/kasir/antrian', [
                 'status_filter' => 'menunggu_pembayaran'
                 // Kita tidak perlu kirim 'page' lagi karena sudah get() semua
             ]);
