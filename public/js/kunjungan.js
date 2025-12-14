@@ -1,5 +1,5 @@
 const btnPeriksa = document.getElementsByClassName("btn-periksa");
-const url = "http://localhost:8001";
+const url = "https://baas-klinik.vercel.app/api/api/";
 const container = document.getElementById("container-modal");
 const idDokter = document.getElementById("id-dokter").innerText;
 
