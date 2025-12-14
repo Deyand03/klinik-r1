@@ -8,50 +8,22 @@ use Illuminate\Support\Facades\Http;
 class PembayaranAdminController extends Controller
 {
     public function index()
-{
-    $token = session('api_token');
-    $apiUrl = env('API_URL'); // Ambil URL
+    {
+        $token = session('api_token');
 
-    // ---------------------------------------------------------
-    // TAHAP 1: CEK URL (Matikan dd ini jika URL sudah benar)
-    // ---------------------------------------------------------
-    // dd('Cek URL saat ini:', $apiUrl); 
-    // ^^^ Hapus tanda // di depan dd kalau mau cek URL dulu
+        // PERUBAHAN: Tembak ke endpoint baru '/api/kasir/antrian-all'
+        $response = Http::withToken($token)
+            ->get(env('API_URL') . '/kasir/antrian', [
+                'status_filter' => 'menunggu_pembayaran'
+                // Kita tidak perlu kirim 'page' lagi karena sudah get() semua
+            ]);
 
-    $response = Http::withToken($token)
-        ->get($apiUrl . '/api/kasir/antrian', [
-            'status_filter' => 'menunggu_pembayaran' 
-        ]);
+        // Karena backend baru mengirim key 'data' (bukan 'table'), sesuaikan disini:
+        $antrian = $response->successful() ? $response->json()['data'] : [];
 
-    // ---------------------------------------------------------
-    // TAHAP 2: CEK ERROR (JIKA GAGAL)
-    // ---------------------------------------------------------
-    if ($response->failed()) {
-        dd([
-            'STATUS' => 'GAGAL / ERROR',
-            'Kode HTTP' => $response->status(), // 401, 404, 500?
-            'Pesan Error' => $response->body(),
-            'URL yang ditembak' => $apiUrl . '/api/kasir/antrian'
-        ]);
+        return view('staff.kasir.index', compact('antrian'));
     }
 
-    // ---------------------------------------------------------
-    // TAHAP 3: CEK DATA (JIKA SUKSES TAPI KOSONG)
-    // ---------------------------------------------------------
-    // Data sukses diambil
-    $dataAntrian = $response->json()['data'] ?? [];
-
-    // Tampilkan paksa isinya biar kita tahu kosong atau ada isi
-    dd([
-        'STATUS' => 'SUKSES (200 OK)',
-        'Jumlah Data' => count($dataAntrian),
-        'Isi Data' => $dataAntrian,
-        'Pesan' => count($dataAntrian) == 0 ? 'DATABASE KOSONG / FILTER TIDAK COCOK' : 'ADA DATA KOK!'
-    ]);
-
-    // Kode di bawah ini tidak akan jalan karena kena dd() di atas
-    return view('staff.kasir.index', compact('antrian'));
-}
 
     /*Menangani proses pembayaran dari Kasir*/
     public function store(Request $request, $id) // $id diambil dari route {id}
