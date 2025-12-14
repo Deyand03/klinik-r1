@@ -6,14 +6,10 @@
 
     @if (session('error'))
         {{-- Tambahkan x-data, x-init, x-show, dan x-transition --}}
-        <div x-data="{ show: true }" 
-             x-init="setTimeout(() => show = false, 5000)" 
-             x-show="show"
-             x-transition:leave="transition ease-in duration-300"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-90"
-             class="fixed top-20 right-4 z-50 animate-bounce">
-            
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90"
+            class="fixed top-20 right-4 z-50 animate-bounce">
+
             <div class="alert alert-error shadow-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6 text-white" fill="none"
                     viewBox="0 0 24 24">
@@ -59,28 +55,12 @@
                     {{-- FOTO PROFIL DINAMIS --}}
                     <div class="col-span-1 md:w-1/3 lg:w-1/4 shrink-0">
                         <div
-                            class="aspect-3/4 relative rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20">
-                            @php
-                                $foto = $doctor['foto_profil'] ?? null;
-                                $imgSrc =
-                                    'https://placehold.co/600x800/2C3753/FFFFFF/png?text=' .
-                                    urlencode($doctor['nama_lengkap']);
+                            class="aspect-3/4 relative rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20 flex items-center justify-center bg-brand-secondary">
 
-                                if ($foto) {
-                                    // Jika link external (placeholder/https), pakai langsung
-                                    if (Str::startsWith($foto, 'http')) {
-                                        $imgSrc = $foto;
-                                    }
-                                    // Jika path lokal storage, tambahkan domain backend
-                                    else {
-                                        $imgSrc = 'http://localhost:8000/storage/' . $foto;
-                                    }
-                                }
-                            @endphp
+                            {{-- Ganti bagian Avatar/Initial dengan Image Placeholder ini --}}
+                            <img src="https://placehold.co/300x400/2C3753/FFFFFF/png?text={{ urlencode($doctor['nama_lengkap']) }}"
+                                alt="{{ $doctor['nama_lengkap'] }}" class="h-full w-full object-cover" />
 
-                            <img src="{{ $imgSrc }}" alt="{{ $doctor['nama_lengkap'] }}"
-                                class="object-cover w-full h-full"
-                                onerror="this.onerror=null; this.src='https://placehold.co/600x800/2C3753/FFFFFF/png?text=No+Image';" />
                         </div>
                     </div>
 
@@ -138,7 +118,9 @@
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm text-blue-700">
-                                        <span class="font-bold">Perhatian:</span> Anda hanya dapat melakukan booking untuk jadwal praktik <span class="font-semibold text-blue-900">hari ini dan besok</span>. Silakan pilih jadwal yang tersedia untuk mendapatkan nomor antrian online.
+                                        <span class="font-bold">Perhatian:</span> Anda hanya dapat melakukan booking untuk
+                                        jadwal praktik <span class="font-semibold text-blue-900">hari ini dan besok</span>.
+                                        Silakan pilih jadwal yang tersedia untuk mendapatkan nomor antrian online.
                                     </p>
                                 </div>
                             </div>
