@@ -83,9 +83,12 @@
                                     <td class="py-4 px-4">
                                         <div class="flex items-center gap-3">
                                             <div class="avatar placeholder">
-                                                <div class="bg-blue-100 text-blue-700 rounded-full w-8 h-8">
+                                                {{-- PERBAIKAN: Tambahkan 'flex items-center justify-center' --}}
+                                                <div
+                                                    class="bg-blue-100 text-blue-700 rounded-full w-8 h-8 flex items-center justify-center">
                                                     <span class="text-xs font-bold">
-                                                        {{ substr($item['dokter']['nama_lengkap'] ?? 'Dr', 0, 2) }}
+                                                        {{-- OPSI: Ambil inisial nama saja (skip gelar 'dr.') --}}
+                                                        {{ substr(str_replace(['dr. ', 'Dr. '], '', $item['dokter']['nama_lengkap'] ?? 'Dr'), 0, 2) }}
                                                     </span>
                                                 </div>
                                             </div>

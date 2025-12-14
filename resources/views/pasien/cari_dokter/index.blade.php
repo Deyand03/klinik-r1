@@ -33,24 +33,9 @@
 
                         {{-- FOTO PROFIL (FIXED LOGIC) --}}
                         <figure class="sm:w-1/3 h-64 sm:h-auto relative">
-                            @php
-                                $foto = $doc['foto_profil'] ?? null;
-                                $imgSrc =
-                                    'https://placehold.co/300x400/2C3753/FFFFFF/png?text=' .
-                                    urlencode($doc['nama_lengkap']);
-
-                                if ($foto) {
-                                    if (Str::startsWith($foto, 'http')) {
-                                        $imgSrc = $foto;
-                                    } else {
-                                        // Arahkan ke Port 8000 (Backend)
-                                        $imgSrc = 'http://localhost:8000/storage/' . $foto;
-                                    }
-                                }
-                            @endphp
-                            <img src="{{ $imgSrc }}" alt="{{ $doc['nama_lengkap'] }}"
-                                class="h-full w-full object-cover"
-                                onerror="this.onerror=null; this.src='https://placehold.co/300x400/2C3753/FFFFFF/png?text=No+Image';" />
+                            {{-- Langsung tembak ke Placeholder dengan Nama Dokter --}}
+                            <img src="https://placehold.co/300x400/2C3753/FFFFFF/png?text={{ urlencode($doc['nama_lengkap']) }}"
+                                alt="{{ $doc['nama_lengkap'] }}" class="h-full w-full object-cover" />
                         </figure>
 
                         <div class="card-body sm:w-2/3 p-6">
