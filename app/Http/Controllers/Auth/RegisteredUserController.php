@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi Frontend (Opsional tapi bagus buat UX)
+        // 1. Validasi Input Dasar di Frontend
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -36,37 +36,43 @@ class RegisteredUserController extends Controller
             'alamat_domisili' => 'required',
         ]);
 
-        // Kirim ke API Backend
-        $response = Http::post(env('API_URL') . '/register', [
+        // 2. Kirim ke Backend (UBAH DISINI: Tambah withHeaders)
+        $response = Http::withHeaders([
+            'Accept' => 'application/json', // PENTING: Agar backend kirim JSON error, bukan redirect
+        ])->post(env('API_URL') . '/register', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-
             'nik' => $request->nik,
             'no_hp' => $request->no_hp,
             'tgl_lahir' => $request->tgl_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'alamat_domisili' => $request->alamat_domisili,
-
-            // --- TAMBAHAN BARU ---
-            'golongan_darah' => $request->golongan_darah ?? '-', // Default strip jika kosong
-            'riwayat_alergi' => $request->riwayat_alergi ?? 'Tidak ada', // Default text
+            'golongan_darah' => $request->golongan_darah ?? '-',
+            'riwayat_alergi' => $request->riwayat_alergi ?? 'Tidak ada',
         ]);
 
+        // 3. Jika Sukses
         if ($response->successful()) {
             $data = $response->json();
-
-            // Auto Login
             session([
                 'api_token' => $data['access_token'],
                 'user_data' => $data['user']
             ]);
-
-            return redirect(route('beranda', absolute: false));
+            return redirect(route('beranda', absolute: false))->with('success', 'Registrasi berhasil!');
         }
 
+        // 4. Jika Error Validasi (Status 422) - UBAH DISINI
+        if ($response->status() === 422) {
+            // Ambil array pesan error dari backend (yang sudah Bahasa Indonesia tadi)
+            $errors = $response->json()['errors'] ?? [];
+            // Kirim kembali ke form register agar muncul tulisan merah
+            return back()->withErrors($errors)->withInput();
+        }
 
-
-        return back()->withErrors(['email' => 'Registrasi Gagal: ' . ($response->json()['message'] ?? 'Error Server')]);
+        // 5. Error Lainnya (Server Error)
+        return back()
+            ->withErrors(['email' => 'Terjadi kesalahan: ' . ($response->json()['message'] ?? 'Gagal menghubungi server.')])
+            ->withInput();
     }
 }
